@@ -17,11 +17,11 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_wrapper_GetDNS_createContext
 
 /*
  * Class:     com_verisign_getdns_wrapper_GetDNS
- * Method:    general
- * Signature: (Ljava/lang/Object;Ljava/lang/String;)Ljava/util/HashMap;
+ * Method:    generalSync
+ * Signature: (Ljava/lang/Object;Ljava/lang/String;Ljava/lang/Integer;Ljava/util/HashMap;Ljava/util/HashMap;)Lcom/verisign/getdns/wrapper/GetDNSReturn;
  */
-JNIEXPORT jobject JNICALL Java_com_verisign_getdns_wrapper_GetDNS_general
-  (JNIEnv *, jobject, jobject, jstring);
+JNIEXPORT jobject JNICALL Java_com_verisign_getdns_wrapper_GetDNS_generalSync
+  (JNIEnv *, jobject, jobject, jstring, jint, jobject);
 
 /*
  * Class:     com_verisign_getdns_wrapper_GetDNS
