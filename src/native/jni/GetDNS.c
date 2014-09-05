@@ -274,10 +274,7 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_wrapper_GetDNS_generalSync
     if(NULL != name)
         nativeString = (*env)->GetStringUTFChars(env, name, 0);
 
-    getdns_dict * this_extensions = getdns_dict_create();
-    int this_ret = getdns_dict_set_int(this_extensions, "return_both_v4_and_v6", GETDNS_EXTENSION_TRUE);
-    //int this_ret = getdns_dict_set_int(this_extensions, "dnssec_return_status", GETDNS_EXTENSION_TRUE);
-    getdns_return_t ret = getdns_general_sync(context, nativeString, request_type, this_extensions, &response);
+    getdns_return_t ret = getdns_general_sync(context, nativeString, request_type, NULL, &response);
 
     if(GETDNS_RETURN_GOOD != ret) 
         throwException(env, ret);
@@ -293,7 +290,6 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_wrapper_GetDNS_generalSync
 
     if(NULL != response) {
         getdns_dict_destroy(response);
-        getdns_dict_destroy(this_extensions);
     }
     return returnValue;
 }
