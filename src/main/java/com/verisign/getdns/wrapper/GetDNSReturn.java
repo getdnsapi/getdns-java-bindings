@@ -3,6 +3,9 @@ package com.verisign.getdns.wrapper;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+ * TODO: Included a new error GETDNS_UNKNOWN for now, can be removed later.
+ */
 public enum GetDNSReturn{
 	GETDNS_RETURN_GOOD(0),
 	GETDNS_RETURN_GENERIC_ERROR(1),
@@ -41,8 +44,4 @@ public enum GetDNSReturn{
             return GetDNSReturn.GETDNS_UNKNOWN;
         return type;
     }
-    
-    public static void main(String[] args) {
-		System.out.println(GetDNSReturn.fromInt(0));
-	}
 }

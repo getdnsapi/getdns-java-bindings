@@ -1,9 +1,6 @@
 package com.verisign.getdns.wrapper;
 
 public class GetDNSException extends RuntimeException {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2810009795416124428L;
 
 	public GetDNSException(GetDNSReturn returnCode) {
@@ -18,7 +15,6 @@ public class GetDNSException extends RuntimeException {
 
 	@Override
     public String toString() {
-    	// TODO Auto-generated method stub
     	return "Error code: "+returnCode;
     }
 
