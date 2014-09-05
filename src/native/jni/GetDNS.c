@@ -244,7 +244,9 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_wrapper_GetDNS_contextCreate
     return (*env)->NewDirectByteBuffer(env, (void*) context, 0);
 }
 
-
+/*
+ * TODO: Need to validate contextParam is the context and not something else.
+ */
 JNIEXPORT void JNICALL Java_com_verisign_getdns_wrapper_GetDNS_contextDestroy
   (JNIEnv *env, jobject thisObj, jobject contextParam) {
     if(contextParam != NULL) {
@@ -255,6 +257,7 @@ JNIEXPORT void JNICALL Java_com_verisign_getdns_wrapper_GetDNS_contextDestroy
 
 /*
  * TODO: Conversion of extensions into getdns_dict is pending.
+ *       Need to validate contextParam.
  */
 JNIEXPORT jobject JNICALL Java_com_verisign_getdns_wrapper_GetDNS_generalSync
   (JNIEnv *env, jobject thisObj, jobject contextParam, jstring name, jint request_type, jobject extensions) {
@@ -271,10 +274,10 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_wrapper_GetDNS_generalSync
     if(NULL != name)
         nativeString = (*env)->GetStringUTFChars(env, name, 0);
 
-    //getdns_dict * this_extensions = getdns_dict_create();
-    //int this_ret = getdns_dict_set_int(this_extensions, "return_both_v4_and_v6", GETDNS_EXTENSION_TRUE);
+    getdns_dict * this_extensions = getdns_dict_create();
+    int this_ret = getdns_dict_set_int(this_extensions, "return_both_v4_and_v6", GETDNS_EXTENSION_TRUE);
     //int this_ret = getdns_dict_set_int(this_extensions, "dnssec_return_status", GETDNS_EXTENSION_TRUE);
-    getdns_return_t ret = getdns_general_sync(context, nativeString, request_type, NULL, &response);
+    getdns_return_t ret = getdns_general_sync(context, nativeString, request_type, this_extensions, &response);
 
     if(GETDNS_RETURN_GOOD != ret) 
         throwException(env, ret);
@@ -288,8 +291,10 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_wrapper_GetDNS_generalSync
     if(NULL != nativeString)
         (*env)->ReleaseStringUTFChars(env, name, nativeString);
 
-    if(NULL != response)
+    if(NULL != response) {
         getdns_dict_destroy(response);
+        getdns_dict_destroy(this_extensions);
+    }
     return returnValue;
 }
 

@@ -24,7 +24,7 @@ public class GetDNSTest {
 	}
 
 	
-	@Test
+	/*@Test
 	public void testGetDNSBulk()
 	{
 		System.out.println("---------Starting testGetDNSBulk");
@@ -45,5 +45,5 @@ public class GetDNSTest {
 		finally{
 			getDNS.contextDestroy(context);
 		}
-	}
+	}*/
 }
