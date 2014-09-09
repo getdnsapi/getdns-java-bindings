@@ -1,6 +1,6 @@
 #include <jni.h>
 #include <stdio.h>
-#include "com_verisign_getdns_wrapper_GetDNS.h"
+#include "com_verisign_getdns_GetDNSContext.h"
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -233,10 +233,10 @@ convertToJavaMap(JNIEnv *env, struct util_methods* methods, struct getdns_dict *
     return responseObject;
 }
 
-JNIEXPORT jobject JNICALL Java_com_verisign_getdns_wrapper_GetDNS_contextCreate
-  (JNIEnv *env, jobject thisObj, jint myInt) {
+JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_contextCreate
+  (JNIEnv *env, jobject thisObj, jint setFromOs) {
     struct getdns_context *context = NULL;
-    getdns_return_t ret = getdns_context_create(&context,1);
+    getdns_return_t ret = getdns_context_create(&context, setFromOs);
     if(ret != GETDNS_RETURN_GOOD) {
         throwException(env, ret);
         return NULL;
@@ -247,7 +247,7 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_wrapper_GetDNS_contextCreate
 /*
  * TODO: Need to validate contextParam is the context and not something else.
  */
-JNIEXPORT void JNICALL Java_com_verisign_getdns_wrapper_GetDNS_contextDestroy
+JNIEXPORT void JNICALL Java_com_verisign_getdns_GetDNSContext_contextDestroy
   (JNIEnv *env, jobject thisObj, jobject contextParam) {
     if(contextParam != NULL) {
         struct getdns_context *context = (struct getdns_context*) (*env)->GetDirectBufferAddress(env, contextParam);
@@ -259,7 +259,7 @@ JNIEXPORT void JNICALL Java_com_verisign_getdns_wrapper_GetDNS_contextDestroy
  * TODO: Conversion of extensions into getdns_dict is pending.
  *       Need to validate contextParam.
  */
-JNIEXPORT jobject JNICALL Java_com_verisign_getdns_wrapper_GetDNS_generalSync
+JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_generalSync
   (JNIEnv *env, jobject thisObj, jobject contextParam, jstring name, jint request_type, jobject extensions) {
 
     struct getdns_context *context = NULL;
@@ -274,7 +274,10 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_wrapper_GetDNS_generalSync
     if(NULL != name)
         nativeString = (*env)->GetStringUTFChars(env, name, 0);
 
-    getdns_return_t ret = getdns_general_sync(context, nativeString, request_type, NULL, &response);
+    getdns_dict * this_extensions = getdns_dict_create();
+    //int this_ret = getdns_dict_set_int(this_extensions, "return_both_v4_and_v6", GETDNS_EXTENSION_TRUE);
+    //int this_ret = getdns_dict_set_int(this_extensions, "dnssec_return_status", GETDNS_EXTENSION_TRUE);
+    getdns_return_t ret = getdns_general_sync(context, nativeString, request_type, this_extensions, &response);
 
     if(GETDNS_RETURN_GOOD != ret) 
         throwException(env, ret);
@@ -290,6 +293,7 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_wrapper_GetDNS_generalSync
 
     if(NULL != response) {
         getdns_dict_destroy(response);
+        getdns_dict_destroy(this_extensions);
     }
     return returnValue;
 }
