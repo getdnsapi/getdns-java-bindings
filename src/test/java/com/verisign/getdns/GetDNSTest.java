@@ -4,6 +4,9 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
+import com.verisign.getdns.GetDNSFactory;
+import com.verisign.getdns.IGetDNSContext;
+
 public class GetDNSTest {
 	
 	
@@ -12,7 +15,14 @@ public class GetDNSTest {
 	public void testGetDNSSimple()
 	{
 		System.out.println("---------Starting testGetDNSSimple");
-		GetDNS getDNS = new GetDNS();
+		IGetDNSContext context = GetDNSFactory.create(1);
+		try{
+			HashMap<String, Object> info = context.generalSync("google.com", 1, null);
+			System.out.println("Output: "+ info);
+		}finally {
+			context.close();
+		}
+		/*GetDNS getDNS = new GetDNS(1);
 		Object context = getDNS.contextCreate(1);  // invoke the native method
 		try{
 				HashMap<String, Object> info = getDNS.generalSync(context, "google.com", 1, null);
@@ -20,7 +30,7 @@ public class GetDNSTest {
 		}
 		finally{
 			getDNS.contextDestroy(context);
-		}
+		}*/
 	}
 
 	
