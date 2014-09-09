@@ -1,4 +1,4 @@
-package com.verisign.getdns.wrapper;
+package com.verisign.getdns;
 
 import java.util.HashMap;
 
