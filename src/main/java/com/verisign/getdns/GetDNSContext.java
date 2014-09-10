@@ -2,7 +2,7 @@ package com.verisign.getdns;
 
 import java.util.HashMap;
 
-import com.verisign.getdns.wrapper.GetDNSException;
+import com.verisign.getdns.GetDNSException;
 
 /**
  * The design here is slightly different from the C API in the following ways.
