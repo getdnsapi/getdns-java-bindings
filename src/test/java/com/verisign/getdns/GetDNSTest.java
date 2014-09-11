@@ -4,12 +4,9 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-import com.verisign.getdns.GetDNSFactory;
-import com.verisign.getdns.IGetDNSContext;
-
 public class GetDNSTest {
-	
-	
+
+
 
 	@Test
 	public void testGetDNSSimple()
@@ -17,23 +14,54 @@ public class GetDNSTest {
 		System.out.println("---------Starting testGetDNSSimple");
 		IGetDNSContext context = GetDNSFactory.create(1);
 		try{
-			HashMap<String, Object> info = context.generalSync("google.com", 1, null);
+			HashMap<String, Object> info = context.generalSync("google.com", RRType.GETDNS_RRTYPE_A, null);
 			System.out.println("Output: "+ info);
 		}finally {
 			context.close();
 		}
-		/*GetDNS getDNS = new GetDNS(1);
-		Object context = getDNS.contextCreate(1);  // invoke the native method
-		try{
-				HashMap<String, Object> info = getDNS.generalSync(context, "google.com", 1, null);
-				System.out.println("Output: "+ info);
-		}
-		finally{
-			getDNS.contextDestroy(context);
-		}*/
 	}
 
-	
+/*	@Test
+	public void testGetDNSSimpleAsync() throws IOException
+	{
+		System.out.println("---------Starting testGetDNSSimple");
+		new Thread(){
+			@Override
+			public void run() {
+				final IGetDNSContext context = GetDNSFactory.create(1);		
+				invokeASync(context);
+			}
+		}.start();
+		try {
+			System.out.println("Sleeping..");
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}*/
+/*	private static void invokeASync(IGetDNSContext context) {
+
+		try{
+			HashMap<String, Object> info = context.generalASync("google.com", 1, null, new IGetDNSCallback() {
+
+				public void handleResponse(HashMap<String, Object> response) {
+					System.out.println("Callback in Java");
+					System.out.println(response);
+				}
+
+				public void handleException(GetDNSException exception) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+			//			System.out.println("Output: "+ info);
+		}finally {
+			//			context.close();
+		}
+	}*/
+
+
 	/*@Test
 	public void testGetDNSBulk()
 	{
@@ -50,7 +78,7 @@ public class GetDNSTest {
 				System.out.println("Output: "+ info);
 			}
 			System.out.println("Avg Time taken per domain: "+((System.currentTimeMillis()-start)/(1000.0*domains.length))+" seconds");
-			
+
 		}
 		finally{
 			getDNS.contextDestroy(context);
