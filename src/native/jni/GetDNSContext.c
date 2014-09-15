@@ -397,8 +397,7 @@ JNIEXPORT jlong JNICALL Java_com_verisign_getdns_GetDNSContext_generalASync
 }
 
 /*
- * TODO: Conversion of extensions into getdns_dict is pending.
- *       Need to validate contextParam.
+ * TODO: Need to validate contextParam.
  */
 JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_generalSync
   (JNIEnv *env, jobject thisObj, jobject contextParam, jstring name, jint request_type, jobject extensions) {
