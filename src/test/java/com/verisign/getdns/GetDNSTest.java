@@ -7,16 +7,21 @@ import org.junit.Test;
 
 public class GetDNSTest {
 	
+	
+
+
+	
+
+
 	@Test
 	public void testGetDNSWithExtension() {
 		System.out.println("---------Starting testGetDNSWithExtension");
 		final IGetDNSContext context = GetDNSFactory.create(1);		
-		
 		try{
 			HashMap<String, Object> extensions = new HashMap<String, Object>();
-			extensions.put("dnssec_return_status", 1000);
-			extensions.put("dnssec_return_only_secure", 1000);
-			extensions.put("dnssec_return_validation_chain", 1000);
+			extensions.put(GetDNSConstants.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
+			extensions.put(GetDNSConstants.DNSSEC_RETURN_ONLY_SECURE, GetDNSConstants.GETDNS_EXTENSION_TRUE);
+			extensions.put(GetDNSConstants.DNSSEC_RETURN_VALIDATION_CHAIN, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 			
 			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.GETDNS_RRTYPE_A, extensions);
 			System.out.println("Output: "+ info);
