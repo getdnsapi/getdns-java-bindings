@@ -8,4 +8,4 @@ The file gradle.properties needs to be edited to customize javahome property
 
 Building and test
 ======================
-gradle clean assemble buildJniLib test
+./gradlew clean assemble buildJniLib test
