@@ -10,8 +10,20 @@ struct util_methods {
     jclass    mapClass;
     jmethodID mapInit;
     jmethodID mapPut;
+    jmethodID mapGetEntrySet;
+    jclass    setClass;
+    jmethodID entrySetGetIterator;
+    jclass    iteratorClass;
+    jmethodID hasNext;
+    jmethodID next;
+    jclass    entryClass;
+    jmethodID entryGetKey;
+    jmethodID entryGetValue;
     jclass    integerClass;
     jmethodID integerInit;
+    jmethodID intValue;
+    jclass    callbackClass;
+    jmethodID callbackHandleResponse;
 };
 
 struct util_methods*

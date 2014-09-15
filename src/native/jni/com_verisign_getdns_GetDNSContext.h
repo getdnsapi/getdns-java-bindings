@@ -10,10 +10,10 @@ extern "C" {
 /*
  * Class:     com_verisign_getdns_GetDNSContext
  * Method:    contextCreate
- * Signature: (I)Ljava/lang/Object;
+ * Signature: (Ljava/lang/Object;I)Ljava/lang/Object;
  */
 JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_contextCreate
-  (JNIEnv *, jobject, jint);
+  (JNIEnv *, jobject, jobject, jint);
 
 /*
  * Class:     com_verisign_getdns_GetDNSContext
@@ -25,11 +25,35 @@ JNIEXPORT void JNICALL Java_com_verisign_getdns_GetDNSContext_contextDestroy
 
 /*
  * Class:     com_verisign_getdns_GetDNSContext
+ * Method:    createEventBase
+ * Signature: ()Ljava/lang/Object;
+ */
+JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_createEventBase
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_verisign_getdns_GetDNSContext
+ * Method:    startListening
+ * Signature: (Ljava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_com_verisign_getdns_GetDNSContext_startListening
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     com_verisign_getdns_GetDNSContext
  * Method:    generalSync
  * Signature: (Ljava/lang/Object;Ljava/lang/String;ILjava/util/HashMap;)Ljava/util/HashMap;
  */
 JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_generalSync
   (JNIEnv *, jobject, jobject, jstring, jint, jobject);
+
+/*
+ * Class:     com_verisign_getdns_GetDNSContext
+ * Method:    generalASync
+ * Signature: (Ljava/lang/Object;Ljava/lang/String;ILjava/util/HashMap;Ljava/lang/Object;)J
+ */
+JNIEXPORT jlong JNICALL Java_com_verisign_getdns_GetDNSContext_generalASync
+  (JNIEnv *, jobject, jobject, jstring, jint, jobject, jobject);
 
 #ifdef __cplusplus
 }

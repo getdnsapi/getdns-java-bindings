@@ -1,12 +1,30 @@
 package com.verisign.getdns;
 
 import java.util.HashMap;
+import java.util.concurrent.CountDownLatch;
 
 import org.junit.Test;
 
 public class GetDNSTest {
+	
+	@Test
+	public void testGetDNSWithExtension() {
+		System.out.println("---------Starting testGetDNSWithExtension");
+		final IGetDNSContext context = GetDNSFactory.create(1);		
+		
+		try{
+			HashMap<String, Object> extensions = new HashMap<String, Object>();
+			extensions.put("dnssec_return_status", 1000);
+			extensions.put("dnssec_return_only_secure", 1000);
+			extensions.put("dnssec_return_validation_chain", 1000);
+			
+			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.GETDNS_RRTYPE_A, extensions);
+			System.out.println("Output: "+ info);
+		}finally {
+			context.close();
+		}
 
-
+	}
 
 	@Test
 	public void testGetDNSSimple()
@@ -14,39 +32,27 @@ public class GetDNSTest {
 		System.out.println("---------Starting testGetDNSSimple");
 		IGetDNSContext context = GetDNSFactory.create(1);
 		try{
-			HashMap<String, Object> info = context.generalSync("google.com", RRType.GETDNS_RRTYPE_A, null);
+			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.GETDNS_RRTYPE_A, null);
 			System.out.println("Output: "+ info);
 		}finally {
 			context.close();
 		}
 	}
-
-/*	@Test
-	public void testGetDNSSimpleAsync() throws IOException
+	
+		
+	@Test
+	public void testGetDNSAsync() 
 	{
-		System.out.println("---------Starting testGetDNSSimple");
-		new Thread(){
-			@Override
-			public void run() {
-				final IGetDNSContext context = GetDNSFactory.create(1);		
-				invokeASync(context);
-			}
-		}.start();
-		try {
-			System.out.println("Sleeping..");
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}*/
-/*	private static void invokeASync(IGetDNSContext context) {
-
+		System.out.println("---------Starting testGetDNSAsync");
+		final IGetDNSContext context = GetDNSFactory.create(1);		
+	
 		try{
-			HashMap<String, Object> info = context.generalASync("google.com", 1, null, new IGetDNSCallback() {
+			final CountDownLatch latch = new CountDownLatch(1);
+			IGetDNSCallback callback = new IGetDNSCallback() {
 
 				public void handleResponse(HashMap<String, Object> response) {
-					System.out.println("Callback in Java");
+					System.out.println("Completed domain with index: "+(1-latch.getCount()));
+					latch.countDown();
 					System.out.println(response);
 				}
 
@@ -54,12 +60,19 @@ public class GetDNSTest {
 					// TODO Auto-generated method stub
 
 				}
-			});
-			//			System.out.println("Output: "+ info);
+			};
+			
+			context.generalASync("verisigninc.com", RRType.GETDNS_RRTYPE_A, null, callback);
+			try {
+				System.out.println("Sleeping..");
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}finally {
-			//			context.close();
+			context.close();
 		}
-	}*/
+	}
 
 
 	/*@Test

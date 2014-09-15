@@ -9,7 +9,7 @@ public interface IGetDNSContext {
 
 	void close();
 
-	/*HashMap<String,Object> generalASync(String name, int requestType, HashMap<String,Object> extensions,
-			IGetDNSCallback callback) throws GetDNSException;*/
+	long generalASync(String name, RRType requestType, HashMap<String,Object> extensions,
+			IGetDNSCallback callback) throws GetDNSException;
 
 }
