@@ -50,7 +50,7 @@ public class GetDNSContext implements IGetDNSContext{
 		}
 	}
 
-	GetDNSContext(int setFromOS) {
+	GetDNSContext(int setFromOS) throws GetDNSException{
 		this.context = contextCreate(eventBase, setFromOS);
 	}
 
