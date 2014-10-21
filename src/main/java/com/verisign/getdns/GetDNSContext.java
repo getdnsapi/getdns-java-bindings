@@ -90,5 +90,13 @@ public class GetDNSContext implements IGetDNSContext{
 
 	private native long generalASync(Object context, String name, int requestType, 
 			HashMap<String,Object> extensions, Object callbackObj)throws GetDNSException;
+
+	private native HashMap<String, Object> addressSync(Object context, String name,
+			HashMap<String, Object> extensions) throws GetDNSException;
+	
+	public  HashMap<String, Object> addressSync(String name,
+			HashMap<String, Object> extensions) throws GetDNSException{
+		return addressSync(context, name,  extensions);
+	}
 	
 }

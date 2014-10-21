@@ -64,8 +64,10 @@ throwJavaIssue(JNIEnv *env, char *message) {
 /*
  * Method to throw a GetDNSException.
  */
-void
-throwException(JNIEnv *env, getdns_return_t ret) {
+int
+throwExceptionOnError(JNIEnv *env, getdns_return_t ret) {
+    if(GETDNS_RETURN_GOOD == ret)
+        return 0;
     jclass getDNSRetClass = (*env)->FindClass(env, "com/verisign/getdns/GetDNSReturn");
     jmethodID fromInt = (*env)->GetStaticMethodID(env, getDNSRetClass, "fromInt", "(I)Lcom/verisign/getdns/GetDNSReturn;");
     jobject retObj = (*env)->CallStaticObjectMethod(env, getDNSRetClass, fromInt, ret);
@@ -73,4 +75,5 @@ throwException(JNIEnv *env, getdns_return_t ret) {
     jmethodID init = (*env)->GetMethodID(env, exClass, "<init>", "(Lcom/verisign/getdns/GetDNSReturn;)V");
     jobject exObj = (*env)->NewObject(env, exClass, init, retObj);
     (*env)->Throw( env, exObj);
+    return 1;
 }
