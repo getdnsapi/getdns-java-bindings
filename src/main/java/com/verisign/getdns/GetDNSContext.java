@@ -99,4 +99,27 @@ public class GetDNSContext implements IGetDNSContext{
 		return addressSync(context, name,  extensions);
 	}
 	
+	private native HashMap<String, Object> serviceSync(Object context, String name,
+			HashMap<String, Object> extensions) throws GetDNSException;
+
+	@Override
+	public HashMap<String, Object> serviceSync(String name,
+			HashMap<String, Object> extensions) throws GetDNSException {
+		return serviceSync(context, name,  extensions);
+		
+	}
+	
+	private native HashMap<String,Object> hostnameSync(Object context,HashMap<String,Object> address, 
+			HashMap<String,Object> extensions)throws GetDNSException;
+
+	@Override
+	public HashMap<String, Object> hostnameSync(
+			HashMap<String, Object> address, HashMap<String, Object> extensions)
+			throws GetDNSException {
+		return hostnameSync(context, address, extensions);
+		
+	}
+
+
+	
 }

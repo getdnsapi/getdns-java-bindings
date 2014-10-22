@@ -344,8 +344,10 @@ getdns_dict* convertMapToDict
     struct getdns_dict *result = getdns_dict_create();
     struct util_methods methods;
 
-    if(NULL == init_util_methods(env, &methods))
+    if(NULL == init_util_methods(env, &methods)){
+        throwJavaIssue(env, "Error while converting to dict, could not init java methods");
         return NULL;
+    }
 
     jobject jentrySet = (*env)->CallObjectMethod(env, mapObj, methods.mapGetEntrySet);
     jobject jiterator = (*env)->CallObjectMethod(env, jentrySet, methods.entrySetGetIterator);
@@ -442,7 +444,7 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_generalSync
 
     CHECK_NULL_INIT_PTR(contextParam, context)
     CHECK_NULL_AND_INIT_STR(name, nativeString)
-    getdns_dict * this_extensions =  getextensions(extensions,env,thisObj);
+    getdns_dict * this_extensions = convertMapToDict(env, thisObj, extensions); /* getextensions(extensions,env,thisObj);*/
 
     getdns_return_t ret = getdns_general_sync(context, nativeString, request_type, this_extensions, &response);
 
@@ -465,7 +467,7 @@ JNIEXPORT jobject JNICALL JNICALL Java_com_verisign_getdns_GetDNSContext_address
 
     CHECK_NULL_INIT_PTR(contextParam, context)
     CHECK_NULL_AND_INIT_STR(name, nativeString)
-    getdns_dict * this_extensions =  getextensions(extensions,env,thisObj); 
+    getdns_dict * this_extensions = convertMapToDict(env, thisObj, extensions); /* getextensions(extensions,env,thisObj); */ 
 
     getdns_return_t ret = getdns_address_sync(context, nativeString,  this_extensions, &response);
 
@@ -475,3 +477,56 @@ JNIEXPORT jobject JNICALL JNICALL Java_com_verisign_getdns_GetDNSContext_address
     cleanup(nativeString, response,this_extensions,env,name); 
     return returnValue;
 }
+
+JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_serviceSync
+    (JNIEnv *env, jobject thisObj, jobject contextParam, jstring name, jobject extensions) {
+    
+     struct getdns_context *context = NULL;
+    const char *nativeString = NULL;
+    struct getdns_dict *response = NULL;
+    struct util_methods methods;
+    jobject returnValue = NULL;
+    
+
+    CHECK_NULL_INIT_PTR(contextParam, context)
+    CHECK_NULL_AND_INIT_STR(name, nativeString)
+    getdns_dict * this_extensions =  convertMapToDict(env, thisObj, extensions);/* getextensions(extensions,env,thisObj);*/ 
+
+    getdns_return_t ret = getdns_service_sync(context, nativeString,  this_extensions, &response);
+
+    if(!throwExceptionOnError(env, ret) && NULL != init_util_methods(env, &methods))
+        returnValue = convertToJavaMap(env, &methods, response);
+
+    cleanup(nativeString, response,this_extensions,env,name); 
+    return returnValue;
+}
+
+/*
+ * Class:     com_verisign_getdns_GetDNSContext
+ * Method:    hostnameSync
+ * Signature: (Ljava/lang/Object;Ljava/lang/String;Ljava/util/HashMap;Ljava/util/HashMap;)Ljava/util/HashMap;
+ */
+JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_hostnameSync(JNIEnv *env, jobject thisObj, jobject contextParam, jobject address, jobject extensions) {
+  
+  
+  
+    struct getdns_context *context = NULL;
+    const char *nativeString = NULL;
+    struct getdns_dict *response = NULL;
+    struct util_methods methods;
+    jobject returnValue = NULL;
+
+    CHECK_NULL_INIT_PTR(contextParam, context)
+    //CHECK_NULL_AND_INIT_STR(name, nativeString)
+    getdns_dict * this_extensions =  convertMapToDict(env, thisObj, extensions);/* getextensions(extensions,env,thisObj);*/
+    getdns_dict * this_address =  convertMapToDict(env, thisObj, address); 
+
+    getdns_return_t ret = getdns_hostname_sync(context, this_address, this_extensions, &response);
+
+    if(!throwExceptionOnError(env, ret) && NULL != init_util_methods(env, &methods))
+        returnValue = convertToJavaMap(env, &methods, response);
+
+    cleanup(nativeString, response,this_extensions,env,NULL); 
+    return returnValue;
+}
+  

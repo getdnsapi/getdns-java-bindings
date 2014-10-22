@@ -54,6 +54,31 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_generalSync
  */
 JNIEXPORT jlong JNICALL Java_com_verisign_getdns_GetDNSContext_generalASync
   (JNIEnv *, jobject, jobject, jstring, jint, jobject, jobject);
+  
+/*
+ * Class:     com_verisign_getdns_GetDNSContext
+ * Method:    addressSync
+ * Signature: (Ljava/lang/Object;Ljava/lang/String;Ljava/util/HashMap;)Ljava/util/HashMap;
+ */
+JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_addressSync
+  (JNIEnv *, jobject, jobject, jstring, jobject);
+
+/*
+ * Class:     com_verisign_getdns_GetDNSContext
+ * Method:    serviceSync
+ * Signature: (Ljava/lang/Object;Ljava/lang/String;Ljava/util/HashMap;)Ljava/util/HashMap;
+ */
+JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_serviceSync
+  (JNIEnv *, jobject, jobject, jstring, jobject);  
+/*
+ * Class:     com_verisign_getdns_GetDNSContext
+ * Method:    hostnameSync
+ * Signature: (Ljava/lang/Object;Ljava/util/HashMap;Ljava/util/HashMap;)Ljava/util/HashMap;
+ */
+JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_hostnameSync
+  (JNIEnv *, jobject, jobject, jobject, jobject);
+
+
 
 #ifdef __cplusplus
 }
