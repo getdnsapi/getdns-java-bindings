@@ -501,11 +501,6 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_serviceSync
     return returnValue;
 }
 
-/*
- * Class:     com_verisign_getdns_GetDNSContext
- * Method:    hostnameSync
- * Signature: (Ljava/lang/Object;Ljava/lang/String;Ljava/util/HashMap;Ljava/util/HashMap;)Ljava/util/HashMap;
- */
 JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_hostnameSync(JNIEnv *env, jobject thisObj, jobject contextParam, jobject address, jobject extensions) {
   
   
@@ -520,6 +515,8 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_hostnameSync(JN
     //CHECK_NULL_AND_INIT_STR(name, nativeString)
     getdns_dict * this_extensions =  convertMapToDict(env, thisObj, extensions);/* getextensions(extensions,env,thisObj);*/
     getdns_dict * this_address =  convertMapToDict(env, thisObj, address); 
+    getdns_bindata this_ipv4_addr = { 4, (void *)"\x08\x08\x08\x08" };
+    getdns_dict_set_bindata(this_address, "address_data", &this_ipv4_addr);
 
     getdns_return_t ret = getdns_hostname_sync(context, this_address, this_extensions, &response);
 
