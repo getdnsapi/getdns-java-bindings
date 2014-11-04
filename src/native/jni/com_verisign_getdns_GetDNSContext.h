@@ -78,6 +78,8 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_serviceSync
 JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_hostnameSync
   (JNIEnv *, jobject, jobject, jobject, jobject);
 
+JNIEXPORT void JNICALL Java_com_verisign_getdns_GetDNSContext_startListening1
+  (JNIEnv *env, jclass class, jobject contextParam);
 
 
 #ifdef __cplusplus

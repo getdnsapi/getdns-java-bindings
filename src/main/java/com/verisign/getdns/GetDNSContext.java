@@ -49,9 +49,30 @@ public class GetDNSContext implements IGetDNSContext{
 			e.printStackTrace();
 		}
 	}
+	
+	private void listen() {
+		new Thread(){
+			public void run() {
+				while(true){
+					synchronized (context) {
+						try {
+							context.wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+							break;
+						}
+					}
+					startListening1(context);
+				}
+			}
+		}.start();
+	}
+	
+	private static native void startListening1(Object context);
 
 	GetDNSContext(int setFromOS) throws GetDNSException{
 		this.context = contextCreate(eventBase, setFromOS);
+//		listen();
 	}
 
 	/*protected void finalize() throws Throwable {
@@ -76,16 +97,21 @@ public class GetDNSContext implements IGetDNSContext{
 	private native HashMap<String,Object> generalSync(Object context, String name, int requestType, 
 			HashMap<String,Object> extensions)throws GetDNSException;
 
-	public long generalASync(String name, RRType requestType, 
-			HashMap<String,Object> extensions, IGetDNSCallback callback)throws GetDNSException{
+	public GetDNSFutureResult generalASync(String name, RRType requestType, 
+			HashMap<String,Object> extensions)throws GetDNSException{
 		if(eventBase == null) {
 			throw new RuntimeException("Error during eventing init. Cannot invoke async, try sync API");
 		}
-		long transactionId = generalASync(context, name, requestType.getValue(), extensions, callback);
+		GetDNSFutureResult result = new GetDNSFutureResult(context);
+		long transactionId = generalASync(context, name, requestType.getValue(), extensions, result);
+		result.setTransactionId(transactionId);
 		synchronized (eventBase) {
 			eventBase.notify();
 		}
-		return transactionId;
+		/*synchronized (context) {
+			context.notify();
+		}*/
+		return result;
 	}
 
 	private native long generalASync(Object context, String name, int requestType, 
@@ -119,7 +145,4 @@ public class GetDNSContext implements IGetDNSContext{
 		return hostnameSync(context, address, extensions);
 		
 	}
-
-
-	
 }

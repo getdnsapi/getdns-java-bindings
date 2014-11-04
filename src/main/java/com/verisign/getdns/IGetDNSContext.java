@@ -18,8 +18,8 @@ public interface IGetDNSContext {
 	HashMap<String, Object> hostnameSync(HashMap<String, Object> address, HashMap<String, Object> extensions)
 			throws GetDNSException;
 
-	long generalASync(String name, RRType requestType,
-			HashMap<String, Object> extensions, IGetDNSCallback callback)
+	GetDNSFutureResult generalASync(String name, RRType requestType,
+			HashMap<String, Object> extensions)
 			throws GetDNSException;
 
 }
