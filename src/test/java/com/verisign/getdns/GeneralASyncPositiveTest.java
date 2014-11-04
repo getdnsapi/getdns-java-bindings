@@ -36,7 +36,7 @@ public class GeneralASyncPositiveTest {
 		}
 	}
 	
-	@Test
+//	@Test
 	public void testGetDNSAsyncBulk() throws ExecutionException, TimeoutException 
 	{
 		System.out.println("---------Starting testGetDNSAsync");

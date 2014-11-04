@@ -527,23 +527,3 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_hostnameSync(JN
     cleanup(nativeString, response,this_extensions,env,NULL); 
     return returnValue;
 }
-  
-JNIEXPORT void JNICALL Java_com_verisign_getdns_GetDNSContext_startListening1
-  (JNIEnv *env, jclass class, jobject contextParam) {
-    struct getdns_context *context = NULL;
-    if(NULL != contextParam) context = (struct getdns_context*) (*env)->GetDirectBufferAddress(env, contextParam);
-   struct timeval tv;
-    /* Keep looping while there are outstanding requests */
-    while (getdns_context_get_num_pending_requests(context, &tv) > 0) {
-        /* setup the read FD_SET to pass to select */
-        int fd = getdns_context_fd(context);
-        fd_set read_fds;
-        FD_ZERO(&read_fds);
-        FD_SET(fd, &read_fds);
-        /* Wait on the FD or for a timeout */
-         fprintf(stderr, "Is this printing\n");
-        select(fd + 1, &read_fds, NULL, NULL, &tv);
-        getdns_context_process_async(context);
-    }
-}
-  

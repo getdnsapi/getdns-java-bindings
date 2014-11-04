@@ -50,29 +50,8 @@ public class GetDNSContext implements IGetDNSContext{
 		}
 	}
 	
-	private void listen() {
-		new Thread(){
-			public void run() {
-				while(true){
-					synchronized (context) {
-						try {
-							context.wait();
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-							break;
-						}
-					}
-					startListening1(context);
-				}
-			}
-		}.start();
-	}
-	
-	private static native void startListening1(Object context);
-
 	GetDNSContext(int setFromOS) throws GetDNSException{
 		this.context = contextCreate(eventBase, setFromOS);
-//		listen();
 	}
 
 	/*protected void finalize() throws Throwable {
@@ -108,9 +87,6 @@ public class GetDNSContext implements IGetDNSContext{
 		synchronized (eventBase) {
 			eventBase.notify();
 		}
-		/*synchronized (context) {
-			context.notify();
-		}*/
 		return result;
 	}
 

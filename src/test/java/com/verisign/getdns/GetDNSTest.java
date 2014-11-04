@@ -16,7 +16,7 @@ public class GetDNSTest {
 	
 
 
-	@Test
+//	@Test
 	public void testGetDNSWithExtension() {
 		System.out.println("---------Starting testGetDNSWithExtension");
 		final IGetDNSContext context = GetDNSFactory.create(1);		
@@ -34,7 +34,7 @@ public class GetDNSTest {
 
 	}
 
-	@Test
+//	@Test
 	public void testGetDNSSimple()
 	{
 		System.out.println("---------Starting testGetDNSSimple");
@@ -48,7 +48,7 @@ public class GetDNSTest {
 	}
 	
 		
-	@Test
+//	@Test
 	public void testGetDNSAsync() throws ExecutionException, TimeoutException 
 	{
 		System.out.println("---------Starting testGetDNSAsync");
