@@ -325,6 +325,7 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_createEventBase
     if (eventBase == NULL)
     {
         fprintf(stderr, "Trying to create the event base failed.\n");
+        throwJavaIssue(env, "Trying to create the event base failed.");
         return NULL;
     }
     return (*env)->NewDirectByteBuffer(env, (void*) eventBase, 0);
@@ -357,22 +358,52 @@ getdns_dict* convertMapToDict
         jobject jentry = (*env)->CallObjectMethod(env, jiterator, methods.next);
 	jobject jkey = (*env)->CallObjectMethod(env, jentry, methods.entryGetKey);
 	jobject jvalue = (*env)->CallObjectMethod(env, jentry, methods.entryGetValue);
+        jclass  valueClass = (*env)->GetObjectClass(env, jvalue);
 	const char* key = (*env)->GetStringUTFChars(env, jkey, 0);
 
         if(key == NULL) continue; // Ignoring null key for now.
+        //fprintf(stderr, "key: %s\n", key);
 
-        if((*env)->IsAssignableFrom(env, methods.integerClass, (*env)->GetObjectClass(env, jvalue))) // Integer value case.
+        if((*env)->IsAssignableFrom(env, methods.integerClass, valueClass)) { // Integer value case.
 	    getdns_dict_set_int(result, key, (*env)->CallIntMethod(env, jvalue, methods.intValue));
-	else if((*env)->IsAssignableFrom(env, (*env)->FindClass(env, "java/lang/String"), (*env)->GetObjectClass(env, jvalue))) { // String value case.
+            //fprintf(stderr, "%s, %d\n", key, (*env)->CallIntMethod(env, jvalue, methods.intValue));
+        }
+	else if((*env)->IsAssignableFrom(env, (*env)->FindClass(env, "java/lang/String"), valueClass)) { // String value case.
             const char* value = (*env)->GetStringUTFChars(env, jvalue, 0);
-	    getdns_dict_util_set_string(result, key, value);
+	    getdns_dict_util_set_string(result, (char*) key, value);
             (*env)->ReleaseStringUTFChars(env, jvalue, value);
+        }
+        else if((*env)->IsAssignableFrom(env, (*env)->FindClass(env, "java/util/HashMap"), valueClass)) { // Map value case.
+            //fprintf(stderr, "Came to map case\n");
+            getdns_dict* subdict = convertMapToDict(env, thisObj, jvalue);
+            getdns_dict_set_dict(result, key, subdict);
+            getdns_dict_destroy(subdict);
+        }
+        else if((*env)->IsAssignableFrom(env, (*env)->FindClass(env, "[B"), valueClass)) { // Map value case.
+            //fprintf(stderr, "Came to byte[] case1\n");
+            int len=0;
+            unsigned char *bytes = convertByteArrayToUnsignedCharArray(env, jvalue, &len);
+            getdns_bindata this_ipv4_addr = { len, bytes };
+            getdns_dict_set_bindata(result, key, &this_ipv4_addr);
+            free(bytes);
         }
         (*env)->ReleaseStringUTFChars(env, jkey, key);
         
     }
     return result;
 }
+
+/*getdns_dict * getextensions(jobject extensions,JNIEnv *env,jobject thisObj){
+         getdns_dict * this_extensions = NULL;
+    if(extensions != NULL) {
+        this_extensions = convertMapToDict(env, thisObj, extensions);
+        if(this_extensions == NULL) {
+            throwJavaIssue(env, "Error while reading extensions");
+            return NULL;
+        }
+    }
+return this_extensions;
+}*/
 
 /*
  * TODO: Conversion of extensions into getdns_dict is pending.
@@ -384,53 +415,24 @@ JNIEXPORT jlong JNICALL Java_com_verisign_getdns_GetDNSContext_generalASync
     struct getdns_context *context = NULL;
     const char *nativeString = NULL;
     getdns_transaction_t transaction_id = 0;
-
-    if(NULL != contextParam)
-        context = (struct getdns_context*) (*env)->GetDirectBufferAddress(env, contextParam);
-
+    struct util_methods methods;
     getdns_dict * this_extensions = NULL;
-    if(extensions != NULL) {
-        this_extensions = convertMapToDict(env, thisObj, extensions);
-        if(this_extensions == NULL) {
-            throwJavaIssue(env, "Error while reading extensions");
-            return -1;
-        }
-    }
 
-    if(NULL != name)
-        nativeString = (*env)->GetStringUTFChars(env, name, 0);
+    CHECK_NULL_INIT_PTR(contextParam, context)
+    CHECK_NULL_AND_INIT_STR(name, nativeString)
+    this_extensions = convertMapToDict(env, thisObj, extensions); /* getextensions(extensions,env,thisObj);*/
 
     getdns_return_t ret = getdns_general(context, nativeString, request_type, this_extensions, (*env)->NewGlobalRef(env, callbackObj), &transaction_id, callbackfn);
-
-    /*if(GETDNS_RETURN_GOOD != ret) 
-        throwException(env, ret);*/
     throwExceptionOnError(env, ret);
 
-    /*
-     * Cleanup
-     */
-    if(NULL != nativeString)
-        (*env)->ReleaseStringUTFChars(env, name, nativeString);
-
-    if(NULL != this_extensions)
-        getdns_dict_destroy(this_extensions);
+    cleanup(nativeString, NULL,this_extensions,env,name);
 
     return ret;
 }
 
 
 
-getdns_dict * getextensions(jobject extensions,JNIEnv *env,jobject thisObj){
-         getdns_dict * this_extensions = NULL;
-    if(extensions != NULL) {
-        this_extensions = convertMapToDict(env, thisObj, extensions);
-        if(this_extensions == NULL) {
-            throwJavaIssue(env, "Error while reading extensions");
-            return NULL;
-        }
-    }
-return this_extensions;
-}
+
 /*
  * TODO: Need to validate contextParam.
  */
@@ -482,7 +484,7 @@ JNIEXPORT jobject JNICALL JNICALL Java_com_verisign_getdns_GetDNSContext_address
 JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_serviceSync
     (JNIEnv *env, jobject thisObj, jobject contextParam, jstring name, jobject extensions) {
     
-     struct getdns_context *context = NULL;
+    struct getdns_context *context = NULL;
     const char *nativeString = NULL;
     struct getdns_dict *response = NULL;
     struct util_methods methods;
@@ -513,11 +515,8 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_hostnameSync(JN
     jobject returnValue = NULL;
 
     CHECK_NULL_INIT_PTR(contextParam, context)
-    //CHECK_NULL_AND_INIT_STR(name, nativeString)
     getdns_dict * this_extensions =  convertMapToDict(env, thisObj, extensions);/* getextensions(extensions,env,thisObj);*/
     getdns_dict * this_address =  convertMapToDict(env, thisObj, address); 
-    getdns_bindata this_ipv4_addr = { 4, (void *)"\x08\x08\x08\x08" };
-    getdns_dict_set_bindata(this_address, "address_data", &this_ipv4_addr);
 
     getdns_return_t ret = getdns_hostname_sync(context, this_address, this_extensions, &response);
 

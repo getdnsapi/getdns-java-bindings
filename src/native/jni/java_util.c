@@ -77,3 +77,11 @@ throwExceptionOnError(JNIEnv *env, getdns_return_t ret) {
     (*env)->Throw( env, exObj);
     return 1;
 }
+
+unsigned char* 
+convertByteArrayToUnsignedCharArray(JNIEnv *env, jbyteArray array, int *len) {
+    *len = (*env)->GetArrayLength (env, array);
+    unsigned char* buf = (unsigned char*)malloc(*len*sizeof(unsigned char));
+    (*env)->GetByteArrayRegion(env, array, 0, *len, buf);
+    return buf;
+}

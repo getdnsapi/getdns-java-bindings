@@ -3,6 +3,10 @@ package com.verisign.getdns;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 
 import org.junit.Test;
@@ -12,13 +16,11 @@ public class HostnameSyncPositiveTest{
 	
 
 	@Test
-	public void testGetHostname(){
+	public void testGetHostname() throws UnknownHostException{
 		final IGetDNSContext context = GetDNSFactory.create(1);		
 		try{
-			HashMap<String, Object> address = new HashMap<>();
-			address.put("address_type", "IPv4");
-			address.put("address_data", "\u0008\u0008\u0008\u0008");
-			HashMap<String, Object> info = context.hostnameSync(address , null);
+			HashMap<String, Object> info = context.hostnameSync("2001:4860:4860::8888" , null);
+			System.out.println(info);
 			assertNotNull(info);
 			assertEquals("Time out error"+info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			//assertNotNull("Type is null and response was "+info, gettype(info));

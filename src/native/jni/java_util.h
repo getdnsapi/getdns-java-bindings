@@ -38,3 +38,6 @@ throwExceptionOnError(JNIEnv *env, getdns_return_t ret) ;
 
 void
 throwJavaIssue(JNIEnv *env, char *message);
+
+unsigned char* 
+convertByteArrayToUnsignedCharArray(JNIEnv *env, jbyteArray array, int* len);

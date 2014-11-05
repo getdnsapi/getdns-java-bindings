@@ -1,5 +1,6 @@
 package com.verisign.getdns;
 
+import java.net.UnknownHostException;
 import java.util.HashMap;
 
 public interface IGetDNSContext {
@@ -15,8 +16,8 @@ public interface IGetDNSContext {
 	HashMap<String, Object> serviceSync(String name,
 			HashMap<String, Object> extensions) throws GetDNSException;
 
-	HashMap<String, Object> hostnameSync(HashMap<String, Object> address, HashMap<String, Object> extensions)
-			throws GetDNSException;
+	HashMap<String, Object> hostnameSync(String address, HashMap<String, Object> extensions)
+			throws GetDNSException, UnknownHostException ;
 
 	GetDNSFutureResult generalASync(String name, RRType requestType,
 			HashMap<String, Object> extensions)

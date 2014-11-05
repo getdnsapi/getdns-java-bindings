@@ -27,7 +27,7 @@ public class GeneralASyncPositiveTest {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
+			System.out.println(info);
 			assertNotNull(info);
 			assertEquals("Time out error"+info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			assertEquals(RRType.GETDNS_RRTYPE_A.getValue(),Integer.parseInt(GetDNSUtil.gettype(info)));

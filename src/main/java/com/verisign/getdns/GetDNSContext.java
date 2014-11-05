@@ -1,5 +1,6 @@
 package com.verisign.getdns;
 
+import java.net.UnknownHostException;
 import java.util.HashMap;
 
 /**
@@ -116,9 +117,8 @@ public class GetDNSContext implements IGetDNSContext{
 
 	@Override
 	public HashMap<String, Object> hostnameSync(
-			HashMap<String, Object> address, HashMap<String, Object> extensions)
-			throws GetDNSException {
-		return hostnameSync(context, address, extensions);
-		
+			String address, HashMap<String, Object> extensions)
+			throws GetDNSException, UnknownHostException {
+		return hostnameSync(context, GetDNSUtil.convertStringToAddress(address), extensions);
 	}
 }
