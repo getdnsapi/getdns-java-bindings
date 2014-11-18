@@ -49,10 +49,10 @@ JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_generalSync
 
 /*
  * Class:     com_verisign_getdns_GetDNSContext
- * Method:    generalASync
+ * Method:    generalAsync
  * Signature: (Ljava/lang/Object;Ljava/lang/String;ILjava/util/HashMap;Ljava/lang/Object;)J
  */
-JNIEXPORT jlong JNICALL Java_com_verisign_getdns_GetDNSContext_generalASync
+JNIEXPORT jlong JNICALL Java_com_verisign_getdns_GetDNSContext_generalAsync
   (JNIEnv *, jobject, jobject, jstring, jint, jobject, jobject);
   
 /*

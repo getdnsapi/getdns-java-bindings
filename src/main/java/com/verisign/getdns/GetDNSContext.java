@@ -77,13 +77,13 @@ public class GetDNSContext implements IGetDNSContext{
 	private native HashMap<String,Object> generalSync(Object context, String name, int requestType, 
 			HashMap<String,Object> extensions)throws GetDNSException;
 
-	public GetDNSFutureResult generalASync(String name, RRType requestType, 
+	public GetDNSFutureResult generalAsync(String name, RRType requestType, 
 			HashMap<String,Object> extensions)throws GetDNSException{
 		if(eventBase == null) {
 			throw new RuntimeException("Error during eventing init. Cannot invoke async, try sync API");
 		}
 		GetDNSFutureResult result = new GetDNSFutureResult(context);
-		long transactionId = generalASync(context, name, requestType.getValue(), extensions, result);
+		long transactionId = generalAsync(context, name, requestType.getValue(), extensions, result);
 		result.setTransactionId(transactionId);
 		synchronized (eventBase) {
 			eventBase.notify();
@@ -91,7 +91,7 @@ public class GetDNSContext implements IGetDNSContext{
 		return result;
 	}
 
-	private native long generalASync(Object context, String name, int requestType, 
+	private native long generalAsync(Object context, String name, int requestType, 
 			HashMap<String,Object> extensions, Object callbackObj)throws GetDNSException;
 
 	private native HashMap<String, Object> addressSync(Object context, String name,

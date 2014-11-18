@@ -23,6 +23,7 @@ init_util_methods(JNIEnv* env, struct util_methods* methods) {
     methods->listInit = (*env)->GetMethodID(env, methods->listClass, "<init>", "(I)V");
     methods->listAdd = (*env)->GetMethodID(env, methods->listClass, "add",
                 "(Ljava/lang/Object;)Z");
+    methods->listGetIterator = (*env)->GetMethodID(env, methods->listClass, "iterator", "()Ljava/util/Iterator;");
 
     methods->mapInit = (*env)->GetMethodID(env, methods->mapClass, "<init>", "(I)V");
     methods->mapPut = (*env)->GetMethodID(env, methods->mapClass, "put",
@@ -84,4 +85,11 @@ convertByteArrayToUnsignedCharArray(JNIEnv *env, jbyteArray array, int *len) {
     unsigned char* buf = (unsigned char*)malloc(*len*sizeof(unsigned char));
     (*env)->GetByteArrayRegion(env, array, 0, *len, buf);
     return buf;
+}
+
+jbyteArray
+convertUnsignedCharArrayToByteArray(JNIEnv *env, unsigned char* data, int len) {
+    jbyteArray result=(*env)->NewByteArray(env, len);
+    (*env)->SetByteArrayRegion(env, result, 0, len, data);
+    return result;
 }

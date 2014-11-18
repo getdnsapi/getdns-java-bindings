@@ -20,7 +20,7 @@ public class GeneralASyncPositiveTest {
 		final IGetDNSContext context = GetDNSFactory.create(1);		
 	
 		try{
-			GetDNSFutureResult futureResult = context.generalASync(DOMAIN_NAME, RRType.GETDNS_RRTYPE_A, null);
+			GetDNSFutureResult futureResult = context.generalAsync(DOMAIN_NAME, RRType.GETDNS_RRTYPE_A, null);
 			HashMap<String, Object> info = null;
 			try {
 				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
@@ -49,7 +49,7 @@ public class GeneralASyncPositiveTest {
 			int i=0;
 			for (String domain : domains) {
 				
-				results.add(context.generalASync(domain, RRType.GETDNS_RRTYPE_A, null));
+				results.add(context.generalAsync(domain, RRType.GETDNS_RRTYPE_A, null));
 				if(++i==20) break;
 			}
 			for (GetDNSFutureResult result : results) {

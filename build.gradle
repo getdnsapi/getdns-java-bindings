@@ -21,7 +21,7 @@ dependencies {
 task buildJniLib(type:Exec) {
   workingDir './src/native/jni/'
 
-    commandLine 'gcc', '-I'+javahome+'/include', '-I'+javahome+'/include/linux', '-shared','-o',System.getProperty("user.dir")+'/build/libs/libgetdnsconnector.so','-fPIC','-I/usr/local/include','-L/usr/local/lib','-lgetdns','-lldns', '-levent','-lgetdns_ext_event', 'java_util.c', 'GetDNSContext.c'
+    commandLine 'gcc', '-I'+javahome+'/include', '-I'+javahome+'/include/linux', '-shared','-o',System.getProperty("user.dir")+'/build/libs/libgetdnsconnector.so','-fPIC','-I/usr/local/include','-L/usr/local/lib','-lgetdns','-lldns', '-levent','-lgetdns_ext_event', 'java_util.c', 'GetDNSContext.c', 'getdns_util.c'
 
   standardOutput = new ByteArrayOutputStream()
   ext.output = {

@@ -11,16 +11,16 @@ public interface IGetDNSContext {
 	HashMap<String, Object> addressSync(String name,
 			HashMap<String, Object> extensions) throws GetDNSException;
 
-	void close();
-
 	HashMap<String, Object> serviceSync(String name,
 			HashMap<String, Object> extensions) throws GetDNSException;
 
 	HashMap<String, Object> hostnameSync(String address, HashMap<String, Object> extensions)
 			throws GetDNSException, UnknownHostException ;
 
-	GetDNSFutureResult generalASync(String name, RRType requestType,
+	GetDNSFutureResult generalAsync(String name, RRType requestType,
 			HashMap<String, Object> extensions)
 			throws GetDNSException;
+
+	void close();
 
 }

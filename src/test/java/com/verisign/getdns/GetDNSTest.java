@@ -16,7 +16,7 @@ public class GetDNSTest {
 	
 
 
-//	@Test
+	@Test
 	public void testGetDNSWithExtension() {
 		System.out.println("---------Starting testGetDNSWithExtension");
 		final IGetDNSContext context = GetDNSFactory.create(1);		
@@ -25,7 +25,9 @@ public class GetDNSTest {
 			extensions.put(GetDNSConstants.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 			extensions.put(GetDNSConstants.DNSSEC_RETURN_ONLY_SECURE, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 			extensions.put(GetDNSConstants.DNSSEC_RETURN_VALIDATION_CHAIN, GetDNSConstants.GETDNS_EXTENSION_TRUE);
-			
+			HashMap<String, Object> optParams = new HashMap<String, Object>();
+			optParams.put("maximum_udp_payload_size", 512);
+			extensions.put(GetDNSConstants.ADD_OPT_PARAMETERS, optParams);
 			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.GETDNS_RRTYPE_A, extensions);
 			System.out.println("Output: "+ info);
 		}finally {
@@ -75,7 +77,7 @@ public class GetDNSTest {
 			int i=0;
 			for (String domain : domains) {
 				
-				results.add(context.generalASync(domain, RRType.GETDNS_RRTYPE_A, null));
+				results.add(context.generalAsync(domain, RRType.GETDNS_RRTYPE_A, null));
 				if(++i==20) break;
 			}
 			for (GetDNSFutureResult result : results) {

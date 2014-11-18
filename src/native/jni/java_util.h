@@ -5,12 +5,14 @@
 
 #define CHECK_NULL_INIT_PTR(javaObj, context) if(NULL != javaObj) context = (struct getdns_context*) (*env)->GetDirectBufferAddress(env, javaObj);
 #define CHECK_NULL_AND_INIT_STR(str, nativeStr) if(NULL != str) nativeStr = (*env)->GetStringUTFChars(env, str, 0);
+#define CHECK_NULL_AND_CONVERT_TO_JAVA_STRING(str, object) if(NULL != str) object = (*env)->NewStringUTF(env, str);
 
 
 struct util_methods {
     jclass    listClass;
     jmethodID listInit;
     jmethodID listAdd;
+    jmethodID listGetIterator;
     jclass    mapClass;
     jmethodID mapInit;
     jmethodID mapPut;
@@ -41,3 +43,6 @@ throwJavaIssue(JNIEnv *env, char *message);
 
 unsigned char* 
 convertByteArrayToUnsignedCharArray(JNIEnv *env, jbyteArray array, int* len);
+
+jbyteArray
+convertUnsignedCharArrayToByteArray(JNIEnv *env, unsigned char* data, int len);
