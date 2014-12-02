@@ -251,3 +251,77 @@ JNIEXPORT jlong JNICALL Java_com_verisign_getdns_GetDNSContext_generalAsync
 }
 
 
+
+/*
+ * TODO: Need to validate contextParam.
+ */
+JNIEXPORT jlong JNICALL Java_com_verisign_getdns_GetDNSContext_addressAsync
+  (JNIEnv *env, jobject thisObj, jobject contextParam, jstring name, jobject extensions, jobject callbackObj) {
+
+    struct getdns_context *context = NULL;
+    const char *nativeString = NULL;
+    getdns_transaction_t transaction_id = 0;
+    struct util_methods methods;
+    getdns_dict * this_extensions = NULL;
+
+    CHECK_NULL_INIT_PTR(contextParam, context)
+    CHECK_NULL_AND_INIT_STR(name, nativeString)
+    this_extensions = convertMapToDict(env, thisObj, extensions);
+
+    getdns_return_t ret = getdns_address(context, nativeString, this_extensions, (*env)->NewGlobalRef(env, callbackObj), &transaction_id, callbackfn);
+    throwExceptionOnError(env, ret);
+
+    cleanup(nativeString, NULL,this_extensions,env,name);
+
+    return ret;
+}
+
+
+/*
+ * TODO: Need to validate contextParam.
+ */
+JNIEXPORT jlong JNICALL Java_com_verisign_getdns_GetDNSContext_serviceAsync
+  (JNIEnv *env, jobject thisObj, jobject contextParam, jstring name, jobject extensions, jobject callbackObj) {
+
+    struct getdns_context *context = NULL;
+    const char *nativeString = NULL;
+    getdns_transaction_t transaction_id = 0;
+    struct util_methods methods;
+    getdns_dict * this_extensions = NULL;
+
+    CHECK_NULL_INIT_PTR(contextParam, context)
+    CHECK_NULL_AND_INIT_STR(name, nativeString)
+    this_extensions = convertMapToDict(env, thisObj, extensions);
+
+    getdns_return_t ret = getdns_service(context, nativeString, this_extensions, (*env)->NewGlobalRef(env, callbackObj), &transaction_id, callbackfn);
+    throwExceptionOnError(env, ret);
+
+    cleanup(nativeString, NULL,this_extensions,env,name);
+
+    return ret;
+}
+
+
+JNIEXPORT jlong JNICALL Java_com_verisign_getdns_GetDNSContext_hostnameAsync
+  (JNIEnv *env, jobject thisObj, jobject contextParam, jobject address, jobject extensions, jobject callbackObj) {
+  
+   struct getdns_context *context = NULL;
+    const char *nativeString = NULL;
+     getdns_transaction_t transaction_id = 0;
+    struct getdns_dict *response = NULL;
+    struct util_methods methods;
+    jobject returnValue = NULL;
+
+    CHECK_NULL_INIT_PTR(contextParam, context)
+    getdns_dict * this_extensions =  convertMapToDict(env, thisObj, extensions);/* getextensions(extensions,env,thisObj);*/
+    getdns_dict * this_address =  convertMapToDict(env, thisObj, address); 
+
+    getdns_return_t ret = getdns_hostname(context, this_address, this_extensions, (*env)->NewGlobalRef(env, callbackObj), &transaction_id, callbackfn);
+
+    if(!throwExceptionOnError(env, ret) && NULL != init_util_methods(env, &methods))
+        returnValue = convertToJavaMap(env, &methods, response);
+
+    cleanup(nativeString, response,this_extensions,env,NULL); 
+    return ret;
+ 
+  }

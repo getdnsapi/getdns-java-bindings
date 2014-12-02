@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import static com.verisign.getdns.GetDNSConstants.*;
 
 public class GetDNSUtil {
@@ -38,6 +39,9 @@ public class GetDNSUtil {
 	 * Convert a string to byte representation of the address.
 	 */
 	public static HashMap<String,Object> convertStringToAddress(String address) throws UnknownHostException{
+		if (address== null || address.isEmpty()){
+			throw new GetDNSException(GetDNSReturn.GETDNS_RETURN_BAD_DOMAIN_NAME);
+		}
 		HashMap<String, Object> addressDetails = new HashMap<>();
 		InetAddress ip = InetAddress.getByName(address);
 		addressDetails.put(ADDRESS_TYPE, ip instanceof Inet4Address?IPV4:IPV6);

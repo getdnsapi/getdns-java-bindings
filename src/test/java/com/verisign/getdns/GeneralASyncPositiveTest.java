@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+
 import static com.verisign.getdns.IGetDNSTestConstants.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -14,9 +15,9 @@ import org.junit.Test;
 public class GeneralASyncPositiveTest {
 	
 	@Test
-	public void testGetDNSASyncForARecord() throws ExecutionException, TimeoutException 
+	public void testGetDNSAsyncForARecord() throws ExecutionException, TimeoutException 
 	{
-		System.out.println("---------Starting testGetDNSAsync");
+		
 		final IGetDNSContext context = GetDNSFactory.create(1);		
 	
 		try{
@@ -27,7 +28,7 @@ public class GeneralASyncPositiveTest {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.println(info);
+			
 			assertNotNull(info);
 			assertEquals("Time out error"+info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			assertEquals(RRType.GETDNS_RRTYPE_A.getValue(),Integer.parseInt(GetDNSUtil.gettype(info)));
@@ -36,10 +37,36 @@ public class GeneralASyncPositiveTest {
 		}
 	}
 	
-//	@Test
+	@Test
+	public void testGetDNSASyncForNXDDomain() throws ExecutionException, TimeoutException, InterruptedException 
+	{
+		
+		final IGetDNSContext context = GetDNSFactory.create(1);		
+	
+		try{
+			GetDNSFutureResult futureResult = context.generalAsync(UNREGDOMAIN, RRType.GETDNS_RRTYPE_SOA, null);
+			HashMap<String, Object> info = null;
+			try {
+				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			assertNotNull(info);
+			System.out.println("-->"+info);
+		//	assertEquals("Time out error"+info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
+		//	assertEquals(RRType.GETDNS_RRTYPE_SOA.getValue(),Integer.parseInt(GetDNSUtil.gettype(info)));
+		}finally {
+			Thread.sleep(5000);
+			context.close();
+		}
+	}
+	
+	
+   // @Test
 	public void testGetDNSAsyncBulk() throws ExecutionException, TimeoutException 
 	{
-		System.out.println("---------Starting testGetDNSAsync");
+		System.out.println("---------Starting testGetDNSAsync bulk");
 		final IGetDNSContext context = GetDNSFactory.create(1);		
 	
 		try{

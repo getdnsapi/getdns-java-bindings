@@ -121,4 +121,59 @@ public class GetDNSContext implements IGetDNSContext{
 			throws GetDNSException, UnknownHostException {
 		return hostnameSync(context, GetDNSUtil.convertStringToAddress(address), extensions);
 	}
+
+	@Override
+	public GetDNSFutureResult addressAsync(String name,
+			HashMap<String, Object> extensions) throws GetDNSException {
+		if(eventBase == null) {
+			throw new RuntimeException("Error during eventing init. Cannot invoke async, try sync API");
+		}
+		GetDNSFutureResult result = new GetDNSFutureResult(context);
+		long transactionId = addressAsync(context, name, extensions, result);
+		result.setTransactionId(transactionId);
+		synchronized (eventBase) {
+			eventBase.notify();
+		}
+		return result;
+	}
+	
+	private native long addressAsync(Object context, String name, 
+			HashMap<String,Object> extensions, Object callbackObj)throws GetDNSException;
+
+	@Override
+	public GetDNSFutureResult serviceAsync(String name,
+			HashMap<String, Object> extensions) throws GetDNSException {
+		if(eventBase == null) {
+			throw new RuntimeException("Error during eventing init. Cannot invoke async, try sync API");
+		}
+		GetDNSFutureResult result = new GetDNSFutureResult(context);
+		long transactionId = serviceAsync(context, name, extensions, result);
+		result.setTransactionId(transactionId);
+		synchronized (eventBase) {
+			eventBase.notify();
+		}
+		return result;
+	}
+	
+	private native long serviceAsync(Object context, String name, 
+			HashMap<String,Object> extensions, Object callbackObj)throws GetDNSException;
+
+	@Override
+	public GetDNSFutureResult hostnameAsync(String address,
+			HashMap<String, Object> extensions) throws GetDNSException,
+			UnknownHostException {
+		if(eventBase == null) {
+			throw new RuntimeException("Error during eventing init. Cannot invoke async, try sync API");
+		}
+		GetDNSFutureResult result = new GetDNSFutureResult(context);
+		long transactionId = hostnameAsync (context, GetDNSUtil.convertStringToAddress(address), extensions, result);
+		result.setTransactionId(transactionId);
+		synchronized (eventBase) {
+			eventBase.notify();
+		}
+		return result;
+	}
+	
+	private native long hostnameAsync(Object context,HashMap<String,Object> address,
+			HashMap<String, Object> extensions,Object callbackObj) throws GetDNSException;
 }
