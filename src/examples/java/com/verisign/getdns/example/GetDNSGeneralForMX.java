@@ -66,8 +66,8 @@ public class GetDNSGeneralForMX {
 				HashMap<String, Object> answers = (HashMap<String, Object>) replies_tree
 						.get(0);
 				if (answers != null) {
-					ArrayList classes = (ArrayList) answers.get("answer");
-					System.out.println(classes);
+					ArrayList answer = (ArrayList) answers.get("answer");
+					System.out.println(answer);
 					
 
 				}

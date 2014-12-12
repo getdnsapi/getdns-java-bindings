@@ -38,20 +38,22 @@ task buildJniLib(type:Exec) {
   }
 }
 
-task runExample(type:JavaExec) {
-//	dependsOn: ['buildJniLib']
-
-   main = System.getProperty("example")
-   if(System.getProperty("example") == null || System.getProperty("args") == null){
-   println "Usage: -Dexample=<exampleName> -Dargs=\"<args>\"  runExample"
-   if(main == null || main == "") {
-    println ("Please provide one of the below exampleName to execute")
-   sourceSets.examples.java.each { File file ->
-           println file.name.replace(".java","")
-       }
-   }
-   else
-    println "No arguments provided"
+task runExample(type:JavaExec)  {
+    classpath = sourceSets.main.runtimeClasspath + sourceSets.examples.runtimeClasspath 
+    jvmArgs '-Djava.library.path='+System.getProperty("user.dir")+'/build/libs'
+    environment "LD_LIBRARY_PATH", "/usr/local/lib"
+    doFirst {
+    main = System.getProperty("example")
+    if(System.getProperty("example") == null || System.getProperty("args") == null){
+        println "Usage: -Dexample=<exampleName> -Dargs=\"<args>\"  runExample"
+    	if(main == null || main == "") {
+     		println ("Please provide one of the below exampleName to execute")
+			sourceSets.examples.java.each { File file ->
+			    println file.name.replace(".java","")
+			}
+		}
+        else
+            println "No arguments provided"
     throw new InvalidUserDataException("Insufficient arguments provided")
      
    }
@@ -59,14 +61,12 @@ task runExample(type:JavaExec) {
     if ( System.getProperty("args") != null) {  
         args= Eval.me(System.getProperty("args"))  
     }
-   classpath = sourceSets.main.runtimeClasspath + sourceSets.examples.runtimeClasspath 
-    jvmArgs '-Djava.library.path='+System.getProperty("user.dir")+'/build/libs'
-    environment "LD_LIBRARY_PATH", "/usr/local/lib"
+    }
 }
 runExample.dependsOn buildJniLib
 buildJniLib.dependsOn assemble
 
-task printBuildInfo {
+task printBuildInfo << {
     print buildJniLib.output()
 }
 
@@ -76,11 +76,4 @@ test {
     environment "LD_LIBRARY_PATH", "/usr/local/lib"
 }
 
-uploadArchives {
-    repositories {
-       flatDir {
-           dirs 'repos'
-       }
-    }
-}
 

@@ -13,15 +13,15 @@ public class ServiceSyncPositiveTest implements IGetDNSTestConstants {
 	
 
 	@Test
-	public void testGetDNAddr(){
+	public void testGetService(){
 		final IGetDNSContext context = GetDNSFactory.create(1);		
 		try{
 					
-			HashMap<String, Object> info = context .serviceSync("nitinsinghit.com", null);
+			HashMap<String, Object> info = context .serviceSync("_xmpp-server._tcp.verisign.com.", null);
 			assertNotNull(info);
 			assertEquals("Time out error"+info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			//assertNotNull("Type is null and response was "+info, gettype(info));
-			assertEquals(RRType.GETDNS_RRTYPE_A.getValue(),Integer.parseInt(gettype(info)));
+			assertEquals(RRType.GETDNS_RRTYPE_SRV.getValue(),Integer.parseInt(gettype(info)));
 		
 			 
 		}finally {

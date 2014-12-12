@@ -23,17 +23,17 @@ public class ServiceAsyncPositiveTest implements IGetDNSTestConstants {
 		final IGetDNSContext context = GetDNSFactory.create(1);		
 	
 		try{
-			GetDNSFutureResult futureResult = context.serviceAsync(DOMAIN_NAME, null);
+			GetDNSFutureResult futureResult = context.serviceAsync("_xmpp-server._tcp.verisign.com.", null);
 			HashMap<String, Object> info = null;
 			try {
 				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.println(info);
 			assertNotNull(info);
 			assertEquals("Time out error"+info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-		//	assertEquals(RRType.GETDNS_RRTYPE_A.getValue(),Integer.parseInt(GetDNSUtil.gettype(info)));
+			assertEquals(RRType.GETDNS_RRTYPE_SRV.getValue(),Integer.parseInt(gettype(info)));
+			System.out.println("Got a service record");
 		}finally {
 			Thread.sleep(5000);
 			context.close();
