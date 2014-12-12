@@ -22,15 +22,11 @@ public class GetDNSGeneral {
 
 	public static void main(String[] args) {
 		final IGetDNSContext context = GetDNSFactory.create(1);
-		for (String string : args) {
-			System.out.println(string);
-		}
 		if (args.length != 2)
 			throw new IllegalArgumentException("Need to pass string and type");
 		String queryString = args[0];
 		String type = args[1];
 
-		System.out.println("Testing....."+ RRType.valueOf("GETDNS_RRTYPE_" + type));
 		try {
 			HashMap<String, Object> info = context.generalSync(queryString,RRType.valueOf("GETDNS_RRTYPE_" + type), null);
 
