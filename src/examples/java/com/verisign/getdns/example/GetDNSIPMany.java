@@ -32,7 +32,7 @@ public class GetDNSIPMany {
 
 			if (info != null ){
 				if(Integer.parseInt(info.get("status").toString()) == 900) {
-
+					System.out.println("\nAddress records for "+queryString+" -----");
 					printAnswer(info);
 
 				}
@@ -60,7 +60,6 @@ public class GetDNSIPMany {
 	public static void printAnswer(HashMap<String, Object> info) {
 		if (info != null) {
 			ArrayList<HashMap<String, Object>> answers = (ArrayList<HashMap<String, Object>>) info.get("just_address_answers");
-			System.out.println(answers);
 			for (HashMap<String, Object> answer : answers) {
 				
 				if (answer != null) {

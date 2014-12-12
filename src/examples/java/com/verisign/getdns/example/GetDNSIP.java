@@ -58,13 +58,12 @@ public class GetDNSIP {
 	
 	public static void printAnswer(HashMap<String, Object> info) {
 		if (info != null) {
-			ArrayList<HashMap<String, Object>> answers = (ArrayList<HashMap<String, Object>>) info.get("replies_tree");
-			System.out.println(answers);
+			ArrayList<HashMap<String, Object>> answers = (ArrayList<HashMap<String, Object>>) info.get("just_address_answers");
 			for (HashMap<String, Object> answer : answers) {
 				
 				if (answer != null) {
-//					ArrayList classes = (ArrayList) answer.get("answer");
-					System.out.println(answer.get("address_type")+": "+answer.get("answer"));
+//					
+					System.out.println(answer.get("address_type")+": "+answer.get("address_data"));
 				
 					
 				}

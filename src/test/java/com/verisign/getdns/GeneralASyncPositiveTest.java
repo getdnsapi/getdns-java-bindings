@@ -24,7 +24,7 @@ public class GeneralASyncPositiveTest {
 			GetDNSFutureResult futureResult = context.generalAsync(DOMAIN_NAME, RRType.GETDNS_RRTYPE_A, null);
 			HashMap<String, Object> info = null;
 			try {
-				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
+				info = futureResult.get(10000, TimeUnit.MILLISECONDS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
