@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin:'application'
+//apply plugin:'application'
+
 
 sourceCompatibility = 1.7
 version = '1.0'
@@ -18,6 +19,14 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.+'
 }
 
+sourceSets {
+    examples {
+    	java
+    	compileClasspath += main.output
+    	runtimeClasspath += main.output
+    }
+}
+
 task buildJniLib(type:Exec) {
   workingDir './src/native/jni/'
 
@@ -29,13 +38,40 @@ task buildJniLib(type:Exec) {
   }
 }
 
+task runExample(type:JavaExec) {
+//	dependsOn: ['buildJniLib']
+
+   main = System.getProperty("example")
+   if(System.getProperty("example") == null || System.getProperty("args") == null){
+   println "Usage: -Dexample=<exampleName> -Dargs=\"<args>\"  runExample"
+   if(main == null || main == "") {
+    println ("Please provide one of the below exampleName to execute")
+   sourceSets.examples.java.each { File file ->
+           println file.name.replace(".java","")
+       }
+   }
+   else
+    println "No arguments provided"
+    throw new InvalidUserDataException("Insufficient arguments provided")
+     
+   }
+   main = "com.verisign.getdns.example."+main
+    if ( System.getProperty("args") != null) {  
+        args= Eval.me(System.getProperty("args"))  
+    }
+   classpath = sourceSets.main.runtimeClasspath + sourceSets.examples.runtimeClasspath 
+    jvmArgs '-Djava.library.path='+System.getProperty("user.dir")+'/build/libs'
+    environment "LD_LIBRARY_PATH", "/usr/local/lib"
+}
+runExample.dependsOn buildJniLib
+buildJniLib.dependsOn assemble
+
 task printBuildInfo {
     print buildJniLib.output()
 }
 
 
 test {
-    systemProperties 'property': 'value'
     jvmArgs '-Djava.library.path='+System.getProperty("user.dir")+'/build/libs'
     environment "LD_LIBRARY_PATH", "/usr/local/lib"
 }
