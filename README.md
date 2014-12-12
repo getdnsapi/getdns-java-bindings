@@ -17,6 +17,6 @@ Find usage of runExample with the below command
 ./gradlew --daemon runExample
 
 Below  are the commands to run few examples
-./gradlew --daemon runExample -Dexample=GetDNSIPSecure  -Dargs="['icicibank.com']"
+./gradlew --daemon runExample -Dexample=GetDNSIPSecure  -Dargs="['verisigninc.com']"
 ./gradlew --daemon runExample -Dexample=GetDNSGeneral  -Dargs="['icicibank.com','A']"
 
