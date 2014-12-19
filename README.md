@@ -38,3 +38,6 @@ Below  are the commands to run few examples
 ./gradlew --daemon runExample -Dexample=GetDNSIPSecure  -Dargs="['verisigninc.com']"
 ./gradlew --daemon runExample -Dexample=GetDNSGeneral  -Dargs="['icicibank.com','A']"
 
+Known issues
+======================
+On some machines some test cases might fail because of timeout issues, we are working on this.
