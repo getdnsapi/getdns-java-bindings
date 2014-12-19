@@ -1,6 +1,6 @@
-GetDNS-Java
+getdns-java-bindings
 ======================
-GetDNS java bindings. This is a very early version with limited testing and validation. This has been tested on CentOS 6.3 64-bit.
+getdns java bindings. This is an early version with limited testing and validation. This has been tested on CentOS 6.3 64-bit.
 
 External dependencies
 =====================
