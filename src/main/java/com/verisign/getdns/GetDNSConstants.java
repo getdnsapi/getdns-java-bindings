@@ -1,9 +1,14 @@
 package com.verisign.getdns;
 
+/**
+ * This class contains important constants for keys and values for GetDNS request and responses.
+ * @author Prithvi
+ *
+ */
 public interface GetDNSConstants {
 	
 	/**
-	 * Extension possible keys.
+	 * Possible keys to be used in the request for extensions.
 	 */
 	public static final String DNSSEC_RETURN_VALIDATION_CHAIN = "dnssec_return_validation_chain";
 	public static final String DNSSEC_RETURN_ONLY_SECURE = "dnssec_return_only_secure";
@@ -16,7 +21,7 @@ public interface GetDNSConstants {
 	
 	
 	/**
-	 * Extension possible values
+	 * Possible values for enabling GetDNS extensions.
 	 */
 	public static final int GETDNS_EXTENSION_TRUE = 1000;
 	public static final int GETDNS_EXTENSION_FALSE = 1001;
