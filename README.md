@@ -25,6 +25,7 @@ The file gradle.properties needs to be edited to customize javahome property
 Building and test
 ======================
 ./gradlew clean assemble buildJniLib test
+
 As per gradle standard libraries will be available in the folder build/libs.
 
 
@@ -35,8 +36,9 @@ Find usage of runExample with the below command
 ./gradlew --daemon runExample
 
 Below  are the commands to run few examples
-./gradlew --daemon runExample -Dexample=GetDNSIPSecure  -Dargs="['verisigninc.com']"
-./gradlew --daemon runExample -Dexample=GetDNSGeneral  -Dargs="['icicibank.com','A']"
+
+* ./gradlew --daemon runExample -Dexample=GetDNSIPSecure  -Dargs="['verisigninc.com']"
+* ./gradlew --daemon runExample -Dexample=GetDNSGeneral  -Dargs="['icicibank.com','A']"
 
 Known issues
 ======================
