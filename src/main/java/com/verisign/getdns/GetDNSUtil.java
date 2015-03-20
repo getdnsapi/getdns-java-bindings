@@ -1,13 +1,9 @@
 package com.verisign.getdns;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GetDNSUtil {
-
-	private static final int HashMap = 0;
-
 	@SuppressWarnings("unchecked")
 	static public Object getinfovalues(HashMap<String, Object> info, String name) {
 		HashMap<String, Object> answers = null;
@@ -47,22 +43,6 @@ public class GetDNSUtil {
 					} else if (name.equalsIgnoreCase("type")) {
 						return answerMap.get("type");
 					} else if (name.equalsIgnoreCase("rdata")) {
-//						if ((int)answerMap.get("type") == RRType.valueOf("GETDNS_RRTYPE_TLSA").getValue()) {
-//							HashMap<String, Object> rdataMap = (HashMap<String, Object>) answerMap.get("rdata");
-//									
-//									
-//							int selector = rdata.get("selector").toString());
-//							int matching_type = Integer.parseInt(rdata.get("matching_type").toString());
-//							byte[] caData = (byte[]) rdata.get("certificate_association_data");
-//							int certUsage = Integer.parseInt(rdata.get("certificate_usage").toString());
-//							 String certData = bytesToHexString(caData);
-//							
-//							 if (certUsage == requestedUsage) {
-//								tlsaRdataSet.put("Certificate Usage", certUsage);
-//								tlsaRdataSet.put("Selector", selector);
-//								tlsaRdataSet.put("Matching Type", matching_type);
-//								// tlsaRdataSet.put("Certificate", certData);
-//							}
 						return (HashMap<String, Object>) answerMap.get("rdata");
 					}
 
@@ -73,18 +53,17 @@ public class GetDNSUtil {
 		return null;
 	}
 
-		/**
-		 * converting bytes array to hex String
-		 */
-		public static String bytesToHexString(byte[] bytes) {
-			StringBuilder sb = new StringBuilder();
-			for (byte b : bytes) {
-				sb.append(String.format("%02x", b & 0xff));
-			}
-			return sb.toString();
+	/**
+	 * converting bytes array to hex String
+	 */
+	public static String bytesToHexString(byte[] bytes) {
+		StringBuilder sb = new StringBuilder();
+		for (byte b : bytes) {
+			sb.append(String.format("%02x", b & 0xff));
 		}
-		
-		
+		return sb.toString();
+	}
+
 	static public String getDnssecStatus(HashMap<String, Object> info) {
 
 		int dnssecStatus = (int) GetDNSUtil.getinfovalues(info, "dnssec_status");
@@ -109,34 +88,6 @@ public class GetDNSUtil {
 		return "Validation_Chain:  " + GetDNSUtil.getinfovalues(info, "validation_chain");
 	}
 
-	public static HashMap<String, Object> getTlaRdataSet(
-			ArrayList<HashMap<String, ArrayList<HashMap<String, Object>>>> replies, int requestedUsage)
-			throws UnsupportedEncodingException {
-		HashMap<String, Object> tlsaRdataSet = new HashMap();
-		for (HashMap<String, ArrayList<HashMap<String, Object>>> reply : replies) {
-			ArrayList<HashMap<String, Object>> answer = reply.get("answer");
-			for (HashMap<String, Object> rr : answer) {
-				int rrtype = (int) rr.get("type");
-				int tlsaType = RRType.valueOf("GETDNS_RRTYPE_TLSA").getValue();
-				if (rrtype == tlsaType) {
-					HashMap<String, Object> rdata = (HashMap<String, Object>) rr.get("rdata");
-					int selector = Integer.parseInt(rdata.get("selector").toString());
-					int matching_type = Integer.parseInt(rdata.get("matching_type").toString());
-					byte[] caData = (byte[]) rdata.get("certificate_association_data");
-					int certUsage = Integer.parseInt(rdata.get("certificate_usage").toString());
-					// String certData = bytesToHexString(caData);
-					if (certUsage == requestedUsage) {
-						tlsaRdataSet.put("Certificate Usage", certUsage);
-						tlsaRdataSet.put("Selector", selector);
-						tlsaRdataSet.put("Matching Type", matching_type);
-						// tlsaRdataSet.put("Certificate", certData);
-					}
-				}
-			}
-		}
-		return tlsaRdataSet;
-	}
-
 	public static void printAnswer(HashMap<String, Object> info) {
 		if (info != null) {
 			ArrayList<HashMap<String, Object>> answers = (ArrayList<HashMap<String, Object>>) info
@@ -148,11 +99,7 @@ public class GetDNSUtil {
 					System.out.println(answer.get("address_type") + ": " + answer.get("address_data"));
 
 				}
-
 			}
-
 		}
-
 	}
-
 }

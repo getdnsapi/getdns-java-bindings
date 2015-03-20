@@ -15,7 +15,9 @@ public class HostnameAsyncPositiveTest {
 
 	@Test
 	public void testGetHostnameIPV4() throws UnknownHostException, ExecutionException, TimeoutException {
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<String, Object> options = new HashMap<String, Object>();
+		options.put(GetDNSConstants.CONTEXT_SET_STUB,true);
+		final IGetDNSContext context = GetDNSFactory.create(1,options);
 		try {
 			GetDNSFutureResult futureResult = context.hostnameAsync("8.8.8.8", null);
 			HashMap<String, Object> info = null;
@@ -37,7 +39,7 @@ public class HostnameAsyncPositiveTest {
 	 @Test
 	public void testGetHostnameIPV6() throws UnknownHostException, ExecutionException, TimeoutException {
 		 HashMap<String, Object> options = new HashMap<String, Object>();
-			options.put(GetDNSConstants.CONTEXT_SET_TIMEOUT, 10000);
+			options.put(GetDNSConstants.CONTEXT_SET_STUB,true);
 		final IGetDNSContext context = GetDNSFactory.create(1,options);
 		try {
 			GetDNSFutureResult futureResult = context.hostnameAsync("2001:4860:4860::8888", null);
