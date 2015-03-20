@@ -7,7 +7,6 @@ import java.util.HashMap;
 
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.IGetDNSContext;
-import com.verisign.getdns.RRType;
 
 /*
  * 

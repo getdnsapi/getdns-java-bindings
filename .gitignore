@@ -1,0 +1,33 @@
+# Created by .gitignore support plugin (hsz.mobi)
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+*.class
+
+# Build stuff
+build/
+bin/
+.gradle/
+dist/
+
+# Eclipse
+.classpath
+.settings/
+.project
+target-eclipse/
+
+
+# Package Files #
+#*.jar
+*.war
+
+#OS related files
+*.DS_Store
+
+#svm
+.svn/
+
+$logs
+*.log
+

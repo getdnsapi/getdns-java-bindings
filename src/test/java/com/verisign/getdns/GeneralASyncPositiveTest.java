@@ -1,14 +1,15 @@
 package com.verisign.getdns;
 
+import static com.verisign.getdns.IGetDNSTestConstants.DOMAIN_NAME;
+import static com.verisign.getdns.IGetDNSTestConstants.UNREGDOMAIN;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-
-import static com.verisign.getdns.IGetDNSTestConstants.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
@@ -31,7 +32,7 @@ public class GeneralASyncPositiveTest {
 			
 			assertNotNull(info);
 			assertEquals("Time out error"+info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.GETDNS_RRTYPE_A.getValue(),Integer.parseInt(GetDNSUtil.gettype(info)));
+			assertEquals(RRType.GETDNS_RRTYPE_A.getValue(),GetDNSUtil.getinfovalues(info, "type"));
 		}finally {
 			context.close();
 		}

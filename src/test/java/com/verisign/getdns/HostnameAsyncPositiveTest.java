@@ -10,14 +10,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.junit.Test;
+
 public class HostnameAsyncPositiveTest {
 
-	
-	//@Test
-	public void testGetHostnameIPV4() throws UnknownHostException, ExecutionException, TimeoutException{
-		final IGetDNSContext context = GetDNSFactory.create(1);		
-		try{
-			GetDNSFutureResult futureResult = context.hostnameAsync("8.8.4.4" , null);
+	@Test
+	public void testGetHostnameIPV4() throws UnknownHostException, ExecutionException, TimeoutException {
+		final IGetDNSContext context = GetDNSFactory.create(1);
+		try {
+			GetDNSFutureResult futureResult = context.hostnameAsync("8.8.8.8", null);
 			HashMap<String, Object> info = null;
 			try {
 				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
@@ -26,34 +26,33 @@ public class HostnameAsyncPositiveTest {
 			}
 			System.out.println(info);
 			assertNotNull(info);
-			assertEquals("Time out error"+info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.GETDNS_RRTYPE_A.getValue(),Integer.parseInt(GetDNSUtil.gettype(info)));
-		}finally {
+			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
+			assertEquals(RRType.GETDNS_RRTYPE_PTR.getValue(),GetDNSUtil.getinfovalues(info, "type"));
+		} finally {
 			context.close();
 		}
-		
+
 	}
-	
-	
-	
-//	@Test
-	public void testGetHostnameIPV6() throws UnknownHostException, ExecutionException, TimeoutException{
-		final IGetDNSContext context = GetDNSFactory.create(1);		
-		try{
-			GetDNSFutureResult futureResult = context.hostnameAsync("2001:4860:4860::8888" , null);
+
+	 @Test
+	public void testGetHostnameIPV6() throws UnknownHostException, ExecutionException, TimeoutException {
+		 HashMap<String, Object> options = new HashMap<String, Object>();
+			options.put(GetDNSConstants.CONTEXT_SET_TIMEOUT, 10000);
+		final IGetDNSContext context = GetDNSFactory.create(1,options);
+		try {
+			GetDNSFutureResult futureResult = context.hostnameAsync("2001:4860:4860::8888", null);
 			HashMap<String, Object> info = null;
 			try {
 				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.println(info);
 			assertNotNull(info);
-			assertEquals("Time out error"+info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.GETDNS_RRTYPE_A.getValue(),Integer.parseInt(GetDNSUtil.gettype(info)));
-		}finally {
+			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
+			assertEquals(RRType.GETDNS_RRTYPE_PTR.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+		} finally {
 			context.close();
 		}
-		
+
 	}
 }

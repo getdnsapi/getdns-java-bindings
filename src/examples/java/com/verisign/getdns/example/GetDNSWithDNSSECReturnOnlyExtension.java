@@ -8,33 +8,23 @@ import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
 import com.verisign.getdns.RRType;
 
-/*
- * 
- * Given a DNS name and type, return the records in the DNS answer section 
- * 
- * 
- * 
- */
+public class GetDNSWithDNSSECReturnOnlyExtension {
 
-public class GetDNSGeneral {
+	public static void main(String args[]) {
 
-	public static void main(String[] args) {
-		HashMap<String, Object> options = new HashMap<String, Object>();
-		options.put(GetDNSConstants.CONTEXT_SET_STUB, true);
-		options.put(GetDNSConstants.CONTEXT_SET_DNS_TRANSPORT, 542);
-		final IGetDNSContext context = GetDNSFactory.create(1, options);
 		if (args.length != 2)
 			throw new IllegalArgumentException("Need to pass string and type");
 		String queryString = args[0];
 		String type = args[1];
-
+		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<String, Object> extensions = new HashMap<String, Object>();
+		extensions.put(GetDNSConstants.DNSSEC_RETURN_ONLY_SECURE, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {
-			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf("GETDNS_RRTYPE_" + type), null);
-			System.out.println("info:  "+info);
+			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf("GETDNS_RRTYPE_" + type),
+					extensions);
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
-
-					GetDNSUtil.printAnswer(info);
+					System.out.println(GetDNSUtil.getDnssecStatus(info));
 				}
 
 				else if (Integer.parseInt(info.get("status").toString()) == 901) {
@@ -50,7 +40,6 @@ public class GetDNSGeneral {
 			context.close();
 		}
 		System.exit(0);
-
 	}
 
 }

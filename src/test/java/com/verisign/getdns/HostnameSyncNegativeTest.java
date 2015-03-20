@@ -1,8 +1,5 @@
 package com.verisign.getdns;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import java.net.UnknownHostException;
 import java.util.HashMap;
 
@@ -20,7 +17,7 @@ public class HostnameSyncNegativeTest {
 			final IGetDNSContext context = GetDNSFactory.create(1);		
 			try{
 				thrown.expect(GetDNSException.class);				
-				thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_BAD_DOMAIN_NAME"));
+				thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
 				HashMap<String, Object> info = context.hostnameSync(null , null);
 				System.out.println(info);
 				
