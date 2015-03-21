@@ -11,6 +11,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
+import com.verisign.getdns.ContextOptionsEnum;
 import com.verisign.getdns.GetDNSConstants;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
@@ -29,7 +30,7 @@ public class DaneCertVerification {
 	 */
 	public static Certificate GetCertificate(String hostname, int port) throws Exception {
 		SSLSocketFactory factory = HttpsURLConnection.getDefaultSSLSocketFactory();
-		System.out.println("Connecting to " + hostname + " on port " + port+"\n");
+		System.out.println("Connecting to " + hostname + " on port " + port + "\n");
 		SSLSocket socket = (SSLSocket) factory.createSocket(hostname, port);
 		socket.startHandshake();
 		Certificate[] serverCerts = socket.getSession().getPeerCertificates();
@@ -53,22 +54,23 @@ public class DaneCertVerification {
 			throws UnsupportedEncodingException {
 		String queryString = "_" + port + "._" + proto + "." + hostname;
 		String type = "TLSA";
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<String, Object> options = new HashMap<String, Object>();
+		options.put(GetDNSConstants.CONTEXT_SET_STUB, true);
+		final IGetDNSContext context = GetDNSFactory.create(1, options);
 		HashMap<String, Object> extensions = new HashMap<String, Object>();
-		extensions.put(GetDNSConstants.DNSSEC_RETURN_ONLY_SECURE, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {
-			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf("GETDNS_RRTYPE_" + type),
-					extensions);
+			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf("GETDNS_RRTYPE_" + type), null);
+			System.out.println("info:  " + info);
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 					return ((HashMap<String, Object>) GetDNSUtil.getinfovalues(info, "rdata"));
 				} else if (Integer.parseInt(info.get("status").toString()) == 901) {
-					System.out.println("no such name: " + queryString + "with type: " + type);
+					System.out.println("No such name: " + queryString + " with type: " + type + "\n");
 				} else {
-					System.out.println("Error in query GETDNS Status =" + info.get("status").toString());
+					System.out.println("Error in query GETDNS Status =" + info.get("status").toString() + "\n");
 				}
 			} else {
-				System.out.println("No response form DNS SERVER");
+				System.out.println("No response form DNS SERVER\n");
 			}
 		} finally {
 			context.close();
@@ -153,11 +155,13 @@ public class DaneCertVerification {
 				HashMap<String, Object> tlsRdataMap = GetTlsaRecord(port, TCP, hostname);
 				if (tlsRdataMap != null) {
 					Certificate cert = GetCertificate(hostname, port);
-					System.out.println("Public Key from server: " + cert.getPublicKey()+"\n");
+					System.out.println("Public Key from server: " + cert.getPublicKey() + "\n");
 					if (VerifyTlsa(cert, tlsRdataMap)) {
 						System.out.println("Matching TLSA record found\n");
 					} else
 						System.out.println("Matching TLSA record is not found\n");
+				} else {
+					System.out.println("Required Certificate is not found in DNS response \n");
 				}
 			}
 		} catch (Exception e) {
