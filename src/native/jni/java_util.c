@@ -1,5 +1,4 @@
 #include "java_util.h"
-#include "GetDNS_common.h"
 
 /*
  * Init all classes and methods needed to be used during converting c data into Java data and vice versa.
@@ -87,35 +86,6 @@ void throwJavaIssue(JNIEnv *env, char *message) {
 	(*env)->ThrowNew(env, exClass, message);
 }
 
-/*
- * Method to throw a GetDNSException.
- */
-int throwExceptionOnErrorWithMessage(JNIEnv *env, char* message,
-		getdns_return_t ret) {
-	if (GETDNS_RETURN_GOOD == ret)
-		return 0;
-
-	jclass getDNSRetClass = (*env)->FindClass(env,
-			"com/verisign/getdns/GetDNSReturn");
-	jmethodID fromInt = (*env)->GetStaticMethodID(env, getDNSRetClass,
-			"fromInt", "(I)Lcom/verisign/getdns/GetDNSReturn;");
-	jobject retObj = (*env)->CallStaticObjectMethod(env, getDNSRetClass,
-			fromInt, ret);
-	jclass exClass = (*env)->FindClass(env,
-			"com/verisign/getdns/GetDNSException");
-	jmethodID init = (*env)->GetMethodID(env, exClass, "<init>",
-			"(Ljava/lang/String;Lcom/verisign/getdns/GetDNSReturn;)V");
-	jstring jMessage = NULL;
-	CHECK_NULL_AND_CONVERT_TO_JAVA_STRING(message, jMessage);
-	jobject exObj = (*env)->NewObject(env, exClass, init, jMessage, retObj);
-	(*env)->Throw(env, exObj);
-	return 1;
-}
-
-int throwExceptionOnError(JNIEnv *env, getdns_return_t ret) {
-	return throwExceptionOnErrorWithMessage(env, NULL, ret);
-}
-
 unsigned char*
 convertByteArrayToUnsignedCharArray(JNIEnv *env, jbyteArray array, int *len) {
 	*len = (*env)->GetArrayLength(env, array);
@@ -135,65 +105,33 @@ jbyteArray convertUnsignedCharArrayToByteArray(JNIEnv *env, unsigned char* data,
  * this method extracts String value from particular index of Array and set to String parameter
  *
  */
-void getStringFromArray(JNIEnv *env, jobjectArray value,
-		struct util_methods methods, const char **stringValue, int index) {
+const char* getStringFromArrayWithIndex(JNIEnv *env, jobjectArray value,
+		struct util_methods methods, int index) {
+	const char * suffix = NULL;
 	jsize length = (*env)->GetArrayLength(env, value);
 
-	for (int i = 0; i < length; i++) {
-		if ((*env)->IsInstanceOf(env,
-				(jstring)(*env)->GetObjectArrayElement(env, value, index),
-				methods.stringClass)) {
-			*stringValue = (*env)->GetStringUTFChars(env,
-					(jstring)(*env)->GetObjectArrayElement(env, value, index),
-					0);
-		}
-
+	if ((*env)->IsInstanceOf(env,
+			(jstring)(*env)->GetObjectArrayElement(env, value, index),
+			methods.stringClass)) {
+		suffix = (*env)->GetStringUTFChars(env,
+				(jstring)(*env)->GetObjectArrayElement(env, value, index), 0);
 	}
+	return suffix;
 }
 
 /**
  * this method extracts integer value from particular index of Array and set to integer parameter
  *
  */
-void getIntFromArray(JNIEnv *env, jobjectArray value,
-		struct util_methods methods, int *intValue, int index) {
-
+int getIntFromArrayWithIndex(JNIEnv *env, jobjectArray value,
+		struct util_methods methods, int index) {
+	int intValue = 0;
 	if ((*env)->IsInstanceOf(env,
 			(*env)->GetObjectArrayElement(env, value, index),
 			methods.integerClass)) {
-		*intValue = (*env)->CallIntMethod(env,
+		intValue = (*env)->CallIntMethod(env,
 				(*env)->GetObjectArrayElement(env, value, index),
 				methods.intValue);
 	}
-}
-
-/**
- * This method extracts values from ObjectArray and pass it to ipDict
- */
-void getDnsDict(JNIEnv *env, jobjectArray value, struct util_methods methods,
-		struct getdns_dict **ipDict) {
-	if ((*env)->GetArrayLength(env, value) > 0) {
-		int port = -1;
-		const char* serverIP = NULL;
-		jsize length = (*env)->GetArrayLength(env, value);
-		for (int i = 0; i < length; i++) {
-			if (serverIP == NULL) {
-				getStringFromArray(env, value, methods, &serverIP, i);
-				printf("serverip:  %s\n", serverIP);
-
-			} else {
-				getIntFromArray(env, value, methods, &port, i);
-				printf("port:  %d\n", port);
-
-			}
-
-		}
-		if (serverIP != NULL && strcmp(serverIP, "") != 0) {
-			*ipDict = getdns_util_create_ip(serverIP);
-			if (port != -1) {
-				getdns_dict_set_int(*ipDict, "port", port);
-			}
-		}
-		(*env)->ReleaseStringUTFChars(env, NULL, serverIP);
-	}
+	return intValue;
 }

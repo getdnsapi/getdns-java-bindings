@@ -1,18 +1,11 @@
-#include <jni.h>
-#include <stdio.h>
 #include "com_verisign_getdns_GetDNSContext.h"
 #include <check.h>
-#include "getdns/getdns.h"
 #include <ctype.h>
 #include <getdns/getdns_ext_libevent.h>
 #include <event.h>
 #include "getdns_util.h"
-#include "GetDNS_common.h"
 
 static JavaVM *jvm;
-/*
- * This is a util method, can be removed later
- */
 
 void print_response(struct getdns_dict * response) {
 	char *dict_str = getdns_pretty_print_dict(response);
@@ -137,9 +130,8 @@ static getdns_return_t setUpstreams(JNIEnv *env, jobject thisObj,
 	if (length > 0) {
 		getdns_list* upstreams = getdns_list_create();
 		for (int i = 0; i < length; i++) {
-			struct getdns_dict* ipDict = NULL;
-			getDnsDict(env, (*env)->GetObjectArrayElement(env, value, i),
-					methods, &ipDict);
+			struct getdns_dict* ipDict = getDnsDict(env,
+					(*env)->GetObjectArrayElement(env, value, i), methods);
 			if (NULL != ipDict) {
 				size_t len = 0;
 				getdns_list_get_length(upstreams, &len);
@@ -172,10 +164,8 @@ static getdns_return_t setNamespace(JNIEnv *env, jobject thisObj,
 		}
 
 		for (int i = 0; i < length; i++) {
-			int intNamespace = -1;
-			intNamespace = getIntFromArray(env, value, methods, &intNamespace,
-					i);
-			if (intNamespace != -1) {
+			int intNamespace = getIntFromArrayWithIndex(env, value, methods, i);
+			if (intNamespace != 0) {
 				namespaces[i] = (getdns_namespace_t) intNamespace;
 
 			} else {
@@ -233,9 +223,8 @@ static getdns_return_t setDnsRootServers(JNIEnv *env, jobject thisObj,
 	if (length > 0) {
 		getdns_list* dns_servers = getdns_list_create();
 		for (int i = 0; i < length; i++) {
-			struct getdns_dict* ipDict = NULL;
-			getDnsDict(env, (*env)->GetObjectArrayElement(env, value, i),
-					methods, &ipDict);
+			struct getdns_dict* ipDict = getDnsDict(env,
+					(*env)->GetObjectArrayElement(env, value, i), methods);
 			if (NULL != ipDict) {
 				size_t len = 0;
 				getdns_list_get_length(dns_servers, &len);
@@ -263,12 +252,14 @@ static getdns_return_t setSuffix(JNIEnv *env, jobject thisObj,
 		getdns_list* suffix_list = getdns_list_create();
 		for (int i = 0; i < length; i++) {
 			getdns_bindata bin_value;
-			char* suffix = NULL;
-			getStringFromArray(env, value, methods, &suffix, i);
+			const char* suffix = getStringFromArrayWithIndex(env, value,
+					methods, i);
+			printf("suffix:   %s", suffix);
+
 			if (suffix != NULL && strcmp(suffix, "") != 0) {
 				bin_value.data = (uint8_t *) suffix;
 				bin_value.size = strlen(suffix);
-				getdns_dict_set_bindata(suffix_list, (size_t) i, &bin_value);
+				getdns_list_set_bindata(suffix_list, (size_t) i, &bin_value);
 				cleanup(suffix, NULL, NULL, env, NULL);
 			} else {
 				ret = GETDNS_RETURN_INVALID_PARAMETER;
@@ -295,13 +286,13 @@ static getdns_return_t setDnssecTrustAnchor(JNIEnv *env, jobject thisObj,
 		getdns_list* addresses = getdns_list_create();
 		for (int i = 0; i < length; i++) {
 			getdns_bindata bin_value;
-			const char* address = NULL;
 
-			getStringFromArray(env, value, methods, &address, i);
+			const char* address = getStringFromArrayWithIndex(env, value,
+					methods, i);
 			if (address != NULL && strcmp(address, "") != 0) {
 				bin_value.data = (uint8_t *) address;
 				bin_value.size = strlen(address);
-				getdns_dict_set_bindata(addresses, (size_t) i, &bin_value);
+				getdns_list_set_bindata(addresses, (size_t) i, &bin_value);
 				cleanup(address, NULL, NULL, env, NULL);
 
 			} else {
@@ -693,7 +684,7 @@ JNICALL Java_com_verisign_getdns_GetDNSContext_hostnameAsync(JNIEnv *env,
 	if (address != NULL) {
 		serverIP = (*env)->GetStringUTFChars(env, address, 0);
 	}
-	printf("ServerIP:   %s\n",serverIP);
+	printf("ServerIP:   %s\n", serverIP);
 	if (serverIP != NULL && strcmp(serverIP, "") != 0) {
 		ipDict = getdns_util_create_ip(serverIP);
 	}
@@ -701,7 +692,7 @@ JNICALL Java_com_verisign_getdns_GetDNSContext_hostnameAsync(JNIEnv *env,
 	getdns_return_t ret = getdns_hostname(context, ipDict, this_extensions,
 			(*env)->NewGlobalRef(env, callbackObj), &transaction_id,
 			callbackfn);
-	printf("return:  %d\n",ret);
+	printf("return:  %d\n", ret);
 	throwExceptionOnError(env, ret);
 
 //	if (NULL != init_util_methods(env, &methods)) {
@@ -769,3 +760,60 @@ Java_com_verisign_getdns_GetDNSContext_applyContextOption(JNIEnv *env,
 	cleanup(nativeKey, NULL, NULL, env, NULL);
 }
 
+/**
+ * Helper function
+ * Convert Unicode to Ascii
+ */
+JNIEXPORT jstring JNICALL Java_com_verisign_getdns_GetDNSContext_ConvertUnicodeToAscii(
+		JNIEnv *env, jobject thisObj, jstring value) {
+	const char *ulabel = NULL;
+	jstring alabel = NULL;
+	if (NULL != value) {
+		ulabel = (*env)->GetStringUTFChars(env, value, 0);
+		alabel = (*env)->NewStringUTF(env,
+				getdns_convert_ulabel_to_alabel(ulabel));
+		if (NULL == alabel) {
+			throwJavaIssue(env, "Error:  Invalid Unicode String");
+		}
+	}
+	cleanup(ulabel, NULL, NULL, env, value);
+	return alabel;
+
+}
+
+/**
+ * Helper function
+ * Convert Ascii to Unicode
+ */
+JNIEXPORT jstring JNICALL Java_com_verisign_getdns_GetDNSContext_ConvertAsciiToUnicode(
+		JNIEnv *env, jobject thisObj, jstring value) {
+	const char *alabel = NULL;
+	jstring ulabel = NULL;
+	if (NULL != value) {
+		alabel = (*env)->GetStringUTFChars(env, value, 0);
+		ulabel = (*env)->NewStringUTF(env,
+				getdns_convert_alabel_to_ulabel(alabel));
+		if (NULL == ulabel) {
+			throwJavaIssue(env, "Error:  Invalid Ascii String");
+		}
+	}
+	cleanup(alabel, NULL, NULL, env, value);
+	return ulabel;
+
+}
+#define SIZE 256
+/**
+ * Helper function
+ */
+JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_GetDnsRootTrustAnchor(
+		JNIEnv *env, jobject thisObj) {
+
+	struct getdns_list* records = NULL;
+	struct util_methods methods;
+	if (NULL == init_util_methods(env, &methods)) {
+		throwJavaIssue(env,
+				"Error while converting to dict, could not init java methods");
+	}
+	records = getdns_root_trust_anchor(NULL);
+	return convertToList(env, &methods, records);
+}

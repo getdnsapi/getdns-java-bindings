@@ -44,3 +44,20 @@ getdns_dict* getdns_util_create_ip(const char* ip) {
 	return dict;
 }
 
+/*
+ * TODO:   This method is imported from python port. Compare with python code and make sure if we have handled all necessary conditions.
+ */
+int isPrintable(char* data, int size) {
+	int printable = 1;
+	size_t i;
+	for (i = 0; i < size; ++i) {
+		if (!isprint(data[i])) {
+			if (data[i] == 0 && i == size - 1) {
+				break;
+			}
+			printable = 0;
+			break;
+		}
+	}
+	return printable;
+}

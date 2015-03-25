@@ -1,6 +1,5 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
-//apply plugin:'application'
 
 
 sourceCompatibility = 1.7
@@ -34,7 +33,7 @@ task buildJniLib(type:Exec) {
 
   workingDir './src/native/jni/'
 
-    commandLine 'gcc', '-I'+javahome+'/include', '-I'+javahome+'/include/darwin', '-shared','-o',System.getProperty("user.dir")+'/build/libs/libgetdnsconnector.dylib','-fPIC','-I/usr/local/include','-L/usr/local/lib','-lgetdns','-lldns', '-levent','-lgetdns_ext_event', 'java_util.c', 'GetDNSContext.c', 'GetDNS_common.c', 'getdns_util.c'
+    commandLine 'gcc', '-I'+javahome+'/include', '-I'+javahome+'/include/darwin', '-shared','-o',System.getProperty("user.dir")+'/build/libs/libgetdnsconnector.dylib','-fPIC','-I/usr/local/include','-L/usr/local/lib','-lgetdns','-lldns','-lidn', '-levent','-lgetdns_ext_event', 'java_util.c', 'GetDNSContext.c', 'GetDNS_common.c', 'getdns_util.c'
 
   standardOutput = new ByteArrayOutputStream()
   ext.output = {

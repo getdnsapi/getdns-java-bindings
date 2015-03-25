@@ -107,6 +107,30 @@ JNIEXPORT jlong JNICALL Java_com_verisign_getdns_GetDNSContext_hostnameAsync(
 JNIEXPORT void JNICALL Java_com_verisign_getdns_GetDNSContext_applyContextOption
 (JNIEnv *, jobject, jobject, jstring, jobject);
 
+/*
+ * Class:     com_verisign_getdns_GetDNSContext
+ * Method:    ConvertUnicodeToAscii
+ * Signature: (Ljava/lang/String)Z
+ */
+JNIEXPORT jstring JNICALL Java_com_verisign_getdns_GetDNSContext_ConvertUnicodeToAscii(
+		JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     com_verisign_getdns_GetDNSContext
+ * Method:    ConvertAsciiToUnicode
+ * Signature: (Ljava/lang/String)Z
+ */
+JNIEXPORT jstring JNICALL Java_com_verisign_getdns_GetDNSContext_ConvertAsciiToUnicode(
+		JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     com_verisign_getdns_GetDNSContext
+ * Method:    ConvertAsciiToUnicode
+ * Signature: (Ljava/lang/String)Z
+ */
+JNIEXPORT jobject JNICALL Java_com_verisign_getdns_GetDNSContext_GetDnsRootTrustAnchor(
+		JNIEnv *, jobject);
+
 #ifdef __cplusplus
 }
 #endif

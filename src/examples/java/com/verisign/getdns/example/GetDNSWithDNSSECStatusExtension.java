@@ -22,6 +22,7 @@ public class GetDNSWithDNSSECStatusExtension {
 		try {
 			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf("GETDNS_RRTYPE_" + type),
 					extensions);
+			System.out.println(info);
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 					System.out.println(GetDNSUtil.getDnssecStatus(info));

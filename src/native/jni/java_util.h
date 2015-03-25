@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <jni.h>
 #include <stdlib.h>
-#include "getdns/getdns.h"
+#include<string.h>
 
 #define CHECK_NULL_INIT_PTR(javaObj, context) if(NULL != javaObj) context = (struct getdns_context*) (*env)->GetDirectBufferAddress(env, javaObj);
 #define CHECK_NULL_AND_INIT_STR(str, nativeStr) if(NULL != str) nativeStr = (*env)->GetStringUTFChars(env, str, 0);
@@ -39,13 +39,6 @@ struct util_methods {
 struct util_methods*
 init_util_methods(JNIEnv* env, struct util_methods*);
 
-int
-throwExceptionOnErrorWithMessage(JNIEnv *env, char* message,
-		getdns_return_t ret);
-
-int
-throwExceptionOnError(JNIEnv *env, getdns_return_t ret);
-
 void
 throwJavaIssue(JNIEnv *env, char *message);
 
@@ -55,13 +48,10 @@ convertByteArrayToUnsignedCharArray(JNIEnv *env, jbyteArray array, int* len);
 jbyteArray
 convertUnsignedCharArrayToByteArray(JNIEnv *env, unsigned char* data, int len);
 
-void
-getStringFromArray(JNIEnv *env, jobjectArray value, struct util_methods methods,
-		const char **stringValue, int index);
+const char*
+getStringFromArrayWithIndex(JNIEnv *env, jobjectArray value,
+		struct util_methods methods, int index);
 
-void
-getIntArrayFromArray(JNIEnv *env, jobjectArray value,
-		struct util_methods methods, int *intValue[], int index);
-
-void getDnsDict(JNIEnv *env, jobjectArray value, struct util_methods methods,
-		struct getdns_dict **ipDict);
+int
+getIntArrayFromArrayWithIndex(JNIEnv *env, jobjectArray value,
+		struct util_methods methods, int index);

@@ -111,8 +111,8 @@ public class GetDNSContext implements IGetDNSContext {
 
 	}
 
-	private native HashMap<String, Object> hostnameSync(Object context, String address,
-			HashMap<String, Object> extensions) throws GetDNSException;
+	private native HashMap<String, Object> hostnameSync(Object context, String address, HashMap<String, Object> extensions)
+			throws GetDNSException;
 
 	@Override
 	public HashMap<String, Object> hostnameSync(String address, HashMap<String, Object> extensions)
@@ -169,8 +169,8 @@ public class GetDNSContext implements IGetDNSContext {
 		return result;
 	}
 
-	private native long hostnameAsync(Object context, String address,
-			HashMap<String, Object> extensions, Object callbackObj) throws GetDNSException;
+	private native long hostnameAsync(Object context, String address, HashMap<String, Object> extensions,
+			Object callbackObj) throws GetDNSException;
 
 	void applyContextOptions(HashMap<String, Object> contextOptions) {
 		for (String optionName : contextOptions.keySet()) {
@@ -179,4 +179,15 @@ public class GetDNSContext implements IGetDNSContext {
 	}
 
 	private native void applyContextOption(Object context, String optionName, Object value);
+
+	public static native String ConvertUnicodeToAscii(String unicode) throws GetDNSException;
+
+	public static native String ConvertAsciiToUnicode(String ascii) throws GetDNSException;
+
+	public static native Object[] GetDnsRootTrustAnchor() throws GetDNSException;
+	//
+	// private native int GetDnsValidateDnssec(Object[] recordToValidate, Object[]
+	// bundleOfSupportRecords,
+	// Object[] trustAnchorRecords) throws GetDNSException;
+
 }

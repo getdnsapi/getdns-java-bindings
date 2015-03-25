@@ -1,21 +1,62 @@
 #include "getdns_util.h"
 
 /*
- * TODO:   This method is imported from python port. Compare with python code and make sure if we have handled all necessary conditions.
+ * Method to throw a GetDNSException.
  */
-int isPrintable(char* data, int size) {
-	int printable = 1;
-	size_t i;
-	for (i = 0; i < size; ++i) {
-		if (!isprint(data[i])) {
-			if (data[i] == 0 && i == size - 1) {
-				break;
+int throwExceptionOnErrorWithMessage(JNIEnv *env, char* message,
+		getdns_return_t ret) {
+	if (GETDNS_RETURN_GOOD == ret)
+		return 0;
+
+	jclass getDNSRetClass = (*env)->FindClass(env,
+			"com/verisign/getdns/GetDNSReturn");
+	jmethodID fromInt = (*env)->GetStaticMethodID(env, getDNSRetClass,
+			"fromInt", "(I)Lcom/verisign/getdns/GetDNSReturn;");
+	jobject retObj = (*env)->CallStaticObjectMethod(env, getDNSRetClass,
+			fromInt, ret);
+	jclass exClass = (*env)->FindClass(env,
+			"com/verisign/getdns/GetDNSException");
+	jmethodID init = (*env)->GetMethodID(env, exClass, "<init>",
+			"(Ljava/lang/String;Lcom/verisign/getdns/GetDNSReturn;)V");
+	jstring jMessage = NULL;
+	CHECK_NULL_AND_CONVERT_TO_JAVA_STRING(message, jMessage);
+	jobject exObj = (*env)->NewObject(env, exClass, init, jMessage, retObj);
+	(*env)->Throw(env, exObj);
+	return 1;
+}
+
+int throwExceptionOnError(JNIEnv *env, getdns_return_t ret) {
+	return throwExceptionOnErrorWithMessage(env, NULL, ret);
+}
+
+/**
+ * This method extracts values from ObjectArray and pass it to ipDict
+ */
+struct getdns_dict* getDnsDict(JNIEnv *env, jobjectArray value,
+		struct util_methods methods) {
+	struct getdns_dict* ipDict = NULL;
+	if ((*env)->GetArrayLength(env, value) > 0) {
+		int port = -1;
+		const char* serverIP = NULL;
+		jsize length = (*env)->GetArrayLength(env, value);
+		for (int i = 0; i < length; i++) {
+			if (serverIP == NULL) {
+				serverIP = getStringFromArrayWithIndex(env, value, methods, i);
+
+			} else {
+				port = getIntFromArrayWithIndex(env, value, methods, i);
 			}
-			printable = 0;
-			break;
+
 		}
+		if (serverIP != NULL && strcmp(serverIP, "") != 0) {
+			ipDict = getdns_util_create_ip(serverIP);
+			if (port != -1) {
+				getdns_dict_set_int(ipDict, "port", port);
+			}
+		}
+		(*env)->ReleaseStringUTFChars(env, NULL, serverIP);
 	}
-	return printable;
+	return ipDict;
 }
 
 /*
@@ -41,7 +82,7 @@ jobject convertBinData(JNIEnv* env, getdns_bindata* data, const char* key) {
 
 	if (data->size == 1 && data->data[0] == 0) {
 		extractedData = ".";
-	} else if (isPrintable(data->data, data->size) == 1) {
+	} else if (isPrintable((char *) data->data, data->size) == 1) {
 		extractedData = (char *) data->data;
 	} else if (priv_getdns_bindata_is_dname(data)) {
 
@@ -68,7 +109,7 @@ jobject convertBinData(JNIEnv* env, getdns_bindata* data, const char* key) {
 }
 
 /*
- * TODO:   This method is imported from python port. Compare with python code and make sure if we have handled all necessary conditions.
+ * convert getdns_list* to Arraylist
  */
 jobject convertToList(JNIEnv* env, struct util_methods* methods,
 		struct getdns_list* list) {
@@ -231,7 +272,7 @@ getdns_list* convertToGetDNSList(JNIEnv *env, jobject thisObj, jobject mapObj) {
 				(*env)->FindClass(env, "java/lang/String"), valueClass)) { // String value case.
 			const char* value = (*env)->GetStringUTFChars(env, jvalue, 0);
 			getdns_bindata bdata = { (*env)->GetStringUTFLength(env, jvalue),
-					(char*) value };
+					(uint8_t *) value };
 			getdns_list_set_bindata(result, idx, &bdata);
 			(*env)->ReleaseStringUTFChars(env, jvalue, value);
 		} else if ((*env)->IsAssignableFrom(env,
@@ -293,7 +334,7 @@ getdns_dict* convertMapToDict(JNIEnv *env, jobject thisObj, jobject mapObj) {
 		} else if ((*env)->IsAssignableFrom(env,
 				(*env)->FindClass(env, "java/lang/String"), valueClass)) { // String value case.
 			const char* value = (*env)->GetStringUTFChars(env, jvalue, 0);
-			printf("value:  %s\n",value);
+			printf("value:  %s\n", value);
 			getdns_dict_util_set_string(result, (char*) key, value);
 			(*env)->ReleaseStringUTFChars(env, jvalue, value);
 		} else if ((*env)->IsAssignableFrom(env,
