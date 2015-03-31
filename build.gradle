@@ -33,7 +33,13 @@ task buildJniLib(type:Exec) {
 
   workingDir './src/native/jni/'
 
-    commandLine 'gcc', '-I'+javahome+'/include', '-I'+javahome+'/include/darwin', '-shared','-o',System.getProperty("user.dir")+'/build/libs/libgetdnsconnector.dylib','-fPIC','-I/usr/local/include','-L/usr/local/lib','-lgetdns','-lldns','-lidn', '-levent','-lgetdns_ext_event', 'java_util.c', 'GetDNSContext.c', 'GetDNS_common.c', 'getdns_util.c'
+    if(System.properties['os.name'].toLowerCase().contains('mac')){
+        commandLine 'gcc', '-I'+javahome+'/include', '-I'+javahome+'/include/darwin', '-shared','-o',System.getProperty("user.dir")+'/build/libs/libgetdnsconnector.dylib','-fPIC','-I/usr/local/include','-L/usr/local/lib','-lgetdns','-lldns','-lidn', '-levent','-lgetdns_ext_event', 'java_util.c', 'GetDNSContext.c', 'GetDNS_common.c', 'getdns_util.c'
+    }
+    else {
+            commandLine 'gcc', '-I'+javahome+'/include', '-I'+javahome+'/include/linux', '-shared','-o',System.getProperty("user.dir")+'/build/libs/libgetdnsconnector.so','-fPIC','-I/usr/local/include','-L/usr/local/lib','-lgetdns','-lldns', '-levent','-lgetdns_ext_event', 'java_util.c', 'GetDNSContext.c', 'getdns_util.c'
+    }
+
 
   standardOutput = new ByteArrayOutputStream()
   ext.output = {
@@ -47,7 +53,6 @@ task runExample(type:JavaExec)  {
     environment "LD_LIBRARY_PATH", "/usr/local/lib"
     doFirst {
     main = System.getProperty("example")
-    println("main vinay:"+main)
     if(System.getProperty("example") == null || System.getProperty("args") == null){
         println "Usage: -Dexample=<exampleName> -Dargs=\"<args>\"  runExample"
     	if(main == null || main == "") {

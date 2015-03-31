@@ -1,5 +1,4 @@
 #include "com_verisign_getdns_GetDNSContext.h"
-#include <check.h>
 #include <ctype.h>
 #include <getdns/getdns_ext_libevent.h>
 #include <event.h>
@@ -129,7 +128,8 @@ static getdns_return_t setUpstreams(JNIEnv *env, jobject thisObj,
 	jsize length = (*env)->GetArrayLength(env, value);
 	if (length > 0) {
 		getdns_list* upstreams = getdns_list_create();
-		for (int i = 0; i < length; i++) {
+                int i=0;
+		for (i = 0; i < length; i++) {
 			struct getdns_dict* ipDict = getDnsDict(env,
 					(*env)->GetObjectArrayElement(env, value, i), methods);
 			if (NULL != ipDict) {
@@ -163,7 +163,8 @@ static getdns_return_t setNamespace(JNIEnv *env, jobject thisObj,
 			return ret;
 		}
 
-		for (int i = 0; i < length; i++) {
+                int i=0;
+		for (i = 0; i < length; i++) {
 			int intNamespace = getIntFromArrayWithIndex(env, value, methods, i);
 			if (intNamespace != 0) {
 				namespaces[i] = (getdns_namespace_t) intNamespace;
@@ -222,7 +223,8 @@ static getdns_return_t setDnsRootServers(JNIEnv *env, jobject thisObj,
 	jsize length = (*env)->GetArrayLength(env, value);
 	if (length > 0) {
 		getdns_list* dns_servers = getdns_list_create();
-		for (int i = 0; i < length; i++) {
+                int i=0;
+		for (i = 0; i < length; i++) {
 			struct getdns_dict* ipDict = getDnsDict(env,
 					(*env)->GetObjectArrayElement(env, value, i), methods);
 			if (NULL != ipDict) {
@@ -250,7 +252,8 @@ static getdns_return_t setSuffix(JNIEnv *env, jobject thisObj,
 	jsize length = (*env)->GetArrayLength(env, value);
 	if (length > 0) {
 		getdns_list* suffix_list = getdns_list_create();
-		for (int i = 0; i < length; i++) {
+                int i=0;
+		for (i = 0; i < length; i++) {
 			getdns_bindata bin_value;
 			const char* suffix = getStringFromArrayWithIndex(env, value,
 					methods, i);
@@ -284,7 +287,8 @@ static getdns_return_t setDnssecTrustAnchor(JNIEnv *env, jobject thisObj,
 	jsize length = (*env)->GetArrayLength(env, value);
 	if (length > 0) {
 		getdns_list* addresses = getdns_list_create();
-		for (int i = 0; i < length; i++) {
+                int i=0;
+		for (i = 0; i < length; i++) {
 			getdns_bindata bin_value;
 
 			const char* address = getStringFromArrayWithIndex(env, value,

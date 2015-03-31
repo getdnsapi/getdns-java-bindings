@@ -39,7 +39,8 @@ struct getdns_dict* getDnsDict(JNIEnv *env, jobjectArray value,
 		int port = -1;
 		const char* serverIP = NULL;
 		jsize length = (*env)->GetArrayLength(env, value);
-		for (int i = 0; i < length; i++) {
+                int i=0;
+		for (i = 0; i < length; i++) {
 			if (serverIP == NULL) {
 				serverIP = getStringFromArrayWithIndex(env, value, methods, i);
 
