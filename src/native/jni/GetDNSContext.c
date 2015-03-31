@@ -256,7 +256,6 @@ static getdns_return_t setSuffix(JNIEnv *env, jobject thisObj,
 			getdns_bindata bin_value;
 			const char* suffix = getStringFromArrayWithIndex(env, value,
 					methods, i);
-			printf("suffix:   %s", suffix);
 
 			if (suffix != NULL && strcmp(suffix, "") != 0) {
 				bin_value.data = (uint8_t *) suffix;
@@ -427,7 +426,6 @@ JNICALL Java_com_verisign_getdns_GetDNSContext_generalSync(JNIEnv *env,
 	CHECK_NULL_INIT_PTR(contextParam, context)
 	CHECK_NULL_AND_INIT_STR(name, nativeString)
 
-	printf("nativeString:  %s\n", nativeString);
 	getdns_dict * this_extensions = convertMapToDict(env, thisObj, extensions); /* getextensions(extensions,env,thisObj);*/
 
 	getdns_return_t ret = getdns_general_sync(context, nativeString,
@@ -671,7 +669,6 @@ JNIEXPORT jlong
 JNICALL Java_com_verisign_getdns_GetDNSContext_hostnameAsync(JNIEnv *env,
 		jobject thisObj, jobject contextParam, jstring address,
 		jobject extensions, jobject callbackObj) {
-	printf("success\n");
 
 	struct getdns_context *context = NULL;
 	getdns_transaction_t transaction_id = 0;
@@ -687,15 +684,12 @@ JNICALL Java_com_verisign_getdns_GetDNSContext_hostnameAsync(JNIEnv *env,
 	if (address != NULL) {
 		serverIP = (*env)->GetStringUTFChars(env, address, 0);
 	}
-	printf("ServerIP:   %s\n", serverIP);
 	if (serverIP != NULL && strcmp(serverIP, "") != 0) {
 		ipDict = getdns_util_create_ip(serverIP);
 	}
-	printf("before return\n");
 	getdns_return_t ret = getdns_hostname(context, ipDict, this_extensions,
 			(*env)->NewGlobalRef(env, callbackObj), &transaction_id,
 			callbackfn);
-	printf("return:  %d\n", ret);
 	throwExceptionOnError(env, ret);
 
 //	if (NULL != init_util_methods(env, &methods)) {
@@ -711,7 +705,6 @@ JNIEXPORT
 void JNICALL
 Java_com_verisign_getdns_GetDNSContext_applyContextOption(JNIEnv *env,
 		jobject thisObj, jobject contextParam, jstring key, jobject value) {
-	printf("Native apply ContextOptions\n");
 
 	struct util_methods methods;
 	const char *nativeKey = NULL;
