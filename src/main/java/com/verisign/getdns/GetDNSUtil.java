@@ -45,7 +45,7 @@ public class GetDNSUtil {
 					} else if (name.equalsIgnoreCase("rdata")) {
 						int i = 0;
 						HashMap<String, Object> rdata = null;
-						System.out.println("size: " + answerList.size());
+						//System.out.println("size: " + answerList.size());
 						while (i < answerList.size()) {
 							answerMap = (HashMap<String, Object>) answerList.get(i);
 							rdata = (HashMap<String, Object>) answerMap.get("rdata");

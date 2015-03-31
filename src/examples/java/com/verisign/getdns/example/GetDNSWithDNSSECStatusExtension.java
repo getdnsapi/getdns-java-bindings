@@ -16,13 +16,15 @@ public class GetDNSWithDNSSECStatusExtension {
 			throw new IllegalArgumentException("Need to pass string and type");
 		String queryString = args[0];
 		String type = args[1];
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<String, Object> options = new HashMap<String, Object>();
+		options.put(GetDNSConstants.CONTEXT_SET_TIMEOUT, 10000);
+		
+		final IGetDNSContext context = GetDNSFactory.create(1,options);
 		HashMap<String, Object> extensions = new HashMap<String, Object>();
 		extensions.put(GetDNSConstants.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {
 			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf("GETDNS_RRTYPE_" + type),
 					extensions);
-			System.out.println(info);
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 					System.out.println(GetDNSUtil.getDnssecStatus(info));

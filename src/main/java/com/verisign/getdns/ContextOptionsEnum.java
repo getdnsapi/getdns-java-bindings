@@ -74,14 +74,14 @@ public enum ContextOptionsEnum {
 		 */
 
 	
-	private int value;
+	private Integer value;
 	
 	private ContextOptionsEnum(int value) {
 		
 		this.value = value;
 	}
 	
-	public int getvalue() {
+	public Integer getvalue() {
     return value;
 	}
 

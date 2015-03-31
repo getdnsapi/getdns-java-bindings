@@ -1,4 +1,4 @@
-package com.verisign.getdns.example;
+ package com.verisign.getdns.example;
 
 import java.util.HashMap;
 
@@ -23,7 +23,6 @@ public class GetDNSWithDNSSECValidationChainExtension {
 			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf("GETDNS_RRTYPE_" + type),
 					extensions);
 			if (info != null) {
-				System.out.println("info:  "+info);
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 					System.out.println(GetDNSUtil.getValidationChain(info));
 				}

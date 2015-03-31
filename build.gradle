@@ -27,19 +27,20 @@ sourceSets {
 }
 
 task buildJniLib(type:Exec) {
+
   if(!new File(javahome+'/include/jni.h').exists()) {
     throw new InvalidUserDataException("Please configure javahome in gradle.properties")
   }
 
   workingDir './src/native/jni/'
 
-    if(System.properties['os.name'].toLowerCase().contains('mac')){
-        commandLine 'gcc', '-I'+javahome+'/include', '-I'+javahome+'/include/darwin', '-shared','-o',System.getProperty("user.dir")+'/build/libs/libgetdnsconnector.dylib','-fPIC','-I/usr/local/include','-L/usr/local/lib','-lgetdns','-lldns','-lidn', '-levent','-lgetdns_ext_event', 'java_util.c', 'GetDNSContext.c', 'GetDNS_common.c', 'getdns_util.c'
-    }
-    else {
-            commandLine 'gcc', '-I'+javahome+'/include', '-I'+javahome+'/include/linux', '-shared','-o',System.getProperty("user.dir")+'/build/libs/libgetdnsconnector.so','-fPIC','-I/usr/local/include','-L/usr/local/lib','-lgetdns','-lldns', '-levent','-lgetdns_ext_event', 'java_util.c', 'GetDNSContext.c', 'getdns_util.c'
-    }
-
+//chedck the OS and sets path accroding to it
+if(System.properties['os.name'].toLowerCase().contains('mac')){
+    commandLine 'gcc', '-I'+javahome+'/include', '-I'+javahome+'/include/darwin', '-shared','-o',System.getProperty("user.dir")+'/build/libs/libgetdnsconnector.dylib','-fPIC','-I/usr/local/include','-L/usr/local/lib','-lgetdns','-lldns','-lidn', '-levent','-lgetdns_ext_event', 'java_util.c', 'GetDNSContext.c', 'GetDNS_common.c', 'getdns_util.c'
+}
+else{
+  commandLine 'gcc', '-I'+javahome+'/include', '-I'+javahome+'/include/linux', '-shared','-o',System.getProperty("user.dir")+'/build/libs/libgetdnsconnector.so','-fPIC','-I/usr/local/include','-L/usr/local/lib','-lgetdns','-lldns','-lidn', '-levent','-lgetdns_ext_event', 'java_util.c', 'GetDNSContext.c', 'GetDNS_common.c', 'getdns_util.c'
+}
 
   standardOutput = new ByteArrayOutputStream()
   ext.output = {
@@ -61,8 +62,9 @@ task runExample(type:JavaExec)  {
 			    println file.name.replace(".java","")
 			}
 		}
-        else
+        else{
             println "No arguments provided"
+            }
     throw new InvalidUserDataException("Insufficient arguments provided")
      
    }
@@ -81,6 +83,7 @@ task printBuildInfo << {
 
 
 test {
+println "success:     "+System.getProperty("user.dir")
     jvmArgs '-Djava.library.path='+System.getProperty("user.dir")+'/build/libs'
     environment "LD_LIBRARY_PATH", "/usr/local/lib"
 }

@@ -11,6 +11,9 @@ public class ServiceSyncPositiveTest implements IGetDNSTestConstants {
 
 	@Test
 	public void testGetService() {
+		HashMap<String, Object> options = new HashMap<String, Object>();
+		//options.put(GetDNSConstants.CONTEXT_SET_STUB, true);
+		options.put(GetDNSConstants.CONTEXT_SET_TIMEOUT, 2000);
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		try {
 

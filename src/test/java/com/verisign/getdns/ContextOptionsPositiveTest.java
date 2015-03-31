@@ -106,6 +106,7 @@ public class ContextOptionsPositiveTest {
 	public void testBasicContextOptions_SetTimeout() {
 		System.out.println("-----------SetTimeout-------------");
 		HashMap<String, Object> options = new HashMap<String, Object>();
+		options.put(GetDNSConstants.CONTEXT_SET_STUB, true);
 		options.put(GetDNSConstants.CONTEXT_SET_TIMEOUT, 2000);
 		IGetDNSContext context = null;
 		try {

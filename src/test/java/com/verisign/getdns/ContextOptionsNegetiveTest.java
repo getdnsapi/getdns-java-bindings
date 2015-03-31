@@ -213,12 +213,12 @@ public class ContextOptionsNegetiveTest {
 	/**
 	 * test NameSpaces
 	 */
-	@Test
+	 @Test
 	public void testNameSpace() {
 		System.out.println("-----------SetNameSpace-------------");
 		HashMap<String, Object> options = new HashMap<String, Object>();
 		try {
-			int[] namespace = { ContextOptionsEnum.GETDNS_NAMESPACE_DNS.getvalue(),
+			Object[] namespace = { ContextOptionsEnum.GETDNS_NAMESPACE_DNS.getvalue(),
 					ContextOptionsEnum.GETDNS_NAMESPACE_MDNS.getvalue() };
 			options.put(GetDNSConstants.CONTEXT_SET_NAMESPACE, namespace);
 			GetDNSFactory.create(1, options);

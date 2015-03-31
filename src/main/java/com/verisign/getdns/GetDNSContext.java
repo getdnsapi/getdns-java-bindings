@@ -185,9 +185,5 @@ public class GetDNSContext implements IGetDNSContext {
 	public static native String ConvertAsciiToUnicode(String ascii) throws GetDNSException;
 
 	public static native Object[] GetDnsRootTrustAnchor() throws GetDNSException;
-	//
-	// private native int GetDnsValidateDnssec(Object[] recordToValidate, Object[]
-	// bundleOfSupportRecords,
-	// Object[] trustAnchorRecords) throws GetDNSException;
 
 }
