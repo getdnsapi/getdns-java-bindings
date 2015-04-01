@@ -206,7 +206,6 @@ public class GetDNSContext implements IGetDNSContext {
 
 	void applyContextOptions(HashMap<ContextOptionNames, Object> contextOptions) {
 		for (ContextOptionNames optionName : contextOptions.keySet()) {
-<<<<<<< HEAD
 			Object val = convertContextOptionValuesIfneeded(contextOptions.get(optionName));
 			applyContextOption(context, optionName.getName(), val);
 		}
@@ -224,26 +223,9 @@ public class GetDNSContext implements IGetDNSContext {
 				value[i] = ((ContextOptionValues) value[i]).getvalue();
 			}
 			val = value;
-=======
-                Object val = convertContextOptionValuesIfneeded(contextOptions.get(optionName));
-                   applyContextOption(context, optionName.getName(), val);
->>>>>>> 1a9287b7bccc86343d260b11402afa41742d9e13
 		}
 		return val;
 	}
-        Object convertContextOptionValuesIfneeded(Object targetValue){
-            Object val = targetValue;
-                if(targetValue instanceof ContextOptionValues)
-                    val = ((ContextOptionValues) targetValue).getvalue();
-
-                else if (targetValue instanceof Object[]) {
-                                Object[] value = ((Object[]) targetValue).clone(); // Avoiding modifying user provided object
-                                for(int i=0;i<value.length && (value[i] instanceof ContextOptionValues);i++)
-                                            value[i] = ((ContextOptionValues) value[i]).getvalue();
-                                val = value;
-               }
-            return val;
-        }
 
 	private native void applyContextOption(Object context, String optionName, Object value);
 
