@@ -17,8 +17,8 @@ public class ContextOptionsNegetiveTest {
 	@Test
 	public void testBasicContextOptions_SetTransport() {
 		System.out.println("-----------SetTransport-------------");
-		HashMap<String, Object> options = new HashMap<String, Object>();
-		options.put(GetDNSConstants.CONTEXT_SET_DNS_TRANSPORT, 100);
+		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+		options.put(ContextOptionNames.DNS_TRANSPORT, 100);
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_CONTEXT_UPDATE_FAIL"));
@@ -31,8 +31,8 @@ public class ContextOptionsNegetiveTest {
 	@Test
 	public void testBasicContextOptions_SetStub() {
 		System.out.println("-----------SetStub-------------");
-		HashMap<String, Object> options = new HashMap<String, Object>();
-		options.put(GetDNSConstants.CONTEXT_SET_RESOLUTION_TYPE, 999);
+		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+		options.put(ContextOptionNames.RESOLUTION_TYPE, 999);
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_CONTEXT_UPDATE_FAIL"));
@@ -45,8 +45,8 @@ public class ContextOptionsNegetiveTest {
 	@Test
 	public void testBasicContextOptions_SetTimeout() {
 		System.out.println("-----------SetTimeout-------------");
-		HashMap<String, Object> options = new HashMap<String, Object>();
-		options.put(GetDNSConstants.CONTEXT_SET_TIMEOUT, 0);
+		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+		options.put(ContextOptionNames.TIMEOUT, 0);
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
@@ -62,10 +62,10 @@ public class ContextOptionsNegetiveTest {
 	@Test
 	public void testBasicContextOptions_SetUpStreams() {
 		System.out.println("-----------SetUpStreams-------------");
-		HashMap<String, Object> options = new HashMap<String, Object>();
-		options.put(GetDNSConstants.CONTEXT_SET_STUB, true);
+		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+		options.put(ContextOptionNames.STUB, true);
 		Object[][] list = { { 12 }, { 32 } };
-		options.put(GetDNSConstants.CONTEXT_SET_UPSTREAMS, list);
+		options.put(ContextOptionNames.UPSTREAMS, list);
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_CONTEXT_UPDATE_FAIL"));
@@ -81,8 +81,8 @@ public class ContextOptionsNegetiveTest {
 	@Test
 	public void testSetStub() {
 		System.out.println("-----------SetStub-------------");
-		HashMap<String, Object> options = new HashMap<String, Object>();
-		options.put(GetDNSConstants.CONTEXT_SET_STUB, 90);
+		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+		options.put(ContextOptionNames.STUB, 90);
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
@@ -98,8 +98,8 @@ public class ContextOptionsNegetiveTest {
 	@Test
 	public void testUseThread() {
 		System.out.println("-----------SetUseThread-------------");
-		HashMap<String, Object> options = new HashMap<String, Object>();
-		options.put(GetDNSConstants.CONTEXT_SET_USE_THREADS, 22);
+		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+		options.put(ContextOptionNames.USE_THREADS, 22);
 		IGetDNSContext context = null;
 		try {
 			thrown.expect(GetDNSException.class);
@@ -116,8 +116,8 @@ public class ContextOptionsNegetiveTest {
 	@Test
 	public void testReturnDnssecStatus() {
 		System.out.println("-----------SetReturnDnssecStatus-------------");
-		HashMap<String, Object> options = new HashMap<String, Object>();
-		options.put(GetDNSConstants.CONTEXT_SET_RETURN_DNSSEC_STATUS, true);
+		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+		options.put(ContextOptionNames.RETURN_DNSSEC_STATUS, true);
 		IGetDNSContext context = null;
 		try {
 			context = GetDNSFactory.create(1, options);
@@ -137,8 +137,8 @@ public class ContextOptionsNegetiveTest {
 	@Test
 	public void testEdnsExtendedRcode() {
 		System.out.println("-----------SetExtendedRcode-------------");
-		HashMap<String, Object> options = new HashMap<String, Object>();
-		options.put(GetDNSConstants.CONTEXT_SET_EDNS_EXTENDED_RCODE, "");
+		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+		options.put(ContextOptionNames.EDNS_EXTENDED_RCODE, "");
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
@@ -155,8 +155,8 @@ public class ContextOptionsNegetiveTest {
 	public void testEdnsVersion() {
 		System.out.println("-----------SetEdnsVersion-------------");
 		try {
-			HashMap<String, Object> options = new HashMap<String, Object>();
-			options.put(GetDNSConstants.CONTEXT_SET_EDNS_VERSION, "");
+			HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+			options.put(ContextOptionNames.EDNS_VERSION, "");
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
 			GetDNSFactory.create(1, options);
@@ -169,8 +169,8 @@ public class ContextOptionsNegetiveTest {
 	public void testEdnsDoBit() {
 		System.out.println("-----------SetEdnsDoBit-------------");
 		try {
-			HashMap<String, Object> options = new HashMap<String, Object>();
-			options.put(GetDNSConstants.CONTEXT_SET_EDNS_DO_BIT, 2);
+			HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+			options.put(ContextOptionNames.EDNS_DO_BIT, 2);
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_CONTEXT_UPDATE_FAIL"));
 			GetDNSFactory.create(1, options);
@@ -186,8 +186,8 @@ public class ContextOptionsNegetiveTest {
 	public void testLimitOutstandingQueries() {
 		System.out.println("-----------SetLimitOutStandingQueries-------------");
 		try {
-			HashMap<String, Object> options = new HashMap<String, Object>();
-			options.put(GetDNSConstants.CONTEXT_SET_LIMIT_OUTSTANDING_QUERIES, "four");
+			HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+			options.put(ContextOptionNames.LIMIT_OUTSTANDING_QUERIES, "four");
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
 			GetDNSFactory.create(1, options);
@@ -200,8 +200,8 @@ public class ContextOptionsNegetiveTest {
 	public void testEdnsMaxUdpPayloadSize() {
 		System.out.println("-----------SetEdnsMaxUdpPayloadSize-------------");
 		try {
-			HashMap<String, Object> options = new HashMap<String, Object>();
-			options.put(GetDNSConstants.CONTEXT_SET_EDNS_MAXIMUM_UDP_PAYLOADSIZE, "");
+			HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+			options.put(ContextOptionNames.EDNS_MAXIMUM_UDP_PAYLOADSIZE, "");
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
 			GetDNSFactory.create(1, options);
@@ -216,11 +216,11 @@ public class ContextOptionsNegetiveTest {
 	 @Test
 	public void testNameSpace() {
 		System.out.println("-----------SetNameSpace-------------");
-		HashMap<String, Object> options = new HashMap<String, Object>();
+		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
 		try {
-			Object[] namespace = { ContextOptionsEnum.GETDNS_NAMESPACE_DNS.getvalue(),
-					ContextOptionsEnum.GETDNS_NAMESPACE_MDNS.getvalue() };
-			options.put(GetDNSConstants.CONTEXT_SET_NAMESPACE, namespace);
+			Object[] namespace = { ContextOptionValues.GETDNS_NAMESPACE_DNS,
+					ContextOptionValues.GETDNS_NAMESPACE_MDNS };
+			options.put(ContextOptionNames.NAMESPACE, namespace);
 			GetDNSFactory.create(1, options);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -234,8 +234,8 @@ public class ContextOptionsNegetiveTest {
 	public void testreDirectFollow() {
 		System.out.println("-----------SetreDirectFollow-------------");
 		try {
-			HashMap<String, Object> options = new HashMap<String, Object>();
-			options.put(GetDNSConstants.CONTEXT_SET_FOLLOW_REDIRECT, 999);
+			HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+			options.put(ContextOptionNames.FOLLOW_REDIRECT, 999);
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
 			GetDNSFactory.create(1, options);
@@ -265,9 +265,9 @@ public class ContextOptionsNegetiveTest {
 	public void testDnsRootServers() {
 		System.out.println("-----------SetDnsRootServers-------------");
 		try {
-			HashMap<String, Object> options = new HashMap<String, Object>();
+			HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
 			Object[][] list = { {} };
-			options.put(GetDNSConstants.CONTEXT_SET_DNS_ROOT_SERVERS, list);
+			options.put(ContextOptionNames.DNS_ROOT_SERVERS, list);
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
 			GetDNSFactory.create(1, options);
@@ -283,9 +283,9 @@ public class ContextOptionsNegetiveTest {
 	public void testDnssecTrustAnchor() {
 		System.out.println("-----------SetDnssecTrustAnchor-------------");
 		try {
-			HashMap<String, Object> options = new HashMap<String, Object>();
+			HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
 			Object[][] list = { { "" } };
-			options.put(GetDNSConstants.CONTEXT_SET_DNSSEC_TRUST_ANCHOR, list);
+			options.put(ContextOptionNames.DNSSEC_TRUST_ANCHOR, list);
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
 			GetDNSFactory.create(1, options);
@@ -302,8 +302,8 @@ public class ContextOptionsNegetiveTest {
 	public void testDnssecAllowedSkew() {
 		System.out.println("-----------SetDnssecAllowedSkew-------------");
 		try {
-			HashMap<String, Object> options = new HashMap<String, Object>();
-			options.put(GetDNSConstants.CONTEXT_SET_DNSSEC_ALLOWED_SKEW, true);
+			HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+			options.put(ContextOptionNames.DNSSEC_ALLOWED_SKEW, true);
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
 			GetDNSFactory.create(1, options);

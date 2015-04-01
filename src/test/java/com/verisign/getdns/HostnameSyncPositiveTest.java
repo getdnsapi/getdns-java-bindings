@@ -14,8 +14,8 @@ public class HostnameSyncPositiveTest{
 
     @Test
 	public void testGetHostnameIPV6() throws UnknownHostException{
-    	HashMap<String, Object> options = new HashMap<String, Object>();
-			options.put(GetDNSConstants.CONTEXT_SET_STUB,true);
+    	HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+			options.put(ContextOptionNames.STUB,true);
 		final IGetDNSContext context = GetDNSFactory.create(1,options);		
 		try{
 			HashMap<String, Object> info = context.hostnameSync("2001:4860:4860::8888" , null);
@@ -33,8 +33,8 @@ public class HostnameSyncPositiveTest{
 	
 	@Test
 	public void testGetHostnameINPV4() throws UnknownHostException{
-		 HashMap<String, Object> options = new HashMap<String, Object>();
-			options.put(GetDNSConstants.CONTEXT_SET_STUB,true);
+		 HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+			options.put(ContextOptionNames.STUB,true);
 		final IGetDNSContext context = GetDNSFactory.create(1,options);		
 		try{
 			

@@ -152,7 +152,6 @@ static getdns_return_t setUpstreams(JNIEnv *env, jobject thisObj,
 // set namespaces
 static getdns_return_t setNamespace(JNIEnv *env, jobject thisObj,
 		getdns_context* context, jobject value, struct util_methods methods) {
-
 	getdns_return_t ret = GETDNS_RETURN_GOOD;
 	getdns_namespace_t *namespaces;
 

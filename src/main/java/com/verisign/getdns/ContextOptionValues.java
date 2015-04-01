@@ -1,6 +1,6 @@
 package com.verisign.getdns;
 
-public enum ContextOptionsEnum {
+public enum ContextOptionValues {
 	
 	/* Namespace types */
 	GETDNS_NAMESPACE_DNS (500),
@@ -76,7 +76,7 @@ public enum ContextOptionsEnum {
 	
 	private Integer value;
 	
-	private ContextOptionsEnum(int value) {
+	private ContextOptionValues(int value) {
 		
 		this.value = value;
 	}

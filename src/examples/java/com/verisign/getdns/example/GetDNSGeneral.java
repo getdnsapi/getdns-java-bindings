@@ -2,7 +2,7 @@ package com.verisign.getdns.example;
 
 import java.util.HashMap;
 
-import com.verisign.getdns.GetDNSConstants;
+import com.verisign.getdns.ContextOptionNames;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
@@ -19,9 +19,9 @@ import com.verisign.getdns.RRType;
 public class GetDNSGeneral {
 
 	public static void main(String[] args) {
-		HashMap<String, Object> options = new HashMap<String, Object>();
-		options.put(GetDNSConstants.CONTEXT_SET_STUB, true);
-		options.put(GetDNSConstants.CONTEXT_SET_DNS_TRANSPORT, 542);
+		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+		options.put(ContextOptionNames.STUB, true);
+		options.put(ContextOptionNames.DNS_TRANSPORT, 542);
 		final IGetDNSContext context = GetDNSFactory.create(1, options);
 		if (args.length != 2)
 			throw new IllegalArgumentException("Need to pass string and type");
@@ -30,11 +30,9 @@ public class GetDNSGeneral {
 
 		try {
 			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf("GETDNS_RRTYPE_" + type), null);
-			System.out.println("info:  "+info);
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
-
-					GetDNSUtil.printAnswer(info);
+					System.out.println(GetDNSUtil.printReadable(info));
 				}
 
 				else if (Integer.parseInt(info.get("status").toString()) == 901) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.verisign.getdns.GetDNSFactory;
+import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
 
 /*
@@ -26,7 +27,7 @@ public class GetDNSService {
 
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
-
+					System.out.println(GetDNSUtil.printReadable(info));
 					printAnswer(info);
 				}
 

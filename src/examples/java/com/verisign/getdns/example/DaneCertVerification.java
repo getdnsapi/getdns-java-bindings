@@ -11,8 +11,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
-import com.verisign.getdns.ContextOptionsEnum;
-import com.verisign.getdns.GetDNSConstants;
+import com.verisign.getdns.ContextOptionNames;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
@@ -54,13 +53,12 @@ public class DaneCertVerification {
 			throws UnsupportedEncodingException {
 		String queryString = "_" + port + "._" + proto + "." + hostname;
 		String type = "TLSA";
-		HashMap<String, Object> options = new HashMap<String, Object>();
-		options.put(GetDNSConstants.CONTEXT_SET_STUB, true);
+		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+		options.put(ContextOptionNames.STUB, true);
 		final IGetDNSContext context = GetDNSFactory.create(1, options);
-		HashMap<String, Object> extensions = new HashMap<String, Object>();
 		try {
 			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf("GETDNS_RRTYPE_" + type), null);
-			System.out.println("info:  " + info);
+			System.out.println(GetDNSUtil.printReadable(info));
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 					return ((HashMap<String, Object>) GetDNSUtil.getinfovalues(info, "rdata"));

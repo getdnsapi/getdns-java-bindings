@@ -8,9 +8,9 @@ public class GetDNSFactory {
 		return new GetDNSContext(setFromOs);
 	}
 
-	public static IGetDNSContext create(int setFromOs, HashMap<String, Object> contextOptions) throws GetDNSException {
+	public static IGetDNSContext create(int setFromOs, HashMap<ContextOptionNames, ?> contextOptions)
+			throws GetDNSException {
 		GetDNSContext context = new GetDNSContext(setFromOs);
-
 		try {
 			context.applyContextOptions(contextOptions);
 		} catch (IllegalArgumentException e) {

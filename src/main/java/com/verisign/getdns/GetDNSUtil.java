@@ -45,7 +45,7 @@ public class GetDNSUtil {
 					} else if (name.equalsIgnoreCase("rdata")) {
 						int i = 0;
 						HashMap<String, Object> rdata = null;
-						//System.out.println("size: " + answerList.size());
+						// System.out.println("size: " + answerList.size());
 						while (i < answerList.size()) {
 							answerMap = (HashMap<String, Object>) answerList.get(i);
 							rdata = (HashMap<String, Object>) answerMap.get("rdata");
@@ -80,39 +80,35 @@ public class GetDNSUtil {
 	static public String getDnssecStatus(HashMap<String, Object> info) {
 
 		int dnssecStatus = (int) GetDNSUtil.getinfovalues(info, "dnssec_status");
-		String status = (GetDNSReturn.fromInt(dnssecStatus).toString());
-		if (status.equalsIgnoreCase("GETDNS_DNSSEC_SECURE")) {
-			return GetDNSConstants.GETDNS_DNSSEC_SECURE;
-		} else if (status.equalsIgnoreCase("GETDNS_DNSSEC_BOGUS")) {
-			return GetDNSConstants.GETDNS_DNSSEC_BOGUS;
-		} else if (status.equalsIgnoreCase("GETDNS_DNSSEC_INDETERMINATE")) {
-			return GetDNSConstants.GETDNS_DNSSEC_INDETERMINATE;
-		} else if (status.equalsIgnoreCase("GETDNS_DNSSEC_INSECURE")) {
-			return GetDNSConstants.GETDNS_DNSSEC_INSECURE;
-		} else if (status.equalsIgnoreCase("GETDNS_DNSSEC_NOT_PERFORMED ")) {
-			return GetDNSConstants.GETDNS_DNSSEC_NOT_PERFORMED;
-		} else {
+		// String status = (GetDNSReturn.fromInt(dnssecStatus).toString());
+		GetDNSReturn ret = GetDNSReturn.fromInt(dnssecStatus);
+		String response = printReadable(info) + "\n";
+		switch (ret) {
+		case GETDNS_DNSSEC_SECURE:
+			return response + GetDNSConstants.GETDNS_DNSSEC_SECURE;
+		case GETDNS_DNSSEC_BOGUS:
+			return response + GetDNSConstants.GETDNS_DNSSEC_BOGUS;
+		case GETDNS_DNSSEC_INDETERMINATE:
+			return response + GetDNSConstants.GETDNS_DNSSEC_INDETERMINATE;
+		case GETDNS_DNSSEC_INSECURE:
+			return response + GetDNSConstants.GETDNS_DNSSEC_INSECURE;
+		case GETDNS_DNSSEC_NOT_PERFORMED:
+			return response + GetDNSConstants.GETDNS_DNSSEC_NOT_PERFORMED;
+		default:
 			return null;
 		}
 	}
 
 	public static String getValidationChain(HashMap<String, Object> info) {
 
-		return "Validation_Chain:  " + GetDNSUtil.getinfovalues(info, "validation_chain");
+		return "-------Validation_Chain----------\n\n  "
+				+ printReadable(GetDNSUtil.getinfovalues(info, "validation_chain"));
 	}
 
-	public static void printAnswer(HashMap<String, Object> info) {
+	public static String printReadable(Object info) {
 		if (info != null) {
-			ArrayList<HashMap<String, Object>> answers = (ArrayList<HashMap<String, Object>>) info
-					.get("just_address_answers");
-			for (HashMap<String, Object> answer : answers) {
-
-				if (answer != null) {
-					//
-					System.out.println(answer.get("address_type") + ": " + answer.get("address_data"));
-
-				}
-			}
+			return info.toString().replaceAll(",", ",\n").replaceAll("=\\[\\{", "=\\[\n\\{\n").replaceAll("\\}", "\n\\}");
 		}
+		return null;
 	}
 }

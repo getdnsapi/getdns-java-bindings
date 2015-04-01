@@ -70,21 +70,37 @@ public class GetDNSContext implements IGetDNSContext {
 		contextDestroy(context);
 	}
 
-	public HashMap<String, Object> generalSync(String name, RRType requestType, HashMap<String, Object> extensions)
+	private HashMap<String, Object> getExtension(HashMap<ExtensionNames, Object> extensions) {
+		HashMap<String, Object> extension = new HashMap<String, Object>();
+		if (extensions != null) {
+			for (ExtensionNames extensionName : extensions.keySet()) {
+				extension.put(extensionName.getName(), extensions.get(extensionName));
+			}
+			return extension;
+		} else {
+			return null;
+		}
+	}
+
+	public HashMap<String, Object> generalSync(String name, RRType requestType, HashMap<ExtensionNames, Object> extensions)
 			throws GetDNSException {
-		return generalSync(context, name, requestType.getValue(), extensions);
+		HashMap<String, Object> extension = new HashMap<String, Object>();
+		extension = getExtension(extensions);
+		return generalSync(context, name, requestType.getValue(), extension);
 	}
 
 	private native HashMap<String, Object> generalSync(Object context, String name, int requestType,
 			HashMap<String, Object> extensions) throws GetDNSException;
 
-	public GetDNSFutureResult generalAsync(String name, RRType requestType, HashMap<String, Object> extensions)
+	public GetDNSFutureResult generalAsync(String name, RRType requestType, HashMap<ExtensionNames, Object> extensions)
 			throws GetDNSException {
 		if (eventBase == null) {
 			throw new RuntimeException("Error during eventing init. Cannot invoke async, try sync API");
 		}
+		HashMap<String, Object> extension = new HashMap<String, Object>();
+		extension = getExtension(extensions);
 		GetDNSFutureResult result = new GetDNSFutureResult(context);
-		long transactionId = generalAsync(context, name, requestType.getValue(), extensions, result);
+		long transactionId = generalAsync(context, name, requestType.getValue(), extension, result);
 		result.setTransactionId(transactionId);
 		synchronized (eventBase) {
 			eventBase.notify();
@@ -98,16 +114,22 @@ public class GetDNSContext implements IGetDNSContext {
 	private native HashMap<String, Object> addressSync(Object context, String name, HashMap<String, Object> extensions)
 			throws GetDNSException;
 
-	public HashMap<String, Object> addressSync(String name, HashMap<String, Object> extensions) throws GetDNSException {
-		return addressSync(context, name, extensions);
+	public HashMap<String, Object> addressSync(String name, HashMap<ExtensionNames, Object> extensions)
+			throws GetDNSException {
+		HashMap<String, Object> extension = new HashMap<String, Object>();
+		extension = getExtension(extensions);
+		return addressSync(context, name, extension);
 	}
 
 	private native HashMap<String, Object> serviceSync(Object context, String name, HashMap<String, Object> extensions)
 			throws GetDNSException;
 
 	@Override
-	public HashMap<String, Object> serviceSync(String name, HashMap<String, Object> extensions) throws GetDNSException {
-		return serviceSync(context, name, extensions);
+	public HashMap<String, Object> serviceSync(String name, HashMap<ExtensionNames, Object> extensions)
+			throws GetDNSException {
+		HashMap<String, Object> extension = new HashMap<String, Object>();
+		extension = getExtension(extensions);
+		return serviceSync(context, name, extension);
 
 	}
 
@@ -115,18 +137,23 @@ public class GetDNSContext implements IGetDNSContext {
 			throws GetDNSException;
 
 	@Override
-	public HashMap<String, Object> hostnameSync(String address, HashMap<String, Object> extensions)
+	public HashMap<String, Object> hostnameSync(String address, HashMap<ExtensionNames, Object> extensions)
 			throws GetDNSException, UnknownHostException {
-		return hostnameSync(context, address, extensions);
+		HashMap<String, Object> extension = new HashMap<String, Object>();
+		extension = getExtension(extensions);
+		return hostnameSync(context, address, extension);
 	}
 
 	@Override
-	public GetDNSFutureResult addressAsync(String name, HashMap<String, Object> extensions) throws GetDNSException {
+	public GetDNSFutureResult addressAsync(String name, HashMap<ExtensionNames, Object> extensions)
+			throws GetDNSException {
 		if (eventBase == null) {
 			throw new RuntimeException("Error during eventing init. Cannot invoke async, try sync API");
 		}
 		GetDNSFutureResult result = new GetDNSFutureResult(context);
-		long transactionId = addressAsync(context, name, extensions, result);
+		HashMap<String, Object> extension = new HashMap<String, Object>();
+		extension = getExtension(extensions);
+		long transactionId = addressAsync(context, name, extension, result);
 		result.setTransactionId(transactionId);
 		synchronized (eventBase) {
 			eventBase.notify();
@@ -138,12 +165,15 @@ public class GetDNSContext implements IGetDNSContext {
 			throws GetDNSException;
 
 	@Override
-	public GetDNSFutureResult serviceAsync(String name, HashMap<String, Object> extensions) throws GetDNSException {
+	public GetDNSFutureResult serviceAsync(String name, HashMap<ExtensionNames, Object> extensions)
+			throws GetDNSException {
 		if (eventBase == null) {
 			throw new RuntimeException("Error during eventing init. Cannot invoke async, try sync API");
 		}
+		HashMap<String, Object> extension = new HashMap<String, Object>();
+		extension = getExtension(extensions);
 		GetDNSFutureResult result = new GetDNSFutureResult(context);
-		long transactionId = serviceAsync(context, name, extensions, result);
+		long transactionId = serviceAsync(context, name, extension, result);
 		result.setTransactionId(transactionId);
 		synchronized (eventBase) {
 			eventBase.notify();
@@ -155,13 +185,15 @@ public class GetDNSContext implements IGetDNSContext {
 			throws GetDNSException;
 
 	@Override
-	public GetDNSFutureResult hostnameAsync(String address, HashMap<String, Object> extensions) throws GetDNSException,
-			UnknownHostException {
+	public GetDNSFutureResult hostnameAsync(String address, HashMap<ExtensionNames, Object> extensions)
+			throws GetDNSException, UnknownHostException {
 		if (eventBase == null) {
 			throw new RuntimeException("Error during eventing init. Cannot invoke async, try sync API");
 		}
 		GetDNSFutureResult result = new GetDNSFutureResult(context);
-		long transactionId = hostnameAsync(context, address, extensions, result);
+		HashMap<String, Object> extension = new HashMap<String, Object>();
+		extension = getExtension(extensions);
+		long transactionId = hostnameAsync(context, address, extension, result);
 		result.setTransactionId(transactionId);
 		synchronized (eventBase) {
 			eventBase.notify();
@@ -172,9 +204,34 @@ public class GetDNSContext implements IGetDNSContext {
 	private native long hostnameAsync(Object context, String address, HashMap<String, Object> extensions,
 			Object callbackObj) throws GetDNSException;
 
-	void applyContextOptions(HashMap<String, Object> contextOptions) {
-		for (String optionName : contextOptions.keySet()) {
-			applyContextOption(context, optionName, contextOptions.get(optionName));
+	void applyContextOptions(HashMap<ContextOptionNames, ?> contextOptions) {
+		for (ContextOptionNames optionName : contextOptions.keySet()) {
+
+			if (contextOptions.get(optionName).getClass().getSimpleName()
+					.equalsIgnoreCase(ContextOptionValues.class.getSimpleName())) {
+				ContextOptionValues val = (ContextOptionValues) contextOptions.get(optionName);
+				applyContextOption(context, optionName.getName(), val.getvalue());
+			}
+
+			else if (contextOptions.get(optionName).getClass().equals(java.lang.Object[].class)) {
+				System.out.println("else");
+				int i = 0;
+				Object[] value = (Object[]) contextOptions.get(optionName);
+				for (Object obj : value) {
+					if (obj.getClass().getSimpleName().equalsIgnoreCase(ContextOptionValues.class.getSimpleName())) {
+						ContextOptionValues val = (ContextOptionValues) obj;
+						value[i] = val.getvalue();
+						i++;
+					} else {
+						break;
+					}
+				}
+				applyContextOption(context, optionName.getName(), value);
+			}
+
+			else {
+				applyContextOption(context, optionName.getName(), contextOptions.get(optionName));
+			}
 		}
 	}
 

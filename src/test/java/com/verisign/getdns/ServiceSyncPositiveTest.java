@@ -11,10 +11,9 @@ public class ServiceSyncPositiveTest implements IGetDNSTestConstants {
 
 	@Test
 	public void testGetService() {
-		HashMap<String, Object> options = new HashMap<String, Object>();
-		//options.put(GetDNSConstants.CONTEXT_SET_STUB, true);
-		options.put(GetDNSConstants.CONTEXT_SET_TIMEOUT, 2000);
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+		options.put(ContextOptionNames.TIMEOUT, 2000);
+		final IGetDNSContext context = GetDNSFactory.create(1, options);
 		try {
 
 			HashMap<String, Object> info = context.serviceSync("_xmpp-server._tcp.verisign.com.", null);
