@@ -206,34 +206,23 @@ public class GetDNSContext implements IGetDNSContext {
 
 	void applyContextOptions(HashMap<ContextOptionNames, ?> contextOptions) {
 		for (ContextOptionNames optionName : contextOptions.keySet()) {
-
-			if (contextOptions.get(optionName).getClass().getSimpleName()
-					.equalsIgnoreCase(ContextOptionValues.class.getSimpleName())) {
-				ContextOptionValues val = (ContextOptionValues) contextOptions.get(optionName);
-				applyContextOption(context, optionName.getName(), val.getvalue());
-			}
-
-			else if (contextOptions.get(optionName).getClass().equals(java.lang.Object[].class)) {
-				System.out.println("else");
-				int i = 0;
-				Object[] value = (Object[]) contextOptions.get(optionName);
-				for (Object obj : value) {
-					if (obj.getClass().getSimpleName().equalsIgnoreCase(ContextOptionValues.class.getSimpleName())) {
-						ContextOptionValues val = (ContextOptionValues) obj;
-						value[i] = val.getvalue();
-						i++;
-					} else {
-						break;
-					}
-				}
-				applyContextOption(context, optionName.getName(), value);
-			}
-
-			else {
-				applyContextOption(context, optionName.getName(), contextOptions.get(optionName));
-			}
+                Object val = convertContextOptionValuesIfneeded(contextOptions.get(optionName));
+                   applyContextOption(context, optionName.getName(), val);
 		}
 	}
+        Object convertContextOptionValuesIfneeded(Object targetValue){
+            Object val = targetValue;
+                if(targetValue instanceof ContextOptionValues)
+                    val = ((ContextOptionValues) targetValue).getvalue();
+
+                else if (targetValue instanceof Object[]) {
+                                Object[] value = ((Object[]) targetValue).clone(); // Avoiding modifying user provided object
+                                for(int i=0;i<value.length && (value[i] instanceof ContextOptionValues);i++)
+                                            value[i] = ((ContextOptionValues) value[i]).getvalue();
+                                val = value;
+               }
+            return val;
+        }
 
 	private native void applyContextOption(Object context, String optionName, Object value);
 
