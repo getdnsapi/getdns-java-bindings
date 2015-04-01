@@ -8,7 +8,7 @@ public class GetDNSFactory {
 		return new GetDNSContext(setFromOs);
 	}
 
-	public static IGetDNSContext create(int setFromOs, HashMap<ContextOptionNames, ?> contextOptions)
+	public static IGetDNSContext create(int setFromOs, HashMap<ContextOptionNames, Object> contextOptions)
 			throws GetDNSException {
 		GetDNSContext context = new GetDNSContext(setFromOs);
 		try {
