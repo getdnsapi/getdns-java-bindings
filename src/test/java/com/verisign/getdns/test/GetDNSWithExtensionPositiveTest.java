@@ -12,7 +12,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.junit.Test;
 
-import com.verisign.getdns.ExtensionNames;
+import com.verisign.getdns.ExtensionName;
 import com.verisign.getdns.GetDNSConstants;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSFutureResult;
@@ -30,8 +30,8 @@ public class GetDNSWithExtensionPositiveTest {
 		System.out.println("--------DNSSEC_RETURN_STATUS TEST--------------");
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		try {
-			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
-			extensions.put(ExtensionNames.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
+			HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
+			extensions.put(ExtensionName.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
@@ -51,8 +51,8 @@ public class GetDNSWithExtensionPositiveTest {
 		System.out.println("--------DNSSEC_RETURN_ONLY_SECURE--------------");
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		try {
-			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
-			extensions.put(ExtensionNames.DNSSEC_RETURN_ONLY_SECURE, GetDNSConstants.GETDNS_EXTENSION_TRUE);
+			HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
+			extensions.put(ExtensionName.DNSSEC_RETURN_ONLY_SECURE, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
@@ -72,8 +72,8 @@ public class GetDNSWithExtensionPositiveTest {
 		System.out.println("--------DNSSEC_RETURN_VALIDATIONCHAIN--------------");
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		try {
-			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
-			extensions.put(ExtensionNames.DNSSEC_RETURN_VALIDATION_CHAIN, GetDNSConstants.GETDNS_EXTENSION_TRUE);
+			HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
+			extensions.put(ExtensionName.DNSSEC_RETURN_VALIDATION_CHAIN, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
@@ -93,8 +93,8 @@ public class GetDNSWithExtensionPositiveTest {
 		System.out.println("--------DNSSEC_RETURN_STATUS TEST--------------");
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		try {
-			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
-			extensions.put(ExtensionNames.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
+			HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
+			extensions.put(ExtensionName.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 			HashMap<String, Object> info = context.generalSync("google.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
@@ -114,8 +114,8 @@ public class GetDNSWithExtensionPositiveTest {
 		System.out.println("--------DNSSEC_RETURN_ONLY_SECURE--------------");
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		try {
-			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
-			extensions.put(ExtensionNames.DNSSEC_RETURN_ONLY_SECURE, GetDNSConstants.GETDNS_EXTENSION_TRUE);
+			HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
+			extensions.put(ExtensionName.DNSSEC_RETURN_ONLY_SECURE, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 			HashMap<String, Object> info = context.generalSync("google.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 903, Integer.parseInt(info.get("status").toString()));
@@ -134,8 +134,8 @@ public class GetDNSWithExtensionPositiveTest {
 		System.out.println("--------DNSSEC_RETURN_VALIDATIONCHAIN--------------");
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		try {
-			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
-			extensions.put(ExtensionNames.DNSSEC_RETURN_VALIDATION_CHAIN, GetDNSConstants.GETDNS_EXTENSION_TRUE);
+			HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
+			extensions.put(ExtensionName.DNSSEC_RETURN_VALIDATION_CHAIN, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 			HashMap<String, Object> info = context.generalSync("google.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
@@ -155,8 +155,8 @@ public class GetDNSWithExtensionPositiveTest {
 		System.out.println("--------RETURN_WITH_V4_AND_V6--------------");
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		try {
-			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
-			extensions.put(ExtensionNames.RETURN_BOTH_V4_AND_V6, GetDNSConstants.GETDNS_EXTENSION_TRUE);
+			HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
+			extensions.put(ExtensionName.RETURN_BOTH_V4_AND_V6, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 			HashMap<String, Object> info = context.generalSync("google-public-dns-a.google.com.", RRType.A,
 					extensions);
 			assertNotNull(info);
@@ -176,8 +176,8 @@ public class GetDNSWithExtensionPositiveTest {
 		System.out.println("--------add_warning_for_bad_dns--------------");
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		try {
-			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
-			extensions.put(ExtensionNames.ADD_WARNING_FOR_BAD_DNS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
+			HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
+			extensions.put(ExtensionName.ADD_WARNING_FOR_BAD_DNS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 			HashMap<String, Object> info = context.generalSync("gagad%$#43", RRType.A, extensions);
 			System.out.println("info:   " + info);
 			assertNotNull(info);
@@ -195,8 +195,8 @@ public class GetDNSWithExtensionPositiveTest {
 		System.out.println("--------RETURN_CALL_DEBUGGING--------------");
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		try {
-			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
-			extensions.put(ExtensionNames.RETURN_CALL_DEBUGGING, GetDNSConstants.GETDNS_EXTENSION_TRUE);
+			HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
+			extensions.put(ExtensionName.RETURN_CALL_DEBUGGING, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));

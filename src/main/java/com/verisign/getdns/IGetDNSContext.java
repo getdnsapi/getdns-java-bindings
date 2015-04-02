@@ -18,9 +18,9 @@ public interface IGetDNSContext {
 	 * </p>
 	 * 
 	 * <pre>
-	 * {
-	 * 	&#064;code
-	 * 	HashMap&lt;String, Object&gt; info = context.generalSync(&quot;gmadkat.com&quot;, RRType.valueOf(&quot;CNAME&quot;), null);
+	 * {@code
+	 * 	HashMap<String, Object> info = context.generalSync("gmadkat.com", RRType.valueOf("CNAME"), null);
+	 * 
 	 * 
 	 * }
 	 * </pre>
@@ -35,7 +35,7 @@ public interface IGetDNSContext {
 	 * @return DNS response
 	 * @throws GetDNSException
 	 */
-	HashMap<String, Object> generalSync(String name, RRType requestType, HashMap<ExtensionNames, Object> extensions)
+	HashMap<String, Object> generalSync(String name, RRType requestType, HashMap<ExtensionName, Object> extensions)
 			throws GetDNSException;
 
 	/**
@@ -68,18 +68,20 @@ public interface IGetDNSContext {
 	 * @return DNS response
 	 * @throws GetDNSException
 	 */
-	HashMap<String, Object> addressSync(String name, HashMap<ExtensionNames, Object> extensions) throws GetDNSException;
+	HashMap<String, Object> addressSync(String name, HashMap<ExtensionName, Object> extensions) throws GetDNSException;
 
 	/**
 	 * it must be a domain name for an SRV lookup. The call returns the relevant
 	 * SRV information for the name
 	 * 
 	 * @param name
+	 *  domain name
 	 * @param extensions
-	 * @return
+	 * (optional) a dictionary containing attribute/value pairs
+	 * @return DNS response
 	 * @throws GetDNSException
 	 */
-	HashMap<String, Object> serviceSync(String name, HashMap<ExtensionNames, Object> extensions) throws GetDNSException;
+	HashMap<String, Object> serviceSync(String name, HashMap<ExtensionName, Object> extensions) throws GetDNSException;
 
 	/**
 	 * <p>
@@ -87,8 +89,7 @@ public interface IGetDNSContext {
 	 * </p>
 	 * 
 	 * <pre>
-	 * {
-	 * 	&#064;code
+	 * {@code
 	 * 	HashMap&lt;String, Object&gt; info = context.hostnameSync(&quot;2001:4860:4860::8888&quot;, null);
 	 * 
 	 * }
@@ -101,7 +102,7 @@ public interface IGetDNSContext {
 	 * @throws GetDNSException
 	 * @throws UnknownHostException
 	 */
-	HashMap<String, Object> hostnameSync(String address, HashMap<ExtensionNames, Object> extensions)
+	HashMap<String, Object> hostnameSync(String address, HashMap<ExtensionName, Object> extensions)
 			throws GetDNSException, UnknownHostException;
 
 	/**
@@ -112,7 +113,7 @@ public interface IGetDNSContext {
 	 * @return
 	 * @throws GetDNSException
 	 */
-	GetDNSFutureResult generalAsync(String name, RRType requestType, HashMap<ExtensionNames, Object> extensions)
+	GetDNSFutureResult generalAsync(String name, RRType requestType, HashMap<ExtensionName, Object> extensions)
 
 	throws GetDNSException;
 
@@ -123,7 +124,7 @@ public interface IGetDNSContext {
 	 * @return
 	 * @throws GetDNSException
 	 */
-	GetDNSFutureResult addressAsync(String name, HashMap<ExtensionNames, Object> extensions) throws GetDNSException;
+	GetDNSFutureResult addressAsync(String name, HashMap<ExtensionName, Object> extensions) throws GetDNSException;
 
 	/**
 	 * 
@@ -132,7 +133,7 @@ public interface IGetDNSContext {
 	 * @return
 	 * @throws GetDNSException
 	 */
-	GetDNSFutureResult serviceAsync(String name, HashMap<ExtensionNames, Object> extensions) throws GetDNSException;
+	GetDNSFutureResult serviceAsync(String name, HashMap<ExtensionName, Object> extensions) throws GetDNSException;
 
 	/**
 	 * 
@@ -142,8 +143,9 @@ public interface IGetDNSContext {
 	 * @throws GetDNSException
 	 * @throws UnknownHostException
 	 */
-	GetDNSFutureResult hostnameAsync(String address, HashMap<ExtensionNames, Object> extensions) throws GetDNSException,
+	GetDNSFutureResult hostnameAsync(String address, HashMap<ExtensionName, Object> extensions) throws GetDNSException,
 			UnknownHostException;
+
 
 	void close();
 

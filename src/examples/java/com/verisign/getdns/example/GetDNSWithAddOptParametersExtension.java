@@ -2,7 +2,7 @@ package com.verisign.getdns.example;
 
 import java.util.HashMap;
 
-import com.verisign.getdns.ExtensionNames;
+import com.verisign.getdns.ExtensionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
@@ -18,9 +18,9 @@ public class GetDNSWithAddOptParametersExtension {
 		String type = args[1];
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		HashMap<String, Object> optParams = new HashMap<String, Object>();
-		optParams.put(ExtensionNames.ADD_OPT_PARAM_EXTENDED_RCODE.getName(), 128);
-		HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
-		extensions.put(ExtensionNames.ADD_OPT_PARAMETERS, optParams);
+		optParams.put(ExtensionName.ADD_OPT_PARAM_EXTENDED_RCODE.getName(), 128);
+		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
+		extensions.put(ExtensionName.ADD_OPT_PARAMETERS, optParams);
 		try {
 			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type),
 					extensions);

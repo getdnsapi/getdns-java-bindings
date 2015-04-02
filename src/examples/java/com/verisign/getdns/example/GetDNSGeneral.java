@@ -2,7 +2,7 @@ package com.verisign.getdns.example;
 
 import java.util.HashMap;
 
-import com.verisign.getdns.ContextOptionNames;
+import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
@@ -19,9 +19,9 @@ import com.verisign.getdns.RRType;
 public class GetDNSGeneral {
 
 	public static void main(String[] args) {
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-		options.put(ContextOptionNames.STUB, true);
-		options.put(ContextOptionNames.DNS_TRANSPORT, 542);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, true);
+		options.put(ContextOptionName.DNS_TRANSPORT, 542);
 		final IGetDNSContext context = GetDNSFactory.create(1, options);
 		if (args.length != 2)
 			throw new IllegalArgumentException("Need to pass string and type");

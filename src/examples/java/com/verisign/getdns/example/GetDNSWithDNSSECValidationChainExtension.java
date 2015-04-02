@@ -2,7 +2,7 @@
 
 import java.util.HashMap;
 
-import com.verisign.getdns.ExtensionNames;
+import com.verisign.getdns.ExtensionName;
 import com.verisign.getdns.GetDNSConstants;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
@@ -18,8 +18,8 @@ public class GetDNSWithDNSSECValidationChainExtension {
 		String queryString = args[0];
 		String type = args[1];
 		final IGetDNSContext context = GetDNSFactory.create(1);
-		HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
-		extensions.put(ExtensionNames.DNSSEC_RETURN_VALIDATION_CHAIN, GetDNSConstants.GETDNS_EXTENSION_TRUE);
+		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
+		extensions.put(ExtensionName.DNSSEC_RETURN_VALIDATION_CHAIN, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {
 			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type),
 					extensions);

@@ -3,9 +3,6 @@ package com.verisign.getdns.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.util.Calendar;
-import java.util.TimeZone;
-
 import org.junit.Test;
 
 import com.verisign.getdns.GetDNSContext;

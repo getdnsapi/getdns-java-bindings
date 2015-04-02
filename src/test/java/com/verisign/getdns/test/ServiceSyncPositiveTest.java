@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-import com.verisign.getdns.ContextOptionNames;
+import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
@@ -17,8 +17,8 @@ public class ServiceSyncPositiveTest implements IGetDNSTestConstants {
 
 	@Test
 	public void testGetService() {
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-		options.put(ContextOptionNames.TIMEOUT, 2000);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.TIMEOUT, 2000);
 		final IGetDNSContext context = GetDNSFactory.create(1, options);
 		try {
 

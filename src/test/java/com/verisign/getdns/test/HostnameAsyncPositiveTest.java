@@ -11,7 +11,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.junit.Test;
 
-import com.verisign.getdns.ContextOptionNames;
+import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSFutureResult;
 import com.verisign.getdns.GetDNSUtil;
@@ -22,8 +22,8 @@ public class HostnameAsyncPositiveTest {
 
 	@Test
 	public void testGetHostnameIPV4() throws UnknownHostException, ExecutionException, TimeoutException {
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-		options.put(ContextOptionNames.STUB,true);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB,true);
 		final IGetDNSContext context = GetDNSFactory.create(1,options);
 		try {
 			GetDNSFutureResult futureResult = context.hostnameAsync("8.8.8.8", null);
@@ -45,8 +45,8 @@ public class HostnameAsyncPositiveTest {
 
 	 @Test
 	public void testGetHostnameIPV6() throws UnknownHostException, ExecutionException, TimeoutException {
-		 HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-			options.put(ContextOptionNames.STUB,true);
+		 HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+			options.put(ContextOptionName.STUB,true);
 		final IGetDNSContext context = GetDNSFactory.create(1,options);
 		try {
 			GetDNSFutureResult futureResult = context.hostnameAsync("2001:4860:4860::8888", null);

@@ -11,7 +11,7 @@ package com.verisign.getdns;
  * 
  * @author Vinay Soni
  */
-public enum ContextOptionNames {
+public enum ContextOptionName {
 	/**
 	 * <p>
 	 * An application can change the quering mechanism of a context to be to act
@@ -262,7 +262,7 @@ public enum ContextOptionNames {
 
 	private String name;
 
-	private ContextOptionNames(String name) {
+	private ContextOptionName(String name) {
 
 		this.name = name;
 	}

@@ -8,8 +8,8 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-import com.verisign.getdns.ContextOptionNames;
-import com.verisign.getdns.ContextOptionValues;
+import com.verisign.getdns.ContextOptionName;
+import com.verisign.getdns.ContextOptionValue;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
@@ -24,8 +24,8 @@ public class ContextOptionsPositiveTest {
 	@Test
 	public void testBasicContextOptions_SetTransport_UDP() {
 		System.out.println("-----------Set_Transport_UDP_Only-------------");
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-		options.put(ContextOptionNames.DNS_TRANSPORT, ContextOptionValues.GETDNS_TRANSPORT_UDP_ONLY);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.DNS_TRANSPORT, ContextOptionValue.GETDNS_TRANSPORT_UDP_ONLY);
 		IGetDNSContext context = null;
 		try {
 			context = GetDNSFactory.create(1, options);
@@ -45,9 +45,9 @@ public class ContextOptionsPositiveTest {
 	@Test
 	public void testBasicContextOptions_SetTransport_TCP() {
 		System.out.println("-----------Set_Transport_TCP_Only-------------");
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-		options.put(ContextOptionNames.STUB, true);
-		options.put(ContextOptionNames.DNS_TRANSPORT, ContextOptionValues.GETDNS_TRANSPORT_TCP_ONLY);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, true);
+		options.put(ContextOptionName.DNS_TRANSPORT, ContextOptionValue.GETDNS_TRANSPORT_TCP_ONLY);
 		IGetDNSContext context = null;
 		try {
 			context = GetDNSFactory.create(1, options);
@@ -67,8 +67,8 @@ public class ContextOptionsPositiveTest {
 	@Test
 	public void testBasicContextOptions_SetResolution_Stub() {
 		System.out.println("-----------SetResolution-------------");
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-		options.put(ContextOptionNames.RESOLUTION_TYPE, ContextOptionValues.GETDNS_RESOLUTION_STUB);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.RESOLUTION_TYPE, ContextOptionValue.GETDNS_RESOLUTION_STUB);
 		IGetDNSContext context = null;
 		try {
 			context = GetDNSFactory.create(1, options);
@@ -88,8 +88,8 @@ public class ContextOptionsPositiveTest {
 	@Test
 	public void testBasicContextOptions_SetResolution_Recursive() {
 		System.out.println("-----------SetResolution-------------");
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-		options.put(ContextOptionNames.RESOLUTION_TYPE, ContextOptionValues.GETDNS_RESOLUTION_RECURSING);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.RESOLUTION_TYPE, ContextOptionValue.GETDNS_RESOLUTION_RECURSING);
 		IGetDNSContext context = null;
 		try {
 			context = GetDNSFactory.create(1, options);
@@ -111,9 +111,9 @@ public class ContextOptionsPositiveTest {
 	@Test
 	public void testBasicContextOptions_SetTimeout() {
 		System.out.println("-----------SetTimeout-------------");
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-		options.put(ContextOptionNames.STUB, true);
-		options.put(ContextOptionNames.TIMEOUT, 2000);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, true);
+		options.put(ContextOptionName.TIMEOUT, 2000);
 		IGetDNSContext context = null;
 		try {
 			context = GetDNSFactory.create(1, options);
@@ -134,10 +134,10 @@ public class ContextOptionsPositiveTest {
 	@Test
 	public void testBasicContextOptions_SetUpStreams() {
 		System.out.println("-----------SetUpStreams-------------");
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-		options.put(ContextOptionNames.STUB, true);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, true);
 		Object[][] list = { { "8.8.8.8" }, { "127.0.0.1", 80 } };
-		options.put(ContextOptionNames.UPSTREAMS, list);
+		options.put(ContextOptionName.UPSTREAMS, list);
 		IGetDNSContext context = null;
 		try {
 			context = GetDNSFactory.create(1, options);
@@ -158,8 +158,8 @@ public class ContextOptionsPositiveTest {
 	@Test
 	public void testSetStub() {
 		System.out.println("-----------SetStub-------------");
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-		options.put(ContextOptionNames.STUB, true);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, true);
 		IGetDNSContext context = null;
 		try {
 			context = GetDNSFactory.create(1, options);
@@ -180,8 +180,8 @@ public class ContextOptionsPositiveTest {
 	@Test
 	public void testUseThread() {
 		System.out.println("-----------SetUseThread-------------");
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-		options.put(ContextOptionNames.USE_THREADS, true);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.USE_THREADS, true);
 		IGetDNSContext context = null;
 		try {
 			context = GetDNSFactory.create(1, options);
@@ -203,8 +203,8 @@ public class ContextOptionsPositiveTest {
 	@Test
 	public void testReturnDnssecStatus() {
 		System.out.println("-----------SetReturnDnssecStatus-------------");
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-		options.put(ContextOptionNames.RETURN_DNSSEC_STATUS, true);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.RETURN_DNSSEC_STATUS, true);
 		IGetDNSContext context = null;
 		try {
 			context = GetDNSFactory.create(1, options);
@@ -224,8 +224,8 @@ public class ContextOptionsPositiveTest {
 	@Test
 	public void testEdnsExtendedRcode() {
 		System.out.println("-----------SetExtendedRcode-------------");
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-		options.put(ContextOptionNames.EDNS_EXTENDED_RCODE, 0);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.EDNS_EXTENDED_RCODE, 0);
 		IGetDNSContext context = null;
 		try {
 			context = GetDNSFactory.create(1);
@@ -243,8 +243,8 @@ public class ContextOptionsPositiveTest {
 	public void testEdnsVersion() {
 		System.out.println("-----------SetEdnsVersion-------------");
 		try {
-			HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-			options.put(ContextOptionNames.EDNS_VERSION, 120);
+			HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+			options.put(ContextOptionName.EDNS_VERSION, 120);
 			GetDNSFactory.create(1, options);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -256,8 +256,8 @@ public class ContextOptionsPositiveTest {
 	public void testEdnsDoBit() {
 		System.out.println("-----------SetEdnsDoBit-------------");
 		try {
-			HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-			options.put(ContextOptionNames.EDNS_DO_BIT, 1);
+			HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+			options.put(ContextOptionName.EDNS_DO_BIT, 1);
 			GetDNSFactory.create(1, options);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -269,8 +269,8 @@ public class ContextOptionsPositiveTest {
 	public void testLimitOutstandingQueries() {
 		System.out.println("-----------SetLimitOutStandingQueries-------------");
 		try {
-			HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-			options.put(ContextOptionNames.LIMIT_OUTSTANDING_QUERIES, 120);
+			HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+			options.put(ContextOptionName.LIMIT_OUTSTANDING_QUERIES, 120);
 			GetDNSFactory.create(1, options);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -282,8 +282,8 @@ public class ContextOptionsPositiveTest {
 	public void testEdnsMaxUdpPayloadSize() {
 		System.out.println("-----------SetEdnsMaxUdpPayloadSize-------------");
 		try {
-			HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-			options.put(ContextOptionNames.EDNS_MAXIMUM_UDP_PAYLOADSIZE, 0);
+			HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+			options.put(ContextOptionName.EDNS_MAXIMUM_UDP_PAYLOADSIZE, 0);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("if any error occurs");
@@ -296,11 +296,11 @@ public class ContextOptionsPositiveTest {
 	@Test
 	public void testNameSpace() {
 		System.out.println("-----------SetNameSpace-------------");
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 
-		Object[] namespace = { ContextOptionValues.GETDNS_NAMESPACE_DNS,
-				ContextOptionValues.GETDNS_NAMESPACE_MDNS };
-		options.put(ContextOptionNames.NAMESPACE, namespace);
+		Object[] namespace = { ContextOptionValue.GETDNS_NAMESPACE_DNS,
+				ContextOptionValue.GETDNS_NAMESPACE_MDNS };
+		options.put(ContextOptionName.NAMESPACE, namespace);
 		IGetDNSContext context = null;
 		try {
 			context = GetDNSFactory.create(1, options);
@@ -322,8 +322,8 @@ public class ContextOptionsPositiveTest {
 	@Test
 	public void testreDirectFollow() {
 		System.out.println("-----------SetreDirectFollow-------------");
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-		options.put(ContextOptionNames.FOLLOW_REDIRECT, ContextOptionValues.GETDNS_REDIRECTS_FOLLOW);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.FOLLOW_REDIRECT, ContextOptionValue.GETDNS_REDIRECTS_FOLLOW);
 		IGetDNSContext context = null;
 		try {
 			context = GetDNSFactory.create(1, options);
@@ -345,10 +345,10 @@ public class ContextOptionsPositiveTest {
 	@Test
 	public void testAppendName() {
 		System.out.println("-----------SetAppendName-------------");
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-		options.put(ContextOptionNames.APPEND_NAME, ContextOptionValues.GETDNS_APPEND_NAME_ALWAYS);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.APPEND_NAME, ContextOptionValue.GETDNS_APPEND_NAME_ALWAYS);
 		Object[] list = { "www" };
-		options.put(ContextOptionNames.SUFFIX, list);
+		options.put(ContextOptionName.SUFFIX, list);
 		IGetDNSContext context = null;
 		try {
 			context = GetDNSFactory.create(1, options);
@@ -370,9 +370,9 @@ public class ContextOptionsPositiveTest {
 	@Test
 	public void testDnsRootServers() {
 		System.out.println("-----------SetDnsRootServers-------------");
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		Object[][] list = { { "8.8.8.8"}, { "2001:4860:4860::8888"} };
-		options.put(ContextOptionNames.DNS_ROOT_SERVERS, list);
+		options.put(ContextOptionName.DNS_ROOT_SERVERS, list);
 		IGetDNSContext context = null;
 		try {
 			context = GetDNSFactory.create(1, options);
@@ -394,9 +394,9 @@ public class ContextOptionsPositiveTest {
 	@Test
 	public void testDnssecTrustAnchor() {
 		System.out.println("-----------SetDnssecTrustAnchor-------------");
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		Object[] list = { "AQPDzldNmMvZFX4NcNJ0uEnKDg7tmv/F3MyQR0lpBmVcNcsIszxNFxsB fKNW9JYCYqpik8366LE7VbIcNRzfp2h9OO8HRl+H+E08zauK8k7evWEm u/6od+2boggPoiEfGNyvNPaSI7FOIroDsnw/taggzHRX1Z7SOiOiPWPN IwSUyWOZ79VmcQ1GLkC6NlYvG3HwYmynQv6oFwGv/KELSw7ZSdrbTQ0H XvZbqMUI7BaMskmvgm1G7oKZ1YiF7O9ioVNc0+7ASbqmZN7Z98EGU/Qh 2K/BgUe8Hs0XVcdPKrtyYnoQHd2ynKPcMMlTEih2/2HDHjRPJ2aywIpK Nnv4oPo/" };
-		options.put(ContextOptionNames.DNSSEC_TRUST_ANCHOR, list);
+		options.put(ContextOptionName.DNSSEC_TRUST_ANCHOR, list);
 		IGetDNSContext context = null;
 		try {
 			context = GetDNSFactory.create(1, options);
@@ -418,8 +418,8 @@ public class ContextOptionsPositiveTest {
 	@Test
 	public void testDnssecAllowedSkew() {
 		System.out.println("-----------SetDnssecAllowedSkew-------------");
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-		options.put(ContextOptionNames.DNSSEC_ALLOWED_SKEW, 2);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.DNSSEC_ALLOWED_SKEW, 2);
 		IGetDNSContext context = null;
 		try {
 			context = GetDNSFactory.create(1, options);

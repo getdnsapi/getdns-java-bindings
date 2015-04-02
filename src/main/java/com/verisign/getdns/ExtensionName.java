@@ -19,7 +19,7 @@ package com.verisign.getdns;
  * 
  * @author Vinay Soni
  */
-public enum ExtensionNames {
+public enum ExtensionName {
 
 	/**
 	 * <p>
@@ -250,7 +250,7 @@ public enum ExtensionNames {
 
 	private String name;
 
-	private ExtensionNames(String name) {
+	private ExtensionName(String name) {
 
 		this.name = name;
 	}

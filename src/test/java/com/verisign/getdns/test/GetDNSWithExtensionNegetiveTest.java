@@ -6,7 +6,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.verisign.getdns.ExtensionNames;
+import com.verisign.getdns.ExtensionName;
 import com.verisign.getdns.GetDNSConstants;
 import com.verisign.getdns.GetDNSException;
 import com.verisign.getdns.GetDNSFactory;
@@ -25,8 +25,8 @@ public class GetDNSWithExtensionNegetiveTest {
 	public void testGetDNSWithDnssecStatusExtension() {
 		System.out.println("--------DNSSEC_RETURN_STATUS TEST--------------");
 		final IGetDNSContext context = GetDNSFactory.create(1);
-		HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
-		extensions.put(ExtensionNames.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
+		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
+		extensions.put(ExtensionName.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
@@ -44,8 +44,8 @@ public class GetDNSWithExtensionNegetiveTest {
 	public void testGetDNSWithDnssecOnlySecureExtension() {
 		System.out.println("--------DNSSEC_RETURN_ONLY_SECURE--------------");
 		final IGetDNSContext context = GetDNSFactory.create(1);
-		HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
-		extensions.put(ExtensionNames.DNSSEC_RETURN_ONLY_SECURE, GetDNSConstants.GETDNS_EXTENSION_TRUE);
+		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
+		extensions.put(ExtensionName.DNSSEC_RETURN_ONLY_SECURE, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
@@ -63,8 +63,8 @@ public class GetDNSWithExtensionNegetiveTest {
 	public void testGetDNSWithDnssecValidationChainExtension() {
 		System.out.println("--------DNSSEC_RETURN_VALIDATIONCHAIN--------------");
 		final IGetDNSContext context = GetDNSFactory.create(1);
-		HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
-		extensions.put(ExtensionNames.DNSSEC_RETURN_VALIDATION_CHAIN, GetDNSConstants.GETDNS_EXTENSION_TRUE);
+		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
+		extensions.put(ExtensionName.DNSSEC_RETURN_VALIDATION_CHAIN, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));

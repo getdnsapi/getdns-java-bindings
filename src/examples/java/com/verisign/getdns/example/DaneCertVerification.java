@@ -11,7 +11,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
-import com.verisign.getdns.ContextOptionNames;
+import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
@@ -53,8 +53,8 @@ public class DaneCertVerification {
 			throws UnsupportedEncodingException {
 		String queryString = "_" + port + "._" + proto + "." + hostname;
 		String type = "TLSA";
-		HashMap<ContextOptionNames, Object> options = new HashMap<ContextOptionNames, Object>();
-		options.put(ContextOptionNames.STUB, true);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, true);
 		final IGetDNSContext context = GetDNSFactory.create(1, options);
 		try {
 			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type), null);

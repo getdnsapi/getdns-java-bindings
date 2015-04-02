@@ -64,7 +64,7 @@ public class GetDNSFactory {
 	 * @return
 	 * @throws GetDNSException
 	 */
-	public static IGetDNSContext create(int setFromOs, HashMap<ContextOptionNames, Object> contextOptions)
+	public static IGetDNSContext create(int setFromOs, HashMap<ContextOptionName, Object> contextOptions)
 			throws GetDNSException {
 		GetDNSContext context = new GetDNSContext(setFromOs);
 		try {
