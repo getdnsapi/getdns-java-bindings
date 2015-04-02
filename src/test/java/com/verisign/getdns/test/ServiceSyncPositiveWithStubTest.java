@@ -22,7 +22,7 @@ public class ServiceSyncPositiveWithStubTest implements IGetDNSTestConstants {
 		final IGetDNSContext context = GetDNSFactory.create(1, options);
 		try {
 
-			HashMap<String, Object> info = context.serviceSync("_xmpp-server._tcp.verisign.com.", null);
+			HashMap<String, Object> info = context.serviceSync("_xmpp-server._tcp.google.com", null);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			// assertNotNull("Type is null and response was "+info, gettype(info));

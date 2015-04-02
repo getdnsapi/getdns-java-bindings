@@ -26,7 +26,7 @@ public class ServiceAsyncPositiveWithStubTest implements IGetDNSTestConstants {
 		final IGetDNSContext context = GetDNSFactory.create(1, options);
 
 		try {
-			GetDNSFutureResult futureResult = context.serviceAsync("_xmpp-server._tcp.verisign.com.", null);
+			GetDNSFutureResult futureResult = context.serviceAsync("_xmpp-server._tcp.google.com", null);
 			HashMap<String, Object> info = null;
 			try {
 				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
