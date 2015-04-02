@@ -84,7 +84,6 @@ task printBuildInfo << {
 
 
 test {
-println "success:     "+System.getProperty("user.dir")
     jvmArgs '-Djava.library.path='+System.getProperty("user.dir")+'/build/libs'
     environment "LD_LIBRARY_PATH", "/usr/local/lib"
 }
