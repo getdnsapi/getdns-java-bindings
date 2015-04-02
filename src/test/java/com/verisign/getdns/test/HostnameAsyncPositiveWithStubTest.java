@@ -18,7 +18,7 @@ import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
 import com.verisign.getdns.RRType;
 
-public class HostnameAsyncPositiveTest {
+public class HostnameAsyncPositiveWithStubTest {
 
 	@Test
 	public void testGetHostnameIPV4() throws UnknownHostException, ExecutionException, TimeoutException {

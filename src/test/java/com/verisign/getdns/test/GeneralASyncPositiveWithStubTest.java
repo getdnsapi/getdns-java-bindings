@@ -13,19 +13,21 @@ import java.util.concurrent.TimeoutException;
 
 import org.junit.Test;
 
+import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSFutureResult;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
 import com.verisign.getdns.RRType;
 
-public class GeneralASyncPositiveTest {
+public class GeneralASyncPositiveWithStubTest {
 	
 	@Test
 	public void testGetDNSAsyncForARecord() throws ExecutionException, TimeoutException 
 	{
-		
-		final IGetDNSContext context = GetDNSFactory.create(1);		
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, true);
+		final IGetDNSContext context = GetDNSFactory.create(1,options);		
 	
 		try{
 			GetDNSFutureResult futureResult = context.generalAsync(DOMAIN_NAME, RRType.A, null);
@@ -47,8 +49,9 @@ public class GeneralASyncPositiveTest {
 	@Test
 	public void testGetDNSASyncForNXDDomain() throws ExecutionException, TimeoutException, InterruptedException 
 	{
-		
-		final IGetDNSContext context = GetDNSFactory.create(1);		
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, true);
+		final IGetDNSContext context = GetDNSFactory.create(1,options);		
 	
 		try{
 			GetDNSFutureResult futureResult = context.generalAsync(UNREGDOMAIN, RRType.SOA, null);
@@ -74,7 +77,9 @@ public class GeneralASyncPositiveTest {
 	public void testGetDNSAsyncBulk() throws ExecutionException, TimeoutException 
 	{
 		System.out.println("---------Starting testGetDNSAsync bulk");
-		final IGetDNSContext context = GetDNSFactory.create(1);		
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, true);
+		final IGetDNSContext context = GetDNSFactory.create(1,options);		
 	
 		try{
 			long currentTime = System.currentTimeMillis();

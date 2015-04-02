@@ -10,17 +10,20 @@ import java.util.concurrent.TimeoutException;
 
 import org.junit.Test;
 
+import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSFutureResult;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
 import com.verisign.getdns.RRType;
 
-public class AddressAsyncPositiveTest implements IGetDNSTestConstants {
+public class AddressAsyncPositiveWithRecursiveTest implements IGetDNSTestConstants {
 
 	// @Test
 	public void testGetDNSAddrForlocalhost() throws ExecutionException, TimeoutException {
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, false);
+		final IGetDNSContext context = GetDNSFactory.create(1,options);
 
 		try {
 			GetDNSFutureResult futureResult = context.addressAsync("localhost", null);
@@ -42,7 +45,9 @@ public class AddressAsyncPositiveTest implements IGetDNSTestConstants {
 
 	@Test
 	public void testGetDNSAddrUnboundDomainZone() throws ExecutionException, TimeoutException {
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, false);
+		final IGetDNSContext context = GetDNSFactory.create(1,options);
 
 		try {
 			GetDNSFutureResult futureResult = context.addressAsync(DOMAIN_NAME_FROM_UNBOUND_ZONE, null);
@@ -64,7 +69,9 @@ public class AddressAsyncPositiveTest implements IGetDNSTestConstants {
 
 	@Test
 	public void testGetDNAddr() throws ExecutionException, TimeoutException {
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, false);
+		final IGetDNSContext context = GetDNSFactory.create(1,options);
 
 		try {
 			GetDNSFutureResult futureResult = context.addressAsync(DOMAIN_NAME, null);

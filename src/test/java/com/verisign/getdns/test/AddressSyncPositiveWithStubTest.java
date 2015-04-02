@@ -7,16 +7,19 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
+import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
 import com.verisign.getdns.RRType;
 
-public class AddressSyncPositiveTest implements IGetDNSTestConstants {
+public class AddressSyncPositiveWithStubTest implements IGetDNSTestConstants {
 
 	// @Test
 	public void testGetDNSAddrForlocalhost() {
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, true);
+		final IGetDNSContext context = GetDNSFactory.create(1,options);
 		try {
 
 			HashMap<String, Object> info = context.addressSync("localhost", null);
@@ -32,7 +35,9 @@ public class AddressSyncPositiveTest implements IGetDNSTestConstants {
 
 	@Test
 	public void testGetDNSAddrUnboundDomainZone() {
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, true);
+		final IGetDNSContext context = GetDNSFactory.create(1,options);
 		try {
 
 			HashMap<String, Object> info = context.addressSync(DOMAIN_NAME_FROM_UNBOUND_ZONE, null);
@@ -48,7 +53,9 @@ public class AddressSyncPositiveTest implements IGetDNSTestConstants {
 
 	@Test
 	public void testGetDNAddr() {
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, true);
+		final IGetDNSContext context = GetDNSFactory.create(1,options);
 		try {
 
 			HashMap<String, Object> info = context.addressSync(DOMAIN_NAME, null);

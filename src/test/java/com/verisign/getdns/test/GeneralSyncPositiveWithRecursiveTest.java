@@ -7,12 +7,13 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
+import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
 import com.verisign.getdns.RRType;
 
-public class GeneralSyncPositiveTest implements IGetDNSTestConstants {
+public class GeneralSyncPositiveWithRecursiveTest implements IGetDNSTestConstants {
 
 	/*
 	 * check unit test case for A Record
@@ -20,7 +21,9 @@ public class GeneralSyncPositiveTest implements IGetDNSTestConstants {
 
 	@Test
 	public void testGetDNSSyncForARecord() {
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, false);
+		final IGetDNSContext context = GetDNSFactory.create(1, options);
 		try {
 
 			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.A, null);
@@ -41,7 +44,9 @@ public class GeneralSyncPositiveTest implements IGetDNSTestConstants {
 	@Test
 	public void testGetDNSSyncForAAAARecord() {
 
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, false);
+		final IGetDNSContext context = GetDNSFactory.create(1, options);
 		try {
 			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.AAAA, null);
 			assertNotNull(info);
@@ -59,8 +64,9 @@ public class GeneralSyncPositiveTest implements IGetDNSTestConstants {
 	 */
 	@Test
 	public void testGetDNSSyncForTXTRecord() {
-
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, false);
+		final IGetDNSContext context = GetDNSFactory.create(1, options);
 		try {
 
 			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.TXT, null);
@@ -81,7 +87,9 @@ public class GeneralSyncPositiveTest implements IGetDNSTestConstants {
 
 	@Test
 	public void testGetDNSSyncForMXRecord() {
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, false);
+		final IGetDNSContext context = GetDNSFactory.create(1, options);
 		try {
 			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.MX, null);
 			assertNotNull(info);
