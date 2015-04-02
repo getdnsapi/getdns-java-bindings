@@ -13,12 +13,12 @@ import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
 import com.verisign.getdns.RRType;
 
-public class ServiceSyncPositiveTest implements IGetDNSTestConstants {
+public class ServiceSyncPositiveWithRecursiveTest implements IGetDNSTestConstants {
 
 	@Test
 	public void testGetService() {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
-		options.put(ContextOptionName.TIMEOUT, 2000);
+		options.put(ContextOptionName.STUB, false);
 		final IGetDNSContext context = GetDNSFactory.create(1, options);
 		try {
 

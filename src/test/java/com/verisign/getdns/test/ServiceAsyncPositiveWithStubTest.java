@@ -10,18 +10,20 @@ import java.util.concurrent.TimeoutException;
 
 import org.junit.Test;
 
+import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSFutureResult;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
 import com.verisign.getdns.RRType;
 
-public class ServiceAsyncPositiveTest implements IGetDNSTestConstants {
+public class ServiceAsyncPositiveWithStubTest implements IGetDNSTestConstants {
 
 	@Test
 	public void testGetDNSService() throws ExecutionException, TimeoutException, InterruptedException {
-
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, true);
+		final IGetDNSContext context = GetDNSFactory.create(1, options);
 
 		try {
 			GetDNSFutureResult futureResult = context.serviceAsync("_xmpp-server._tcp.verisign.com.", null);
@@ -43,8 +45,9 @@ public class ServiceAsyncPositiveTest implements IGetDNSTestConstants {
 
 	@Test
 	public void testGetDNSNXDDomain() throws ExecutionException, TimeoutException {
-
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, true);
+		final IGetDNSContext context = GetDNSFactory.create(1, options);
 
 		try {
 			GetDNSFutureResult futureResult = context.serviceAsync(UNREGDOMAIN, null);

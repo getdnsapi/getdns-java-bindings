@@ -23,7 +23,7 @@ public class AddressAsyncPositiveWithStubTest implements IGetDNSTestConstants {
 	public void testGetDNSAddrForlocalhost() throws ExecutionException, TimeoutException {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
-		final IGetDNSContext context = GetDNSFactory.create(1,options);
+		final IGetDNSContext context = GetDNSFactory.create(1, options);
 
 		try {
 			GetDNSFutureResult futureResult = context.addressAsync("localhost", null);
@@ -47,7 +47,7 @@ public class AddressAsyncPositiveWithStubTest implements IGetDNSTestConstants {
 	public void testGetDNSAddrUnboundDomainZone() throws ExecutionException, TimeoutException {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
-		final IGetDNSContext context = GetDNSFactory.create(1,options);
+		final IGetDNSContext context = GetDNSFactory.create(1, options);
 
 		try {
 			GetDNSFutureResult futureResult = context.addressAsync(DOMAIN_NAME_FROM_UNBOUND_ZONE, null);
@@ -60,7 +60,7 @@ public class AddressAsyncPositiveWithStubTest implements IGetDNSTestConstants {
 			System.out.println(info);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.A.getValue(),GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
 		} finally {
 			context.close();
 		}
@@ -71,7 +71,7 @@ public class AddressAsyncPositiveWithStubTest implements IGetDNSTestConstants {
 	public void testGetDNAddr() throws ExecutionException, TimeoutException {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
-		final IGetDNSContext context = GetDNSFactory.create(1,options);
+		final IGetDNSContext context = GetDNSFactory.create(1, options);
 
 		try {
 			GetDNSFutureResult futureResult = context.addressAsync(DOMAIN_NAME, null);
