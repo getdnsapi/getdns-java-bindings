@@ -21,7 +21,7 @@ public class GetDNSWithReturnBothV4andV6Extension {
 		HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
 		extensions.put(ExtensionNames.RETURN_BOTH_V4_AND_V6, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {
-			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf("GETDNS_RRTYPE_" + type),
+			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type),
 					extensions);
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {

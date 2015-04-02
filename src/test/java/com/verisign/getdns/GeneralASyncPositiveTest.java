@@ -22,7 +22,7 @@ public class GeneralASyncPositiveTest {
 		final IGetDNSContext context = GetDNSFactory.create(1);		
 	
 		try{
-			GetDNSFutureResult futureResult = context.generalAsync(DOMAIN_NAME, RRType.GETDNS_RRTYPE_A, null);
+			GetDNSFutureResult futureResult = context.generalAsync(DOMAIN_NAME, RRType.A, null);
 			HashMap<String, Object> info = null;
 			try {
 				info = futureResult.get(10000, TimeUnit.MILLISECONDS);
@@ -32,7 +32,7 @@ public class GeneralASyncPositiveTest {
 			
 			assertNotNull(info);
 			assertEquals("Time out error"+info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.GETDNS_RRTYPE_A.getValue(),GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.A.getValue(),GetDNSUtil.getinfovalues(info, "type"));
 		}finally {
 			context.close();
 		}
@@ -45,7 +45,7 @@ public class GeneralASyncPositiveTest {
 		final IGetDNSContext context = GetDNSFactory.create(1);		
 	
 		try{
-			GetDNSFutureResult futureResult = context.generalAsync(UNREGDOMAIN, RRType.GETDNS_RRTYPE_SOA, null);
+			GetDNSFutureResult futureResult = context.generalAsync(UNREGDOMAIN, RRType.SOA, null);
 			HashMap<String, Object> info = null;
 			try {
 				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
@@ -77,7 +77,7 @@ public class GeneralASyncPositiveTest {
 			int i=0;
 			for (String domain : domains) {
 				
-				results.add(context.generalAsync(domain, RRType.GETDNS_RRTYPE_A, null));
+				results.add(context.generalAsync(domain, RRType.A, null));
 				if(++i==20) break;
 			}
 			for (GetDNSFutureResult result : results) {

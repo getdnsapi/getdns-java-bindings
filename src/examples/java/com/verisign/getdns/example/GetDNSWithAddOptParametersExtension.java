@@ -22,7 +22,7 @@ public class GetDNSWithAddOptParametersExtension {
 		HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
 		extensions.put(ExtensionNames.ADD_OPT_PARAMETERS, optParams);
 		try {
-			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf("GETDNS_RRTYPE_" + type),
+			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type),
 					extensions);
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {

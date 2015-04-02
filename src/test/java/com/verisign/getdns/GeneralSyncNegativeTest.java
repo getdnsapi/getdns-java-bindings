@@ -26,7 +26,7 @@ public class GeneralSyncNegativeTest implements IGetDNSTestConstants{
 		try{
 //			thrown.expect(GetDNSException.class);
 //			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			HashMap<String, Object> info =	context.generalSync(UNREGDOMAIN, RRType.GETDNS_RRTYPE_A, null);
+			HashMap<String, Object> info =	context.generalSync(UNREGDOMAIN, RRType.A, null);
 			assertNotNull(info);
 		}finally {
 			context.close();
@@ -46,7 +46,7 @@ public class GeneralSyncNegativeTest implements IGetDNSTestConstants{
 		try{
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			context.generalSync( null, RRType.GETDNS_RRTYPE_A, null);
+			context.generalSync( null, RRType.A, null);
 		}finally {
 			context.close();
 		}
@@ -64,7 +64,7 @@ public class GeneralSyncNegativeTest implements IGetDNSTestConstants{
 			
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_BAD_DOMAIN_NAME"));
-			context.generalSync(TOOLONGDOMAINNAME, RRType.GETDNS_RRTYPE_A, null);
+			context.generalSync(TOOLONGDOMAINNAME, RRType.A, null);
 			 
 		}finally {
 			context.close();
@@ -79,7 +79,7 @@ public class GeneralSyncNegativeTest implements IGetDNSTestConstants{
 			
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_BAD_DOMAIN_NAME"));
-			context.generalSync(TOOMANYOCTETS, RRType.GETDNS_RRTYPE_A, null);
+			context.generalSync(TOOMANYOCTETS, RRType.A, null);
 			 
 		}finally {
 			context.close();

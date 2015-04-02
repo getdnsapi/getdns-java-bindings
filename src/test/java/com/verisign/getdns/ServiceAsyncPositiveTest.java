@@ -27,7 +27,7 @@ public class ServiceAsyncPositiveTest implements IGetDNSTestConstants {
 			}
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.GETDNS_RRTYPE_SRV.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.SRV.getValue(), GetDNSUtil.getinfovalues(info, "type"));
 			System.out.println("Got a service record");
 		} finally {
 			Thread.sleep(5000);

@@ -27,7 +27,7 @@ public class GetDNSGeneralAsync {
 		String type = args[1];
 
 		try {
-			GetDNSFutureResult result = context.generalAsync(queryString, RRType.valueOf("GETDNS_RRTYPE_" + type), null);
+			GetDNSFutureResult result = context.generalAsync(queryString, RRType.valueOf(type), null);
 			HashMap<String, Object> info = null;
 			info = result.get(5000, TimeUnit.MILLISECONDS);
 

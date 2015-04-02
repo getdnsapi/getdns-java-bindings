@@ -29,7 +29,7 @@ public class GetDNSGeneral {
 		String type = args[1];
 
 		try {
-			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf("GETDNS_RRTYPE_" + type), null);
+			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type), null);
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 					System.out.println(GetDNSUtil.printReadable(info));

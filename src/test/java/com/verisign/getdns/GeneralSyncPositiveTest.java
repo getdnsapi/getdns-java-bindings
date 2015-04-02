@@ -18,11 +18,11 @@ public class GeneralSyncPositiveTest implements IGetDNSTestConstants {
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		try {
 
-			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.GETDNS_RRTYPE_A, null);
+			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.A, null);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			// assertNotNull("Type is null and response was "+info, gettype(info));
-			assertEquals(RRType.GETDNS_RRTYPE_A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
 
 		} finally {
 			context.close();
@@ -38,11 +38,11 @@ public class GeneralSyncPositiveTest implements IGetDNSTestConstants {
 
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		try {
-			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.GETDNS_RRTYPE_AAAA, null);
+			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.AAAA, null);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			// assertNotNull("Type is null and response was "+info, gettype(info));
-			assertEquals(RRType.GETDNS_RRTYPE_AAAA.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.AAAA.getValue(), GetDNSUtil.getinfovalues(info, "type"));
 
 		} finally {
 			context.close();
@@ -58,12 +58,12 @@ public class GeneralSyncPositiveTest implements IGetDNSTestConstants {
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		try {
 
-			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.GETDNS_RRTYPE_TXT, null);
+			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.TXT, null);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			// assertNotNull("Type is null and response was "+info, gettype(info));
 
-			assertEquals(RRType.GETDNS_RRTYPE_TXT.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.TXT.getValue(), GetDNSUtil.getinfovalues(info, "type"));
 
 		} finally {
 			context.close();
@@ -78,11 +78,11 @@ public class GeneralSyncPositiveTest implements IGetDNSTestConstants {
 	public void testGetDNSSyncForMXRecord() {
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		try {
-			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.GETDNS_RRTYPE_MX, null);
+			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.MX, null);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			// assertNotNull("Type is null and response was "+info, gettype(info));
-			assertEquals(RRType.GETDNS_RRTYPE_MX.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.MX.getValue(), GetDNSUtil.getinfovalues(info, "type"));
 
 		} finally {
 			context.close();

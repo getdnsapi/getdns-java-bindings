@@ -23,7 +23,7 @@ public class GetDNSWithExtensionNegetiveTest {
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			HashMap<String, Object> info = context.generalSync(null, RRType.GETDNS_RRTYPE_A, extensions);
+			HashMap<String, Object> info = context.generalSync(null, RRType.A, extensions);
 		} finally {
 			context.close();
 		}
@@ -42,7 +42,7 @@ public class GetDNSWithExtensionNegetiveTest {
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			HashMap<String, Object> info = context.generalSync(null, RRType.GETDNS_RRTYPE_A, extensions);
+			HashMap<String, Object> info = context.generalSync(null, RRType.A, extensions);
 		} finally {
 			context.close();
 		}
@@ -61,7 +61,7 @@ public class GetDNSWithExtensionNegetiveTest {
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			HashMap<String, Object> info = context.generalSync(null, RRType.GETDNS_RRTYPE_A, extensions);
+			HashMap<String, Object> info = context.generalSync(null, RRType.A, extensions);
 		} finally {
 			context.close();
 		}

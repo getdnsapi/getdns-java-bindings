@@ -57,7 +57,7 @@ public class DaneCertVerification {
 		options.put(ContextOptionNames.STUB, true);
 		final IGetDNSContext context = GetDNSFactory.create(1, options);
 		try {
-			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf("GETDNS_RRTYPE_" + type), null);
+			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type), null);
 			System.out.println(GetDNSUtil.printReadable(info));
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {

@@ -21,7 +21,7 @@ public class GetDNSWithDNSSECStatusExtension {
 		HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
 		extensions.put(ExtensionNames.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {
-			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf("GETDNS_RRTYPE_" + type),
+			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type),
 					extensions);
 			if (info != null) {
 				System.out.println("info:  " + info);

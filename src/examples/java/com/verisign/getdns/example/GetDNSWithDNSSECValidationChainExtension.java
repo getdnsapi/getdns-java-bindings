@@ -21,7 +21,7 @@ public class GetDNSWithDNSSECValidationChainExtension {
 		HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
 		extensions.put(ExtensionNames.DNSSEC_RETURN_VALIDATION_CHAIN, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {
-			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf("GETDNS_RRTYPE_" + type),
+			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type),
 					extensions);
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {

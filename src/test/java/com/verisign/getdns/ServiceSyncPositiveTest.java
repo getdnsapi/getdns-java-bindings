@@ -20,7 +20,7 @@ public class ServiceSyncPositiveTest implements IGetDNSTestConstants {
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			// assertNotNull("Type is null and response was "+info, gettype(info));
-			assertEquals(RRType.GETDNS_RRTYPE_SRV.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.SRV.getValue(), GetDNSUtil.getinfovalues(info, "type"));
 
 		} finally {
 			context.close();

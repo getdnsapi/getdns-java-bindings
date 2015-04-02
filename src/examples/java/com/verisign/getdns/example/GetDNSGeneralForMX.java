@@ -25,7 +25,7 @@ public class GetDNSGeneralForMX {
 		String queryString = args[0];
 
 		try {
-			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf("GETDNS_RRTYPE_" + "MX"), null);
+			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf("MX"), null);
 
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {

@@ -18,7 +18,7 @@ public class AddressSyncPositiveTest implements IGetDNSTestConstants {
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			// assertNotNull("Type is null and response was "+info, gettype(info));
-			assertEquals(RRType.GETDNS_RRTYPE_A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
 
 		} finally {
 			context.close();
@@ -34,7 +34,7 @@ public class AddressSyncPositiveTest implements IGetDNSTestConstants {
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			// assertNotNull("Type is null and response was "+info, gettype(info));
-			assertEquals(RRType.GETDNS_RRTYPE_A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
 
 		} finally {
 			context.close();
@@ -51,7 +51,7 @@ public class AddressSyncPositiveTest implements IGetDNSTestConstants {
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			// assertNotNull("Type is null and response was "+info, gettype(info));
-			assertEquals(RRType.GETDNS_RRTYPE_A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
 
 		} finally {
 			context.close();

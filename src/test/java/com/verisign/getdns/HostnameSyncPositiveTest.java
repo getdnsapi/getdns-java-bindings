@@ -22,7 +22,7 @@ public class HostnameSyncPositiveTest{
 			System.out.println(info);
 			assertNotNull(info);
 			assertEquals("Time out error"+info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.GETDNS_RRTYPE_PTR.getValue(),GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.PTR.getValue(),GetDNSUtil.getinfovalues(info, "type"));
 		
 			 
 		}finally {
@@ -42,7 +42,7 @@ public class HostnameSyncPositiveTest{
 			System.out.println(info);
 			assertNotNull(info);
 			assertEquals("Time out error"+info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.GETDNS_RRTYPE_PTR.getValue(),GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.PTR.getValue(),GetDNSUtil.getinfovalues(info, "type"));
 		
 			 
 		}finally {

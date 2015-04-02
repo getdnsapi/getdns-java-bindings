@@ -24,7 +24,7 @@ public class GetDNSWithExtensionPositiveTest {
 		try {
 			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
 			extensions.put(ExtensionNames.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
-			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.GETDNS_RRTYPE_A, extensions);
+			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			assertEquals(400, GetDNSUtil.getinfovalues(info, "dnssec_status"));
@@ -45,7 +45,7 @@ public class GetDNSWithExtensionPositiveTest {
 		try {
 			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
 			extensions.put(ExtensionNames.DNSSEC_RETURN_ONLY_SECURE, GetDNSConstants.GETDNS_EXTENSION_TRUE);
-			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.GETDNS_RRTYPE_A, extensions);
+			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			assertEquals(400, GetDNSUtil.getinfovalues(info, "dnssec_status"));
@@ -66,7 +66,7 @@ public class GetDNSWithExtensionPositiveTest {
 		try {
 			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
 			extensions.put(ExtensionNames.DNSSEC_RETURN_VALIDATION_CHAIN, GetDNSConstants.GETDNS_EXTENSION_TRUE);
-			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.GETDNS_RRTYPE_A, extensions);
+			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			assertNotNull(GetDNSUtil.getinfovalues(info, "validation_chain"));
@@ -87,7 +87,7 @@ public class GetDNSWithExtensionPositiveTest {
 		try {
 			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
 			extensions.put(ExtensionNames.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
-			HashMap<String, Object> info = context.generalSync("google.com", RRType.GETDNS_RRTYPE_A, extensions);
+			HashMap<String, Object> info = context.generalSync("google.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			assertEquals(403, GetDNSUtil.getinfovalues(info, "dnssec_status"));
@@ -108,7 +108,7 @@ public class GetDNSWithExtensionPositiveTest {
 		try {
 			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
 			extensions.put(ExtensionNames.DNSSEC_RETURN_ONLY_SECURE, GetDNSConstants.GETDNS_EXTENSION_TRUE);
-			HashMap<String, Object> info = context.generalSync("google.com", RRType.GETDNS_RRTYPE_A, extensions);
+			HashMap<String, Object> info = context.generalSync("google.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 903, Integer.parseInt(info.get("status").toString()));
 		} finally {
@@ -128,7 +128,7 @@ public class GetDNSWithExtensionPositiveTest {
 		try {
 			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
 			extensions.put(ExtensionNames.DNSSEC_RETURN_VALIDATION_CHAIN, GetDNSConstants.GETDNS_EXTENSION_TRUE);
-			HashMap<String, Object> info = context.generalSync("google.com", RRType.GETDNS_RRTYPE_A, extensions);
+			HashMap<String, Object> info = context.generalSync("google.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			assertNull(GetDNSUtil.getinfovalues(info, "validation_chain"));
@@ -149,7 +149,7 @@ public class GetDNSWithExtensionPositiveTest {
 		try {
 			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
 			extensions.put(ExtensionNames.RETURN_BOTH_V4_AND_V6, GetDNSConstants.GETDNS_EXTENSION_TRUE);
-			HashMap<String, Object> info = context.generalSync("google-public-dns-a.google.com.", RRType.GETDNS_RRTYPE_A,
+			HashMap<String, Object> info = context.generalSync("google-public-dns-a.google.com.", RRType.A,
 					extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
@@ -170,7 +170,7 @@ public class GetDNSWithExtensionPositiveTest {
 		try {
 			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
 			extensions.put(ExtensionNames.ADD_WARNING_FOR_BAD_DNS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
-			HashMap<String, Object> info = context.generalSync("gagad%$#43", RRType.GETDNS_RRTYPE_A, extensions);
+			HashMap<String, Object> info = context.generalSync("gagad%$#43", RRType.A, extensions);
 			System.out.println("info:   " + info);
 			assertNotNull(info);
 		} finally {
@@ -189,7 +189,7 @@ public class GetDNSWithExtensionPositiveTest {
 		try {
 			HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
 			extensions.put(ExtensionNames.RETURN_CALL_DEBUGGING, GetDNSConstants.GETDNS_EXTENSION_TRUE);
-			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.GETDNS_RRTYPE_A, extensions);
+			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			// assertNotNull(GetDNSUtil.getinfovalues(info, "IPv6"));
@@ -296,7 +296,7 @@ public class GetDNSWithExtensionPositiveTest {
 			int i = 0;
 			for (String domain : domains) {
 
-				results.add(context.generalAsync(domain, RRType.GETDNS_RRTYPE_A, null));
+				results.add(context.generalAsync(domain, RRType.A, null));
 				if (++i == 20)
 					break;
 			}
