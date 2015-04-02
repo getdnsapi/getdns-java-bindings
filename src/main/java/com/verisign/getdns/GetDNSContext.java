@@ -4,9 +4,11 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 
 /**
- * The design here is slightly different from the C API in the following ways.
- * 1. Return the object created or the response. 2. Throw an exception in case
- * of any issues.
+ * <p>
+ * The design here is slightly different from the C API in the following ways:
+ * <ul>
+ * <li>Return the object created or the response</li>
+ * <li>Throw an exception in case of any issues</li></ul>
  *
  */
 public class GetDNSContext implements IGetDNSContext {

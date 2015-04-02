@@ -1,5 +1,12 @@
 package com.verisign.getdns;
 
+/**
+ * 
+ * Handles all JNI exceptions
+ * 
+ * @author Prithvi
+ *
+ */
 public class GetDNSException extends RuntimeException {
 	private static final long serialVersionUID = 2810009795416124428L;
 
@@ -20,7 +27,7 @@ public class GetDNSException extends RuntimeException {
 
 	@Override
 	public String toString() {
-		return getMessage()+" Error code: " + returnCode;
+		return getMessage() + " Error code: " + returnCode;
 	}
 
 }

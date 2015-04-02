@@ -1,7 +1,11 @@
 package com.verisign.getdns;
 import java.util.HashMap;
 
-
+/**
+ * This class contains RRype
+ * @author Prithvi
+ *
+ */
 public class RRType {
         private static final HashMap<String,RRType> nameToRRTypeMap = new HashMap<String,RRType>();
         private static final HashMap<Integer,RRType> valueToRRTypeMap = new HashMap<Integer,RRType>();
@@ -104,14 +108,22 @@ public class RRType {
                 nameToRRTypeMap.put(name, this);
                 valueToRRTypeMap.put(value, this);
 	}
-        
+       /**
+        *  Returns value of a RRtype
+        * @param value
+        * @return
+        */
         public static final RRType valueOf(int value){
             if(valueToRRTypeMap.containsKey(value))
                 return valueToRRTypeMap.get(value);
             else
                 throw new IllegalArgumentException("Invalid RRType value passed");
         }
-
+/**
+ *  Return value of a RRtype
+ * @param name
+ * @return
+ */
         public static final RRType valueOf(String name){
             if(nameToRRTypeMap.containsKey(name))
                 return nameToRRTypeMap.get(name);

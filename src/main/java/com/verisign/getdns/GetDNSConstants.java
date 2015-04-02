@@ -5,6 +5,7 @@ package com.verisign.getdns;
  * request and responses.
  * 
  * @author Prithvi
+ * @modified Vinay Soni
  *
  */
 public interface GetDNSConstants {
@@ -14,17 +15,6 @@ public interface GetDNSConstants {
 	 */
 	public static final int GETDNS_EXTENSION_TRUE = 1000;
 	public static final int GETDNS_EXTENSION_FALSE = 1001;
-
-	/**
-	 * Constants related to passing address.
-	 */
-	public static final String IPV6 = "IPv6";
-	public static final String IPV4 = "IPv4";
-	public static final String ADDRESS_DATA = "address_data";
-	public static final String ADDRESS_TYPE = "address_type";
-
-
-	
 
 	/**
 	 * dnssec status return text

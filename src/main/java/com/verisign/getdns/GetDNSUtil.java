@@ -3,6 +3,13 @@ package com.verisign.getdns;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * 
+ * This class generally extracts the DNS response and gives the required output
+ * 
+ * @author Vinay Soni
+ *
+ */
 public class GetDNSUtil {
 	@SuppressWarnings("unchecked")
 	static public Object getinfovalues(HashMap<String, Object> info, String name) {
@@ -67,7 +74,10 @@ public class GetDNSUtil {
 	}
 
 	/**
-	 * converting bytes array to hex String
+	 * this methods converts bytes array to hex String
+	 * 
+	 * @param bytes
+	 * @return
 	 */
 	public static String bytesToHexString(byte[] bytes) {
 		StringBuilder sb = new StringBuilder();
@@ -77,6 +87,12 @@ public class GetDNSUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * This methods reutrns DNSSEC status
+	 * 
+	 * @param info
+	 * @return DNSSEC Status
+	 */
 	static public String getDnssecStatus(HashMap<String, Object> info) {
 
 		int dnssecStatus = (int) GetDNSUtil.getinfovalues(info, "dnssec_status");
@@ -99,6 +115,12 @@ public class GetDNSUtil {
 		}
 	}
 
+	/**
+	 * This method returns validation chain from DNS response
+	 * 
+	 * @param info
+	 * @return
+	 */
 	public static String getValidationChain(HashMap<String, Object> info) {
 
 		return "-------Validation_Chain----------\n\n  "

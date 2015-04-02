@@ -6,6 +6,13 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+/**
+ * 
+ * This is used for Asyc call implementation
+ * 
+ * @author Pritvhi
+ *
+ */
 public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGetDNSCallback {
 
 	private HashMap<String, Object> response = null;
