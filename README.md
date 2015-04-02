@@ -6,11 +6,12 @@ This has been built and tested with Java 1.7 and 1.8
 
 Currently building against the getdns 0.1.6 release.
 getdns external dependencies include:
-* [libldns from NLnet Labs](https://www.nlnetlabs.nl/projects/ldns/) version 1.6.17 or later (ldns requires ope
+
+*   [libldns from NLnet Labs](https://www.nlnetlabs.nl/projects/ldns/) version 1.6.17 or later (ldns requires ope
 nssl headers and libraries)
-* [libidn from the FSF](http://www.gnu.org/software/libidn/) version 1.29
-* [libexpat](http://expat.sourceforge.net/) for libunbound.
-* [libunbound from NLnet Labs](http://www.nlnetlabs.nl/projects/unbound/) version 1.4.22 or later
+*   [libidn from the FSF](http://www.gnu.org/software/libidn/) version 1.29
+*   [libexpat](http://expat.sourceforge.net/) for libunbound.
+*   [libunbound from NLnet Labs](http://www.nlnetlabs.nl/projects/unbound/) version 1.4.22 or later
 * [libevent](http://libevent.org) version 2.0.22 stable
 
 Note that getdns **MUST** be built with the --with-libevent flag to configure.
