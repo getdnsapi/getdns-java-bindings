@@ -45,16 +45,15 @@ public class GetDNSUtil {
 					} else if (name.equalsIgnoreCase("rdata")) {
 						int i = 0;
 						HashMap<String, Object> rdata = null;
-						// System.out.println("size: " + answerList.size());
 						while (i < answerList.size()) {
 							answerMap = (HashMap<String, Object>) answerList.get(i);
 							rdata = (HashMap<String, Object>) answerMap.get("rdata");
-							if (rdata.containsKey("certificate_usage") && (int) rdata.get("certificate_usage") == 3) {
-								break;
-							} else {
-								rdata = null;
-							}
-							i++;
+                                                        break; // May cause some issues due to commenting the below code.
+							//if (rdata.containsKey("certificate_usage") && (int) rdata.get("certificate_usage") == 3) {
+							//} else {
+							//	rdata = null;
+							//}
+							//i++;
 						}
 						return rdata;
 					}

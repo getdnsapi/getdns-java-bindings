@@ -7,6 +7,8 @@ import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
 import com.verisign.getdns.RRType;
+import com.verisign.getdns.ExtensionNames;
+import com.verisign.getdns.GetDNSConstants;
 
 /*
  * 
@@ -27,9 +29,12 @@ public class GetDNSCustomRRType {
 			throw new IllegalArgumentException("Need to pass string and type");
 		String queryString = args[0];
 		String type = args[1];
+                HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
+                extensions.put(ExtensionNames.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
+
 
 		try {
-			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type), null);
+			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type), extensions);
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 					//System.out.println(GetDNSUtil.printReadable(info));
