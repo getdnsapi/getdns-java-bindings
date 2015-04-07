@@ -166,7 +166,7 @@ public class GetDNSUtil {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static Object getObject(Map<String, Object> map, String path) {
+	public static Object getObject(Map<String, Object> map, String path) {
 		int childIndex = path.indexOf('/', 1);
 		String currentPath = childIndex != -1?path.substring(1, childIndex):path.substring(1);
 		Object value = null;
@@ -197,7 +197,8 @@ public class GetDNSUtil {
 			return (HashMap<String, Object>) result;
 		return null;
 	}
-        @SuppressWarnings("unchecked")
+	
+    @SuppressWarnings("unchecked")
 	public static ArrayList<Map<String, Object>> getAsListOfMap(Map<String, Object> map, String path){
 		Object result = getObject(map, path);
 		if(result instanceof ArrayList){

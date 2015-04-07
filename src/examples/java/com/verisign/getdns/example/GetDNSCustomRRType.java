@@ -36,9 +36,7 @@ public class GetDNSCustomRRType {
 			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type), extensions);
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
-					// System.out.println(GetDNSUtil.printReadable(info));
-					byte[] rdataRaw = (byte[]) ((HashMap<String, Object>) GetDNSUtil.getinfovalues(info, "rdata"))
-							.get("rdata_raw");
+					byte[] rdataRaw = (byte[]) GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/rdata/rdata_raw");
 					System.out.println("Size: " + rdataRaw.length);
 					System.out.println("Rdata: " + bytesToHex(rdataRaw));
 				}

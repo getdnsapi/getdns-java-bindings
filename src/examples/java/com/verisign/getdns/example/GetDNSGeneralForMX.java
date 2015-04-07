@@ -1,6 +1,5 @@
 package com.verisign.getdns.example;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.verisign.getdns.GetDNSFactory;
@@ -31,7 +30,7 @@ public class GetDNSGeneralForMX {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 
 					//System.out.println(GetDNSUtil.printReadable(info));
-                                        printAnswer(info);
+					System.out.println(GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/rdata/exchange"));
 
 				}
 
@@ -48,28 +47,6 @@ public class GetDNSGeneralForMX {
 			context.close();
 		}
 		System.exit(0);
-
-	}
-
-	/*
-	 * Method to parse the DNS response to get Required type Record
-	 */
-
-	public static void printAnswer(HashMap<String, Object> info) {
-		if (info != null) {
-                    System.out.println(GetDNSUtil.getAsMap(info, "/replies_tree[0]/answer[0]/rdata").get("exchange"));///rdata/exchange"));
-			/*ArrayList replies_tree = (ArrayList) info.get("replies_tree");
-			if (replies_tree != null && replies_tree.size() > 0) {
-				HashMap<String, Object> answers = (HashMap<String, Object>) replies_tree.get(0);
-				if (answers != null) {
-					ArrayList answer = (ArrayList) answers.get("answer");
-					System.out.println(answer);
-
-				}
-
-			}*/
-
-		}
 
 	}
 
