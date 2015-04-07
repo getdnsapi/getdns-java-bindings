@@ -45,6 +45,11 @@ Examples can be found in the directory *src/examples/java*
 
 ./gradlew --daemon runExample -Dexample=DaneCertVerification  -Dargs="['getdnsapi.net', 443]"
 
+./gradlew --daemon runExample -Dexample=GetDNSIP -Dargs="['getdnsapi.net']"
+
+./gradlew --daemon runExample  -Dexample=GetDNSGeneralForMX  -Dargs="['verisign.com']"
+
+
 ```
 
 ###Known issues

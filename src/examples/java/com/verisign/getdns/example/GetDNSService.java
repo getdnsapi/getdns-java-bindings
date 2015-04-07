@@ -2,6 +2,7 @@ package com.verisign.getdns.example;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
@@ -27,7 +28,7 @@ public class GetDNSService {
 
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
-					System.out.println(GetDNSUtil.printReadable(info));
+					//System.out.println(GetDNSUtil.printReadable(info));
 					printAnswer(info);
 				}
 
@@ -53,23 +54,17 @@ public class GetDNSService {
 	public static void printAnswer(HashMap<String, Object> info) {
 		boolean foundSRV = false;
 		if (info != null) {
-			ArrayList<HashMap<String, Object>> replies_tree = (ArrayList<HashMap<String, Object>>) info.get("replies_tree");
-			if (replies_tree != null && replies_tree.size() > 0) {
-				ArrayList<HashMap<String, Object>> answers = (ArrayList<HashMap<String, Object>>) ((HashMap<String, Object>) replies_tree
-						.get(0)).get("answer");
-				if (answers != null) {
-					for (HashMap<String, Object> answer : answers) {
-						if (answer != null && answer.get("type") != null && answer.get("type").toString().equals("33")) {
-							HashMap<String, Object> rdata = (HashMap<String, Object>) answer.get("rdata");
-							System.out.println("SRV " + answer.get("name") + ", Priority: " + rdata.get("priority") + ", "
-									+ " port: " + rdata.get("port") + " target: " + rdata.get("target"));
-							foundSRV = true;
-						}
-					}
-				}
-
-			}
-
+                        ArrayList<Map<String, Object>> answers = GetDNSUtil.getAsListOfMap(info, "/replies_tree[0]/answer");
+                        if (answers != null) {
+                            for (Map<String, Object> answer : answers) {
+                                if (answer != null && answer.get("type") != null && answer.get("type").toString().equals("33")) {
+                                    HashMap<String, Object> rdata = GetDNSUtil.getAsMap(answer, "/rdata");
+                                    System.out.println("SRV " + answer.get("name") + ", Priority: " + rdata.get("priority") + ", "
+                                                         + " port: " + rdata.get("port") + " target: " + rdata.get("target"));
+                                    foundSRV = true;
+                                }
+                            }
+                        }
 		}
 		if (!foundSRV)
 			System.out.println("No SRV records found");

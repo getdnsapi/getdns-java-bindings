@@ -2,6 +2,7 @@ package com.verisign.getdns.example;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
@@ -27,7 +28,8 @@ public class GetDNSIP {
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 
-					System.out.println(GetDNSUtil.printReadable(info));
+					//System.out.println(GetDNSUtil.printReadable(info));
+                                        printAnswer(info);
 
 				}
 
@@ -53,15 +55,10 @@ public class GetDNSIP {
 
 	public static void printAnswer(HashMap<String, Object> info) {
 		if (info != null) {
-			ArrayList<HashMap<String, Object>> answers = (ArrayList<HashMap<String, Object>>) info
-					.get("just_address_answers");
-			for (HashMap<String, Object> answer : answers) {
-
-				if (answer != null) {
-					//
+			ArrayList<Map<String, Object>> answers = GetDNSUtil.getAsListOfMap(info, "/just_address_answers");
+			for (Map<String, Object> answer : answers) {
+				if (answer != null) 
 					System.out.println(answer.get("address_type") + ": " + answer.get("address_data"));
-
-				}
 
 			}
 

@@ -30,7 +30,8 @@ public class GetDNSGeneralForMX {
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 
-					System.out.println(GetDNSUtil.printReadable(info));
+					//System.out.println(GetDNSUtil.printReadable(info));
+                                        printAnswer(info);
 
 				}
 
@@ -56,7 +57,8 @@ public class GetDNSGeneralForMX {
 
 	public static void printAnswer(HashMap<String, Object> info) {
 		if (info != null) {
-			ArrayList replies_tree = (ArrayList) info.get("replies_tree");
+                    System.out.println(GetDNSUtil.getAsMap(info, "/replies_tree[0]/answer[0]/rdata").get("exchange"));///rdata/exchange"));
+			/*ArrayList replies_tree = (ArrayList) info.get("replies_tree");
 			if (replies_tree != null && replies_tree.size() > 0) {
 				HashMap<String, Object> answers = (HashMap<String, Object>) replies_tree.get(0);
 				if (answers != null) {
@@ -65,7 +67,7 @@ public class GetDNSGeneralForMX {
 
 				}
 
-			}
+			}*/
 
 		}
 

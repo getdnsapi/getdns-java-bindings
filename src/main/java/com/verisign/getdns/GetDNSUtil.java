@@ -2,6 +2,7 @@ package com.verisign.getdns;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 
@@ -131,6 +132,80 @@ public class GetDNSUtil {
 	public static String printReadable(Object info) {
 		if (info != null) {
 			return info.toString().replaceAll(",", ",\n").replaceAll("=\\[\\{", "=\\[\n\\{\n").replaceAll("\\}", "\n\\}");
+		}
+		return null;
+	}
+        private static Object getListObject(Map<String, Object> map, String path) {
+		Object value = null;
+		int indexOfArrayPath = path.indexOf('[');
+		if(indexOfArrayPath!=-1){
+			Object val = map.get(path.substring(0, indexOfArrayPath));
+			value = getListObject(val, path.substring(indexOfArrayPath));
+		}
+		return value;
+	}
+
+	private static Object getListObject(Object val, String path) {
+		int indexOfArrayPath = path.indexOf('[');
+		int indexOfArrayClosePath = path.indexOf(']');
+		Object value = null;
+		if(indexOfArrayPath != -1 && indexOfArrayClosePath != -1 && val instanceof ArrayList<?>)
+		{
+			try{
+				value = ((ArrayList<?>) val).get(Integer.parseInt(path.substring(indexOfArrayPath+1,indexOfArrayClosePath)));
+			}catch(NumberFormatException e){
+				throw new IllegalArgumentException("Invalid index specified: "+path, e);
+			}
+			catch(IndexOutOfBoundsException e){
+				throw new IllegalArgumentException("Invalid index specified: "+path, e);
+			}
+			if(indexOfArrayClosePath != path.length()-1)
+				return getListObject(value, path.substring(indexOfArrayClosePath+1));
+		}
+		return value;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static Object getObject(Map<String, Object> map, String path) {
+		int childIndex = path.indexOf('/', 1);
+		String currentPath = childIndex != -1?path.substring(1, childIndex):path.substring(1);
+		Object value = null;
+		
+		if((value = getListObject(map, currentPath)) == null)
+			value = map.get(currentPath);
+		if(childIndex == -1)
+			return value;
+		else if(value != null && (value instanceof Map)){
+			String next = path.substring(childIndex);
+			return getObject((Map<String, Object>) value, next);
+		}
+		else
+			return null;
+	}
+        @SuppressWarnings("unchecked")
+	public static ArrayList<Object> getAsArrayList(Map<String, Object> map, String path){
+		Object result = getObject(map, path);
+		if(result instanceof ArrayList)
+			return (ArrayList<Object>) result;
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static HashMap<String,Object> getAsMap(Map<String, Object> map, String path){
+		Object result = getObject(map, path);
+		if(result instanceof HashMap)
+			return (HashMap<String, Object>) result;
+		return null;
+	}
+        @SuppressWarnings("unchecked")
+	public static ArrayList<Map<String, Object>> getAsListOfMap(Map<String, Object> map, String path){
+		Object result = getObject(map, path);
+		if(result instanceof ArrayList){
+			for (Object element : ((ArrayList)result)) {
+				if(!(element instanceof Map))
+					return null;
+			}
+			return (ArrayList<Map<String, Object>>) result;
 		}
 		return null;
 	}
