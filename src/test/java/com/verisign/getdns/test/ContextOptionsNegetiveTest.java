@@ -107,7 +107,6 @@ public class ContextOptionsNegetiveTest {
 		System.out.println("-----------SetUseThread-------------");
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.USE_THREADS, 22);
-		IGetDNSContext context = null;
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
@@ -220,13 +219,12 @@ public class ContextOptionsNegetiveTest {
 	/**
 	 * test NameSpaces
 	 */
-	 @Test
+	@Test
 	public void testNameSpace() {
 		System.out.println("-----------SetNameSpace-------------");
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		try {
-			Object[] namespace = { ContextOptionValue.GETDNS_NAMESPACE_DNS,
-					ContextOptionValue.GETDNS_NAMESPACE_MDNS };
+			Object[] namespace = { ContextOptionValue.GETDNS_NAMESPACE_DNS, ContextOptionValue.GETDNS_NAMESPACE_MDNS };
 			options.put(ContextOptionName.NAMESPACE, namespace);
 			GetDNSFactory.create(1, options);
 		} catch (Exception e) {

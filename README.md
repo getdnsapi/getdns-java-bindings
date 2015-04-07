@@ -4,7 +4,7 @@ getdns java bindings. This is an early version with limited testing and validati
 ##External dependencies
 This has been built and tested with Java 1.7 and 1.8
 
-Currently building against the getdns 0.1.6 release.
+Currently building against the getdns 0.1.7 release.
 getdns external dependencies include:
 
 *   [libldns from NLnet Labs](https://www.nlnetlabs.nl/projects/ldns/) version 1.6.17 or later (ldns requires ope

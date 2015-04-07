@@ -60,7 +60,6 @@ public class GeneralAsyncNegitiveTest implements IGetDNSTestConstants{
 
 	@Test
 	public void testGetDNSSyncForTooManyOctets(){
-		System.out.println("Junit 3");
 		final IGetDNSContext context = GetDNSFactory.create(1);		
 		try{
 			

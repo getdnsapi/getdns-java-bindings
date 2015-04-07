@@ -25,7 +25,6 @@ public class AddressSyncPositiveWithRecursiveTest implements IGetDNSTestConstant
 			HashMap<String, Object> info = context.addressSync("localhost", null);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			// assertNotNull("Type is null and response was "+info, gettype(info));
 			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
 
 		} finally {
@@ -43,7 +42,6 @@ public class AddressSyncPositiveWithRecursiveTest implements IGetDNSTestConstant
 			HashMap<String, Object> info = context.addressSync(DOMAIN_NAME_FROM_UNBOUND_ZONE, null);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			// assertNotNull("Type is null and response was "+info, gettype(info));
 			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
 
 		} finally {
@@ -62,7 +60,6 @@ public class AddressSyncPositiveWithRecursiveTest implements IGetDNSTestConstant
 			System.out.println("info:  " + info);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			// assertNotNull("Type is null and response was "+info, gettype(info));
 			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
 
 		} finally {

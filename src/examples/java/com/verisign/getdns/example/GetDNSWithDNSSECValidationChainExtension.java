@@ -24,8 +24,10 @@ public class GetDNSWithDNSSECValidationChainExtension {
 			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type),
 					extensions);
 			if (info != null) {
+				System.out.println(GetDNSUtil.printReadable(info));
+				
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
-					System.out.println(GetDNSUtil.getValidationChain(info));
+					//System.out.println(GetDNSUtil.getValidationChain(info));
 				}
 
 				else if (Integer.parseInt(info.get("status").toString()) == 901) {
