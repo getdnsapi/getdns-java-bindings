@@ -51,6 +51,8 @@ Examples can be found in the directory *src/examples/java*
 
 ./gradlew --daemon runExample -Dexample=GetDNSCustomRRType -Dargs="['62d4a9f862867f38a82da911d4747490d560989536b53d2c51e0e336._sign._smimecert.gmadkat.com','TYPE65514']"
 
+./gradlew --daemon runExample -Dexample=GetDNSGeneralAsyncCancel  -Dargs="['getdnsapi.net','A']"
+
 
 ```
 

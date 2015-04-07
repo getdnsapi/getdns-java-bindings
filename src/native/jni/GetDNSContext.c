@@ -529,6 +529,10 @@ void callbackfn(struct getdns_context *context,
 	JNIEnv * env;
 	jint rs = (*jvm)->AttachCurrentThread(jvm, (void**) &env, NULL);
 	struct util_methods methods;
+        if(callback_type == GETDNS_CALLBACK_CANCEL){
+	    (*env)->DeleteGlobalRef(env, callbackObj);
+            return;
+        }
 	if (NULL == callbackObj) {
 		throwJavaIssue(env, "Callback object was NULL");
 		return;
@@ -605,7 +609,7 @@ JNICALL Java_com_verisign_getdns_GetDNSContext_generalAsync(JNIEnv *env,
 
 	cleanup(nativeString, NULL, this_extensions, env, name);
 
-	return ret;
+	return transaction_id;
 }
 
 /*
@@ -633,7 +637,7 @@ JNICALL Java_com_verisign_getdns_GetDNSContext_addressAsync(JNIEnv *env,
 
 	cleanup(nativeString, NULL, this_extensions, env, name);
 
-	return ret;
+	return transaction_id;
 }
 
 /*
@@ -661,7 +665,7 @@ JNICALL Java_com_verisign_getdns_GetDNSContext_serviceAsync(JNIEnv *env,
 
 	cleanup(nativeString, NULL, this_extensions, env, name);
 
-	return ret;
+	return transaction_id;
 }
 
 JNIEXPORT jlong
@@ -696,8 +700,18 @@ JNICALL Java_com_verisign_getdns_GetDNSContext_hostnameAsync(JNIEnv *env,
 //	}
 	cleanup(serverIP, ipDict, this_extensions, env, NULL);
 	//getdns_dict_destroy(ipDict);
-	return ret;
+	return transaction_id;
 
+}
+
+JNIEXPORT void JNICALL Java_com_verisign_getdns_GetDNSContext_cancelRequest(
+                JNIEnv *env, jobject thisObj, jobject contextParam, jlong transacionId){
+    struct getdns_context *context = NULL;
+
+    CHECK_NULL_INIT_PTR(contextParam, context);
+
+    getdns_return_t ret = getdns_cancel_callback(context, transacionId);
+    throwExceptionOnError(env, ret);
 }
 
 JNIEXPORT

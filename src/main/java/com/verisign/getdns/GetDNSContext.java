@@ -102,7 +102,7 @@ public class GetDNSContext implements IGetDNSContext {
 		}
 		HashMap<String, Object> extension = new HashMap<String, Object>();
 		extension = getExtension(extensions);
-		GetDNSFutureResult result = new GetDNSFutureResult(context);
+		GetDNSFutureResult result = new GetDNSFutureResult(this);
 		long transactionId = generalAsync(context, name, requestType.getValue(), extension, result);
 		result.setTransactionId(transactionId);
 		synchronized (eventBase) {
@@ -152,7 +152,7 @@ public class GetDNSContext implements IGetDNSContext {
 		if (eventBase == null) {
 			throw new RuntimeException("Error during eventing init. Cannot invoke async, try sync API");
 		}
-		GetDNSFutureResult result = new GetDNSFutureResult(context);
+		GetDNSFutureResult result = new GetDNSFutureResult(this);
 		HashMap<String, Object> extension = new HashMap<String, Object>();
 		extension = getExtension(extensions);
 		long transactionId = addressAsync(context, name, extension, result);
@@ -173,7 +173,7 @@ public class GetDNSContext implements IGetDNSContext {
 		}
 		HashMap<String, Object> extension = new HashMap<String, Object>();
 		extension = getExtension(extensions);
-		GetDNSFutureResult result = new GetDNSFutureResult(context);
+		GetDNSFutureResult result = new GetDNSFutureResult(this);
 		long transactionId = serviceAsync(context, name, extension, result);
 		result.setTransactionId(transactionId);
 		synchronized (eventBase) {
@@ -191,7 +191,7 @@ public class GetDNSContext implements IGetDNSContext {
 		if (eventBase == null) {
 			throw new RuntimeException("Error during eventing init. Cannot invoke async, try sync API");
 		}
-		GetDNSFutureResult result = new GetDNSFutureResult(context);
+		GetDNSFutureResult result = new GetDNSFutureResult(this);
 		HashMap<String, Object> extension = new HashMap<String, Object>();
 		extension = getExtension(extensions);
 		long transactionId = hostnameAsync(context, address, extension, result);
@@ -201,6 +201,12 @@ public class GetDNSContext implements IGetDNSContext {
 		}
 		return result;
 	}
+
+	public void cancelRequest(Long transactionId) throws GetDNSException{
+            cancelRequest(context, transactionId);
+        }
+
+	private native void cancelRequest(Object context, long transactionId) throws GetDNSException;
 
 	private native long hostnameAsync(Object context, String address, HashMap<String, Object> extensions,
 			Object callbackObj) throws GetDNSException;

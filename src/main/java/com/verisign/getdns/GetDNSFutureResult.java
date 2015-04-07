@@ -18,19 +18,23 @@ public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGet
 	private HashMap<String, Object> response = null;
 	private GetDNSException exception;
 	private Long transactionId;
+        private GetDNSContext context = null;
+        private boolean isCancelled = false;
 
-	public GetDNSFutureResult(Object context) {
+	public GetDNSFutureResult(GetDNSContext context) {
+            this.context = context;
 	}
 
 	@Override
-	public boolean cancel(boolean mayInterruptIfRunning) {
-		throw new UnsupportedOperationException("We do not support this as yet");
+	public boolean cancel(boolean mayInterruptIfRunning) throws GetDNSException{
+            context.cancelRequest(transactionId);
+            isCancelled = true;
+            return isCancelled;
 	}
 
 	@Override
 	public boolean isCancelled() {
-		// TODO Auto-generated method stub
-		return false;
+		return isCancelled;
 	}
 
 	@Override
