@@ -1,30 +1,29 @@
 /*
-* Copyright (c) 2015, Verisign, Inc.
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-* * Redistributions of source code must retain the above copyright
-* notice, this list of conditions and the following disclaimer.
-* * Redistributions in binary form must reproduce the above copyright
-* notice, this list of conditions and the following disclaimer in the
-* documentation and/or other materials provided with the distribution.
-* * Neither the names of the copyright holders nor the
-* names of its contributors may be used to endorse or promote products
-* derived from this software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL Verisign, Inc. BE LIABLE FOR ANY
-* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
-
+ * Copyright (c) 2015, Verisign, Inc.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ * * Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ * * Neither the names of the copyright holders nor the
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL Verisign, Inc. BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 package com.verisign.getdns;
 
 import java.util.ArrayList;
@@ -54,15 +53,6 @@ public class GetDNSUtil {
 				}
 			}
 
-			if (name.equalsIgnoreCase("validation_chain")) {
-				if (info.containsKey("validation_chain")) {
-					if (info.get("validation_chain").toString().length() > 2) {
-						return info.get("validation_chain").toString();
-					} else {
-						return null;
-					}
-				}
-			}
 			ArrayList replies_trees = (ArrayList) info.get("replies_tree");
 
 			if (replies_trees != null && replies_trees.size() > 0) {
@@ -117,42 +107,29 @@ public class GetDNSUtil {
 	}
 
 	/**
-	 * This methods reutrns DNSSEC status
+	 * this method returns the getDns status txt
+	 * 
+	 * @param info
+	 * @return
+	 */
+	static public String getdnsStatus(HashMap<String, Object> info) {
+		int getDnsStatus = (int) getObject(info, "/status");
+		GetDNSReturn ret = GetDNSReturn.fromInt(getDnsStatus);
+		return "\n" + ret.toString();
+	}
+
+	/**
+	 * This method returns DNSSEC status txt
 	 * 
 	 * @param info
 	 * @return DNSSEC Status
 	 */
 	static public String getDnssecStatus(HashMap<String, Object> info) {
 
-		int dnssecStatus = (int) GetDNSUtil.getinfovalues(info, "dnssec_status");
+		int dnssecStatus = (int) GetDNSUtil.getObject(info, "/replies_tree[0]/dnssec_status");
 		GetDNSReturn ret = GetDNSReturn.fromInt(dnssecStatus);
 		String response = printReadable(info) + "\n";
-		switch (ret) {
-		case GETDNS_DNSSEC_SECURE:
-			return response + GetDNSConstants.GETDNS_DNSSEC_SECURE;
-		case GETDNS_DNSSEC_BOGUS:
-			return response + GetDNSConstants.GETDNS_DNSSEC_BOGUS;
-		case GETDNS_DNSSEC_INDETERMINATE:
-			return response + GetDNSConstants.GETDNS_DNSSEC_INDETERMINATE;
-		case GETDNS_DNSSEC_INSECURE:
-			return response + GetDNSConstants.GETDNS_DNSSEC_INSECURE;
-		case GETDNS_DNSSEC_NOT_PERFORMED:
-			return response + GetDNSConstants.GETDNS_DNSSEC_NOT_PERFORMED;
-		default:
-			return null;
-		}
-	}
-
-	/**
-	 * This method returns validation chain from DNS response
-	 * 
-	 * @param info
-	 * @return
-	 */
-	public static String getValidationChain(HashMap<String, Object> info) {
-
-		return "-------Validation_Chain----------\n\n  "
-				+ printReadable(GetDNSUtil.getinfovalues(info, "validation_chain"));
+		return response + " \n\n" + ret.toString();
 	}
 
 	public static String printReadable(Object info) {
@@ -166,7 +143,7 @@ public class GetDNSUtil {
 	private static Object getListObject(Map<String, Object> map, String path) {
 		Object value = null;
 		int indexOfArrayPath = path.indexOf('[');
-		System.out.println("indexofArrayPath:  " + indexOfArrayPath);
+		//System.out.println("indexofArrayPath:  " + indexOfArrayPath);
 		if (indexOfArrayPath != -1) {
 			Object val = map.get(path.substring(0, indexOfArrayPath));
 			// System.out.println("val:  " + val);

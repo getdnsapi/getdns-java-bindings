@@ -31,8 +31,8 @@ public class GetDNSIPMany {
 				if (info != null) {
 					if (Integer.parseInt(info.get("status").toString()) == 900) {
 						System.out.println("\nAddress records for " + queryString + " -----");
-						//System.out.println(GetDNSUtil.printReadable(info));
 						printAnswer(info);
+						System.out.println(GetDNSUtil.getdnsStatus(info));
 
 					} else if (Integer.parseInt(info.get("status").toString()) == 901) {
 						System.out.println("no such address: " + queryString);

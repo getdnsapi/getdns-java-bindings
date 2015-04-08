@@ -28,8 +28,8 @@ public class GetDNSService {
 
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
-					//System.out.println(GetDNSUtil.printReadable(info));
 					printAnswer(info);
+					System.out.println(GetDNSUtil.getdnsStatus(info));
 				}
 
 				else if (Integer.parseInt(info.get("status").toString()) == 901) {

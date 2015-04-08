@@ -21,11 +21,11 @@ public class GetDNSWithReturnBothV4andV6Extension {
 		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 		extensions.put(ExtensionName.RETURN_BOTH_V4_AND_V6, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {
-			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type),
-					extensions);
+			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type), extensions);
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 					System.out.println(GetDNSUtil.printReadable(info));
+					System.out.println(GetDNSUtil.getdnsStatus(info));
 				}
 
 				else if (Integer.parseInt(info.get("status").toString()) == 901) {

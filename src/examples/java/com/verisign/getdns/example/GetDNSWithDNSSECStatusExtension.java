@@ -21,10 +21,9 @@ public class GetDNSWithDNSSECStatusExtension {
 		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 		extensions.put(ExtensionName.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {
-			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type),
-					extensions);
+			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type), extensions);
 			if (info != null) {
-				System.out.println("info:  " + info);
+
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 					System.out.println(GetDNSUtil.getDnssecStatus(info));
 				}

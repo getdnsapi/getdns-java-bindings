@@ -33,8 +33,8 @@ public class GetDNSGeneralAsync {
 
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
-
-				System.out.println(GetDNSUtil.printReadable(info));
+					System.out.println(GetDNSUtil.printReadable(info));
+					System.out.println(GetDNSUtil.getdnsStatus(info));
 				}
 
 				else if (Integer.parseInt(info.get("status").toString()) == 901) {
@@ -55,20 +55,22 @@ public class GetDNSGeneralAsync {
 
 	}
 
-//	public static void printAnswer(HashMap<String, Object> info) {
-//		if (info != null) {
-//			ArrayList<HashMap<String, Object>> answers = (ArrayList<HashMap<String, Object>>) info
-//					.get("just_address_answers");
-//			for (HashMap<String, Object> answer : answers) {
-//
-//				if (answer != null) {
-//					System.out.println(answer.get("address_type") + ": " + answer.get("address_data"));
-//				}
-//
-//			}
-//
-//		}
-//
-//	}
+	// public static void printAnswer(HashMap<String, Object> info) {
+	// if (info != null) {
+	// ArrayList<HashMap<String, Object>> answers = (ArrayList<HashMap<String,
+	// Object>>) info
+	// .get("just_address_answers");
+	// for (HashMap<String, Object> answer : answers) {
+	//
+	// if (answer != null) {
+	// System.out.println(answer.get("address_type") + ": " +
+	// answer.get("address_data"));
+	// }
+	//
+	// }
+	//
+	// }
+	//
+	// }
 
 }

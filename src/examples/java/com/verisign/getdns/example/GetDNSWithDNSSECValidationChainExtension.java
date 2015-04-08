@@ -1,4 +1,4 @@
- package com.verisign.getdns.example;
+package com.verisign.getdns.example;
 
 import java.util.HashMap;
 
@@ -21,13 +21,13 @@ public class GetDNSWithDNSSECValidationChainExtension {
 		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 		extensions.put(ExtensionName.DNSSEC_RETURN_VALIDATION_CHAIN, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {
-			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type),
-					extensions);
+			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type), extensions);
 			if (info != null) {
-				System.out.println(GetDNSUtil.printReadable(info));
-				
+
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
-					//System.out.println(GetDNSUtil.getValidationChain(info));
+					System.out.println("-------------Validation Chain------------------\n");
+					System.out.println(GetDNSUtil.printReadable(GetDNSUtil.getObject(info, "/validation_chain")));
+					System.out.println(GetDNSUtil.getdnsStatus(info));
 				}
 
 				else if (Integer.parseInt(info.get("status").toString()) == 901) {
@@ -44,6 +44,4 @@ public class GetDNSWithDNSSECValidationChainExtension {
 		}
 		System.exit(0);
 	}
-
-
 }
