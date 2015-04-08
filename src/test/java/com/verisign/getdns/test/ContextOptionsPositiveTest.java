@@ -298,8 +298,7 @@ public class ContextOptionsPositiveTest {
 		System.out.println("-----------SetNameSpace-------------");
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 
-		Object[] namespace = { ContextOptionValue.GETDNS_NAMESPACE_DNS,
-				ContextOptionValue.GETDNS_NAMESPACE_MDNS };
+		Object[] namespace = { ContextOptionValue.GETDNS_NAMESPACE_DNS, ContextOptionValue.GETDNS_NAMESPACE_MDNS };
 		options.put(ContextOptionName.NAMESPACE, namespace);
 		IGetDNSContext context = null;
 		try {
@@ -371,7 +370,7 @@ public class ContextOptionsPositiveTest {
 	public void testDnsRootServers() {
 		System.out.println("-----------SetDnsRootServers-------------");
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
-		Object[][] list = { { "8.8.8.8"}, { "2001:4860:4860::8888"} };
+		Object[][] list = { { "8.8.8.8" }, { "2001:4860:4860::8888" } };
 		options.put(ContextOptionName.DNS_ROOT_SERVERS, list);
 		IGetDNSContext context = null;
 		try {

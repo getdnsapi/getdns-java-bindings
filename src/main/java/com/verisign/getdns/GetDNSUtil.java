@@ -98,7 +98,6 @@ public class GetDNSUtil {
 	static public String getDnssecStatus(HashMap<String, Object> info) {
 
 		int dnssecStatus = (int) GetDNSUtil.getinfovalues(info, "dnssec_status");
-		// String status = (GetDNSReturn.fromInt(dnssecStatus).toString());
 		GetDNSReturn ret = GetDNSReturn.fromInt(dnssecStatus);
 		String response = printReadable(info) + "\n";
 		switch (ret) {
@@ -135,12 +134,17 @@ public class GetDNSUtil {
 		}
 		return null;
 	}
-        private static Object getListObject(Map<String, Object> map, String path) {
+
+	// extract if it's a ArrayList or return null
+	private static Object getListObject(Map<String, Object> map, String path) {
 		Object value = null;
 		int indexOfArrayPath = path.indexOf('[');
-		if(indexOfArrayPath!=-1){
+		System.out.println("indexofArrayPath:  " + indexOfArrayPath);
+		if (indexOfArrayPath != -1) {
 			Object val = map.get(path.substring(0, indexOfArrayPath));
+			// System.out.println("val:  " + val);
 			value = getListObject(val, path.substring(indexOfArrayPath));
+			// System.out.println("value(get list object):  " + value);
 		}
 		return value;
 	}
@@ -149,61 +153,77 @@ public class GetDNSUtil {
 		int indexOfArrayPath = path.indexOf('[');
 		int indexOfArrayClosePath = path.indexOf(']');
 		Object value = null;
-		if(indexOfArrayPath != -1 && indexOfArrayClosePath != -1 && val instanceof ArrayList<?>)
-		{
-			try{
-				value = ((ArrayList<?>) val).get(Integer.parseInt(path.substring(indexOfArrayPath+1,indexOfArrayClosePath)));
-			}catch(NumberFormatException e){
-				throw new IllegalArgumentException("Invalid index specified: "+path, e);
+		if (indexOfArrayPath != -1 && indexOfArrayClosePath != -1 && val instanceof ArrayList<?>) {
+			try {
+				value = ((ArrayList<?>) val).get(Integer.parseInt(path.substring(indexOfArrayPath + 1, indexOfArrayClosePath)));
+			} catch (NumberFormatException e) {
+				throw new IllegalArgumentException("Invalid index specified: " + path, e);
+			} catch (IndexOutOfBoundsException e) {
+				throw new IllegalArgumentException("Invalid index specified: " + path, e);
 			}
-			catch(IndexOutOfBoundsException e){
-				throw new IllegalArgumentException("Invalid index specified: "+path, e);
-			}
-			if(indexOfArrayClosePath != path.length()-1)
-				return getListObject(value, path.substring(indexOfArrayClosePath+1));
+			if (indexOfArrayClosePath != path.length() - 1)
+				return getListObject(value, path.substring(indexOfArrayClosePath + 1));
 		}
 		return value;
 	}
 
 	@SuppressWarnings("unchecked")
 	public static Object getObject(Map<String, Object> map, String path) {
+		// System.out.println("path:  " + path);
 		int childIndex = path.indexOf('/', 1);
-		String currentPath = childIndex != -1?path.substring(1, childIndex):path.substring(1);
+
+		// System.out.println("childIndex:  " + childIndex);
+
+		String currentPath = childIndex != -1 ? path.substring(1, childIndex) : path.substring(1);
+
+		// System.out.println("currentpath:  " + currentPath);
 		Object value = null;
-		
-		if((value = getListObject(map, currentPath)) == null)
+		// System.out.println("getlistonbject:   " + getListObject(map,
+		// currentPath));
+		if ((value = getListObject(map, currentPath)) == null) {
+			// System.out.println("valule:1:  " + value);
 			value = map.get(currentPath);
-		if(childIndex == -1)
-			return value;
-		else if(value != null && (value instanceof Map)){
-			String next = path.substring(childIndex);
-			return getObject((Map<String, Object>) value, next);
+			// System.out.println("valule:2:  " + value);
+		} else {
+			// System.out.println("value:3:  " + value);
+			// System.out.println("why");
 		}
-		else
+		if (childIndex == -1) {
+			// System.out.println("testing-1");
+			return value;
+		} else if (value != null && (value instanceof Map)) {
+			// System.out.println("testing-2");
+			String next = path.substring(childIndex);
+			// System.out.println("next:   " + next);
+			return getObject((Map<String, Object>) value, next);
+		} else {
+			// System.out.println("testing-3");
 			return null;
+		}
 	}
-        @SuppressWarnings("unchecked")
-	public static ArrayList<Object> getAsArrayList(Map<String, Object> map, String path){
+
+	@SuppressWarnings("unchecked")
+	public static ArrayList<Object> getAsArrayList(Map<String, Object> map, String path) {
 		Object result = getObject(map, path);
-		if(result instanceof ArrayList)
+		if (result instanceof ArrayList)
 			return (ArrayList<Object>) result;
 		return null;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public static HashMap<String,Object> getAsMap(Map<String, Object> map, String path){
+	public static HashMap<String, Object> getAsMap(Map<String, Object> map, String path) {
 		Object result = getObject(map, path);
-		if(result instanceof HashMap)
+		if (result instanceof HashMap)
 			return (HashMap<String, Object>) result;
 		return null;
 	}
-	
-    @SuppressWarnings("unchecked")
-	public static ArrayList<Map<String, Object>> getAsListOfMap(Map<String, Object> map, String path){
+
+	@SuppressWarnings("unchecked")
+	public static ArrayList<Map<String, Object>> getAsListOfMap(Map<String, Object> map, String path) {
 		Object result = getObject(map, path);
-		if(result instanceof ArrayList){
-			for (Object element : ((ArrayList)result)) {
-				if(!(element instanceof Map))
+		if (result instanceof ArrayList) {
+			for (Object element : ((ArrayList<Object>) result)) {
+				if (!(element instanceof Map))
 					return null;
 			}
 			return (ArrayList<Map<String, Object>>) result;
