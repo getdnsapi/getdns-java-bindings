@@ -39,7 +39,7 @@ public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGet
 
 	@Override
 	public boolean isDone() {
-		return response != null;
+		return isCancelled || response != null;
 	}
 
 	@Override
