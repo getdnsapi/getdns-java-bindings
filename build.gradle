@@ -37,11 +37,12 @@ task buildJniLib(type:Exec) {
   def libraryExtension = 'so'
   def systemJNIPath = 'linux'
   
+  
   if(System.properties['os.name'].toLowerCase().contains('mac')){
     libraryExtension = 'dylib'
     systemJNIPath = 'darwin'
   }
-  commandLine 'gcc', '-I'+javahome+'/include', '-I'+javahome+'/include/'+systemJNIPath, '-shared','-o',System.getProperty("user.dir")+'/build/libs/libgetdnsconnector.'+libraryExtension,'-fPIC','-I/usr/local/include','-L/usr/local/lib', 'java_util.c', 'GetDNSContext.c', 'GetDNS_common.c', 'getdns_util.c', '-lgetdns','-lldns','-lidn', '-levent','-lgetdns_ext_event'
+  commandLine 'gcc', '-I'+javahome+'/include', '-I'+javahome+'/include/'+systemJNIPath, '-shared','-o',project.libsDir.getPath()+'/libgetdnsconnector.'+libraryExtension,'-fPIC','-I/usr/local/include','-L/usr/local/lib', 'java_util.c', 'GetDNSContext.c', 'GetDNS_common.c', 'getdns_util.c', '-lgetdns','-lldns','-lidn', '-levent','-lgetdns_ext_event'
 
   standardOutput = new ByteArrayOutputStream()
   ext.output = {
@@ -87,5 +88,9 @@ test {
     jvmArgs '-Djava.library.path='+System.getProperty("user.dir")+'/build/libs'
     environment "LD_LIBRARY_PATH", "/usr/local/lib"
 }
+
+/*tasks.withType(JavaExec) {
+    systemProperty "java.library.path", project.libsDir.getPath()
+}*/
 
 
