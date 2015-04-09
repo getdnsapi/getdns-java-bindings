@@ -26,20 +26,19 @@ public class GetDNSGeneralAsyncCancel {
 		String type = args[1];
 
 		try {
+			System.out.println("Initiating the query");
 			GetDNSFutureResult result = context.generalAsync(queryString, RRType.valueOf(type), null);
-                        result.cancel(true);
-                        System.out.println("Cancel status of the request: "+result.isCancelled());
+            result.cancel(true);
+            System.out.println("Cancel status of the request: "+result.isCancelled());
 			HashMap<String, Object> info = null;
-                        System.out.println("Now checking for result");
-			info = result.get(5000, TimeUnit.MILLISECONDS);
+            System.out.println("Now checking for result");
+            info = result.get(5000, TimeUnit.MILLISECONDS);
 
 			if (info != null) {
                             System.out.println("Something is wrong here, we got a response even after cancellation");
-			} else {
-				System.out.println("No response from DNS SERVER");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		} finally {
 			context.close();
 		}
