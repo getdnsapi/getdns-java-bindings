@@ -37,7 +37,6 @@ package com.verisign.getdns;
  * <i>ContextOptionValues.java</i> file
  * </p>
  * 
- * @author Vinay Soni
  */
 public enum ContextOptionName {
 	/**

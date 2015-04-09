@@ -30,8 +30,6 @@ package com.verisign.getdns;
 /**
  * 
  * This interface contains all the getdns function
- * 
- * @author Prithvi
  *
  */
 public interface IGetDNSContext extends IGetDNSContextSync, IGetDNSContextAsync{
