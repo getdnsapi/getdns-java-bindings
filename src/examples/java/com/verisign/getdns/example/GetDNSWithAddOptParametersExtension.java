@@ -22,11 +22,11 @@ public class GetDNSWithAddOptParametersExtension {
 		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 		extensions.put(ExtensionName.ADD_OPT_PARAMETERS, optParams);
 		try {
-			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type),
-					extensions);
+			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type), extensions);
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 					System.out.println(GetDNSUtil.printReadable(info));
+					System.out.println(GetDNSUtil.getdnsStatus(info));
 				}
 
 				else if (Integer.parseInt(info.get("status").toString()) == 901) {

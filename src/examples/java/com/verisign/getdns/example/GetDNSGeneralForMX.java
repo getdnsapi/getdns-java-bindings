@@ -29,8 +29,8 @@ public class GetDNSGeneralForMX {
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 
-					//System.out.println(GetDNSUtil.printReadable(info));
 					System.out.println(GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/rdata/exchange"));
+					System.out.println(GetDNSUtil.getdnsStatus(info));
 
 				}
 
