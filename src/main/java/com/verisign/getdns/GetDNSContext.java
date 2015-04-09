@@ -38,7 +38,7 @@ import java.util.HashMap;
  * </ul>
  *
  */
-public class GetDNSContext implements IGetDNSContext {
+public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback {
 	protected static Object eventBase = null;
 	private Object context;
 
@@ -120,7 +120,7 @@ public class GetDNSContext implements IGetDNSContext {
 
 	private native HashMap<String, Object> generalSync(Object context, String name, int requestType,
 			HashMap<String, Object> extensions) throws GetDNSException;
-
+	
 	public GetDNSFutureResult generalAsync(String name, RRType requestType, HashMap<ExtensionName, Object> extensions)
 			throws GetDNSException {
 		if (eventBase == null) {
@@ -227,6 +227,38 @@ public class GetDNSContext implements IGetDNSContext {
 		}
 		return result;
 	}
+	
+	public Long generalAsync(String name, RRType requestType, HashMap<ExtensionName, Object> extensions,
+			IGetDNSCallback callback)
+					throws GetDNSException {
+		GetDNSFutureResult result = generalAsync(name, requestType, extensions);
+		result.setCallback(callback);
+		return result.getTransactionId();
+	}
+	
+	@Override
+	public Long addressAsync(String name, HashMap<ExtensionName, Object> extensions, 
+			IGetDNSCallback callback) throws GetDNSException {
+		GetDNSFutureResult result = addressAsync(name, extensions);
+		result.setCallback(callback);
+		return result.getTransactionId();
+	}
+	
+	@Override
+	public Long serviceAsync(String name, HashMap<ExtensionName, Object> extensions, 
+			IGetDNSCallback callback) throws GetDNSException {
+		GetDNSFutureResult result = serviceAsync(name, extensions);
+		result.setCallback(callback);
+		return result.getTransactionId();
+	}
+	
+	@Override
+	public Long hostnameAsync(String address, HashMap<ExtensionName, Object> extensions, 
+			IGetDNSCallback callback) throws GetDNSException, UnknownHostException{
+		GetDNSFutureResult result = hostnameAsync(address, extensions);
+		result.setCallback(callback);
+		return result.getTransactionId();
+	}
 
 	public void cancelRequest(Long transactionId) throws GetDNSException {
 		cancelRequest(context, transactionId);
@@ -238,6 +270,9 @@ public class GetDNSContext implements IGetDNSContext {
 			Object callbackObj) throws GetDNSException;
 
 	void applyContextOptions(HashMap<ContextOptionName, Object> contextOptions) {
+		if(contextOptions == null){
+			return;
+		}
 		for (ContextOptionName optionName : contextOptions.keySet()) {
 			Object val = convertContextOptionValuesIfneeded(contextOptions.get(optionName));
 			applyContextOption(context, optionName.getName(), val);

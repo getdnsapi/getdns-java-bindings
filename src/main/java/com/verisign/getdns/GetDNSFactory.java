@@ -92,6 +92,11 @@ public class GetDNSFactory {
 	 */
 	public static IGetDNSContext create(int setFromOs, HashMap<ContextOptionName, Object> contextOptions)
 			throws GetDNSException {
+		return createContext(setFromOs, contextOptions);
+	}
+
+	private static GetDNSContext createContext(int setFromOs,
+			HashMap<ContextOptionName, Object> contextOptions) {
 		GetDNSContext context = new GetDNSContext(setFromOs);
 		try {
 			context.applyContextOptions(contextOptions);
@@ -101,5 +106,10 @@ public class GetDNSFactory {
 			throw e;
 		}
 		return context;
+	}
+	
+	public static IGetDNSContextWithCallback createWithCallback(int setFromOs, HashMap<ContextOptionName, Object> contextOptions)
+			throws GetDNSException {
+		return createContext(setFromOs, contextOptions);
 	}
 }

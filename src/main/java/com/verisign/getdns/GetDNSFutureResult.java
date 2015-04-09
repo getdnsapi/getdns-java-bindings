@@ -47,6 +47,7 @@ public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGet
 	private Long transactionId;
 	private GetDNSContext context = null;
 	private boolean isCancelled = false;
+	private IGetDNSCallback callback;
 
 	public GetDNSFutureResult(GetDNSContext context) {
 		this.context = context;
@@ -96,6 +97,8 @@ public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGet
 		synchronized (this) {
 			this.response = response;
 			this.notify();
+			if(callback != null)
+				callback.handleResponse(response);
 		}
 	}
 
@@ -104,6 +107,8 @@ public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGet
 		synchronized (this) {
 			this.exception = exception;
 			this.notify();
+			if(callback != null)
+				callback.handleException(exception);
 		}
 	}
 
@@ -113,6 +118,10 @@ public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGet
 
 	public void setTransactionId(Long transactionId) {
 		this.transactionId = transactionId;
+	}
+
+	public void setCallback(IGetDNSCallback callback) {
+		this.callback = callback;
 	}
 
 }
