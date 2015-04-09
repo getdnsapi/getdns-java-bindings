@@ -28,6 +28,7 @@ package com.verisign.getdns;
 
 import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
 
 /**
  * <p>
@@ -41,6 +42,7 @@ import java.util.HashMap;
 public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback {
 	protected static Object eventBase = null;
 	private Object context;
+	private ExecutorService executor;
 
 	static {
 		System.loadLibrary("getdnsconnector");
@@ -228,35 +230,49 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 		return result;
 	}
 	
+	@Override
+	public void setExecutor(ExecutorService executor) {
+		this.executor = executor;
+	}
+	
+	void sendToCallback(final IGetDNSCallback callback, final HashMap<String, Object> response, final RuntimeException exception){
+		if(executor != null)
+			executor.submit(new Runnable() {
+				public void run() {
+					if(response != null)
+						callback.handleResponse(response, exception);
+				}
+			});
+		else
+			callback.handleResponse(response, exception);
+	}
+	
 	public Long generalAsync(String name, RRType requestType, HashMap<ExtensionName, Object> extensions,
-			IGetDNSCallback callback)
-					throws GetDNSException {
-		GetDNSFutureResult result = generalAsync(name, requestType, extensions);
-		result.setCallback(callback);
-		return result.getTransactionId();
+			IGetDNSCallback callback) throws GetDNSException {
+		return postProcessingForCallback(generalAsync(name, requestType, extensions), callback);
 	}
 	
 	@Override
 	public Long addressAsync(String name, HashMap<ExtensionName, Object> extensions, 
 			IGetDNSCallback callback) throws GetDNSException {
-		GetDNSFutureResult result = addressAsync(name, extensions);
-		result.setCallback(callback);
-		return result.getTransactionId();
+		return postProcessingForCallback(addressAsync(name, extensions), callback);
 	}
 	
 	@Override
 	public Long serviceAsync(String name, HashMap<ExtensionName, Object> extensions, 
 			IGetDNSCallback callback) throws GetDNSException {
-		GetDNSFutureResult result = serviceAsync(name, extensions);
-		result.setCallback(callback);
-		return result.getTransactionId();
+		return postProcessingForCallback(serviceAsync(name, extensions), callback);
 	}
 	
 	@Override
 	public Long hostnameAsync(String address, HashMap<ExtensionName, Object> extensions, 
 			IGetDNSCallback callback) throws GetDNSException, UnknownHostException{
-		GetDNSFutureResult result = hostnameAsync(address, extensions);
+		return postProcessingForCallback(hostnameAsync(address, extensions), callback);
+	}
+
+	Long postProcessingForCallback(GetDNSFutureResult result, IGetDNSCallback callback){
 		result.setCallback(callback);
+		result.setExecutors(executor);
 		return result.getTransactionId();
 	}
 

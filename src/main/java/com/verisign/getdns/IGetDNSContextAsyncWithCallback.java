@@ -2,6 +2,7 @@ package com.verisign.getdns;
 
 import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
 
 public interface IGetDNSContextAsyncWithCallback {
 	Long generalAsync(String name, RRType requestType, HashMap<ExtensionName, Object> extensions, IGetDNSCallback callback)
@@ -17,4 +18,6 @@ public interface IGetDNSContextAsyncWithCallback {
 			throws GetDNSException;
 	
 	void cancelRequest(Long transactionId) throws GetDNSException;
+	
+	void setExecutor(ExecutorService executor);
 }

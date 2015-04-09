@@ -29,7 +29,7 @@ package com.verisign.getdns;
 import java.util.HashMap;
 
 public interface IGetDNSCallback {
-	void handleResponse(HashMap<String, Object> response);
+	void handleResponse(HashMap<String, Object> response, RuntimeException exception);
 
-	void handleException(GetDNSException exception);
+//	void handleException(GetDNSException exception);
 }

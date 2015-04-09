@@ -1,6 +1,7 @@
 package com.verisign.getdns.example;
 
 import java.util.HashMap;
+import java.util.concurrent.Executors;
 
 import com.verisign.getdns.GetDNSException;
 import com.verisign.getdns.GetDNSFactory;
@@ -17,16 +18,17 @@ import com.verisign.getdns.RRType;
  * 
  */
 
-public class GetDNSGeneralAsyncCallback {
+public class GetDNSGeneralAsyncCallbackWithThreadPool {
 
 	public static void main(String[] args) {
 		final IGetDNSContextWithCallback context = GetDNSFactory.createWithCallback(1, null);
+		context.setExecutor(Executors.newFixedThreadPool(5));
 
 		try {
-			String[] domains = {"verisigninc.com", "google.com"};
+			String[] domains = {"verisign.com", "verisigninc.com", "google.com", "yahoo.com", "facebook.com"};
 			for (final String domain : domains) {
 				context.generalAsync(domain, RRType.valueOf("A"), null, new IGetDNSCallback() {
-
+					
 					@Override
 					public void handleResponse(HashMap<String, Object> response, RuntimeException exception) {
 						checkResponse(domain, "A", response);
@@ -36,10 +38,13 @@ public class GetDNSGeneralAsyncCallback {
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
-					}
-				});
+					}});
 			}
-			Thread.sleep(20000);
+//			HashMap<String, Object> info = null;
+//			info = result.get(5000, TimeUnit.MILLISECONDS);
+			Thread.sleep(10000);
+
+//			checkResponse(queryString, type, info);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -53,6 +58,7 @@ public class GetDNSGeneralAsyncCallback {
 			HashMap<String, Object> info) {
 		if (info != null) {
 			if (Integer.parseInt(info.get("status").toString()) == 900) {
+//				System.out.println(GetDNSUtil.printReadable(info));
 				System.out.println("Queried: "+queryString+" status: "+GetDNSUtil.getdnsStatus(info));
 			}
 

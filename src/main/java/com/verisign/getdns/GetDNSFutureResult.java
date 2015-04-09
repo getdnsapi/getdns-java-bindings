@@ -29,6 +29,7 @@ package com.verisign.getdns;
 import java.util.HashMap;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -41,11 +42,12 @@ import java.util.concurrent.TimeoutException;
 public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGetDNSCallback {
 
 	private HashMap<String, Object> response = null;
-	private GetDNSException exception;
+	private RuntimeException exception;
 	private Long transactionId;
 	private GetDNSContext context = null;
 	private boolean isCancelled = false;
 	private IGetDNSCallback callback;
+	private ExecutorService executor;
 
 	public GetDNSFutureResult(GetDNSContext context) {
 		this.context = context;
@@ -91,35 +93,43 @@ public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGet
 	}
 
 	@Override
-	public void handleResponse(HashMap<String, Object> response) {
+	public void handleResponse(HashMap<String, Object> response, RuntimeException exception) {
 		synchronized (this) {
 			this.response = response;
-			this.notify();
-			if(callback != null)
-				callback.handleResponse(response);
-		}
-	}
-
-	@Override
-	public void handleException(GetDNSException exception) {
-		synchronized (this) {
 			this.exception = exception;
 			this.notify();
-			if(callback != null)
-				callback.handleException(exception);
+		}
+		sendToCallback(response, exception);
+	}
+
+	private void sendToCallback(final HashMap<String, Object> response,
+			final RuntimeException exception) {
+		if(callback != null){
+			if(this.executor != null)
+				executor.submit(new Runnable() {
+					public void run() {
+						callback.handleResponse(response, exception);
+					}
+				});
+			else
+				callback.handleResponse(response, exception);
 		}
 	}
 
-	public Long getTransactionId() {
+	Long getTransactionId() {
 		return transactionId;
 	}
 
-	public void setTransactionId(Long transactionId) {
+	void setTransactionId(Long transactionId) {
 		this.transactionId = transactionId;
 	}
 
-	public void setCallback(IGetDNSCallback callback) {
+	void setCallback(IGetDNSCallback callback) {
 		this.callback = callback;
+	}
+	
+	void setExecutors(ExecutorService executor){
+		this.executor = executor;
 	}
 
 }

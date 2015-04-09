@@ -29,13 +29,8 @@ public class GetDNSAddressAsyncCallback {
 			IGetDNSCallback callback = new IGetDNSCallback() {
 				
 				@Override
-				public void handleResponse(HashMap<String, Object> response) {
+				public void handleResponse(HashMap<String, Object> response, RuntimeException exception) {
 					GetDNSIP.printAnswer(response);
-				}
-				
-				@Override
-				public void handleException(GetDNSException exception) {
-					
 				}
 			};
 			context.addressAsync(queryString, null, callback);

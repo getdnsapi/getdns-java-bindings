@@ -29,13 +29,8 @@ public class GetDNSServiceAsyncCallback {
 			IGetDNSCallback callback = new IGetDNSCallback() {
 				
 				@Override
-				public void handleResponse(HashMap<String, Object> response) {
+				public void handleResponse(HashMap<String, Object> response, RuntimeException exception) {
 					GetDNSService.printAnswer(response);
-				}
-				
-				@Override
-				public void handleException(GetDNSException exception) {
-					
 				}
 			};
 			context.serviceAsync(queryString, null, callback);
