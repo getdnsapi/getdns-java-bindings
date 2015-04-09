@@ -10,9 +10,8 @@ interface IGetDNSContextSync {
 	 * </p>
 	 * 
 	 * <pre>
-	 * {
-	 * 	&#064;code
-	 * 	HashMap&lt;String, Object&gt; info = context.generalSync(&quot;gmadkat.com&quot;, RRType.valueOf(&quot;CNAME&quot;), null);
+	 * {@code
+	 * 	HashMap<String, Object> info = context.generalSync("gmadkat.com", RRType.valueOf("CNAME"), null);
 	 * 
 	 * }
 	 * </pre>
@@ -33,7 +32,7 @@ interface IGetDNSContextSync {
 	/**
 	 * 
 	 * <p>
-	 * he name argument can only take a host name.
+	 * The name argument can only take a host name.
 	 * </p>
 	 * 
 	 * 
@@ -81,9 +80,8 @@ interface IGetDNSContextSync {
 	 * </p>
 	 * 
 	 * <pre>
-	 * {
-	 * 	&#064;code
-	 * 	HashMap&lt;String, Object&gt; info = context.hostnameSync(&quot;2001:4860:4860::8888&quot;, null);
+	 * {@code
+	 * 	HashMap<String, Object> info = context.hostnameSync("2001:4860:4860::8888", null);
 	 * 
 	 * }
 	 * </pre>
@@ -91,6 +89,7 @@ interface IGetDNSContextSync {
 	 * @param address
 	 *          IPV4 or IPV6 Address
 	 * @param extensions
+	 * (optional) a dictionary containing attribute/value pairs
 	 * @return
 	 * @throws GetDNSException
 	 * @throws UnknownHostException

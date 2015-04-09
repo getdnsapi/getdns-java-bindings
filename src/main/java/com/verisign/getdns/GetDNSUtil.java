@@ -32,7 +32,10 @@ import java.util.Map;
 
 /**
  * 
- * This class extracts the DNS response and gives the required output
+ * <p>
+ * This class contains helper functions to extract specific data from dns
+ * response, you can see in examples
+ * </p>
  *
  */
 public class GetDNSUtil {

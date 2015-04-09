@@ -29,8 +29,10 @@ package com.verisign.getdns;
 import java.util.HashMap;
 import java.util.Map;
 
-/*
- * TODO: Included a new error GETDNS_UNKNOWN for now, can be removed later.
+/**
+ * <p>
+ * It contains response text for each response status code
+ * </p>
  */
 public enum GetDNSReturn {
 

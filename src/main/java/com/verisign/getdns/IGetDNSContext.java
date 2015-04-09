@@ -29,7 +29,7 @@ package com.verisign.getdns;
 
 /**
  * 
- * This interface contains all the getdns function
+ * <p>This interface contains all the getdns function</p>
  *
  */
 public interface IGetDNSContext extends IGetDNSContextSync, IGetDNSContextAsync{

@@ -34,16 +34,7 @@ package com.verisign.getdns;
  * value is “False” it will most often take the value
  * getdns.GETDNS_EXTENSION_TRUE.
  * </p>
- * <p>
- * <b>Note:</b> If a request is using a context in which stub resolution is set,
- * and that request also has any of the dnssec_return_status,
- * dnssec_return_only_secure, or dnssec_return_validation_chain extensions
- * specified, the API will not perform the request and will instead return an
- * error of getdns.GETDNS_RETURN_DNSSEC_WITH_STUB_DISALLOWED.
- * 
- * </p>
- * 
- * @author Vinay Soni
+ *
  */
 public enum ExtensionName {
 
@@ -223,12 +214,11 @@ public enum ExtensionName {
 	 * </p>
 	 * 
 	 * <pre>
-	 * {
-	 * 	&#064;code
-	 * 	HashMap&lt;String, Object&gt; optParams = new HashMap&lt;String, Object&gt;();
-	 * 	optParams.put(ExtensionNames.ADD_OPT_PARAM_EXTENDED_RCODE.getName(), 128);
-	 * 	HashMap&lt;ExtensionNames, Object&gt; extensions = new HashMap&lt;ExtensionNames, Object&gt;();
-	 * 	extensions.put(ExtensionNames.ADD_OPT_PARAMETERS, optParams);
+	 * {@code
+	 * HashMap<String, Object> optParams = new HashMap<String, Object>();
+	 * optParams.put(ExtensionNames.ADD_OPT_PARAM_EXTENDED_RCODE.getName(), 128);
+	 * HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
+	 * extensions.put(ExtensionNames.ADD_OPT_PARAMETERS, optParams);
 	 * }
 	 * </pre>
 	 */
