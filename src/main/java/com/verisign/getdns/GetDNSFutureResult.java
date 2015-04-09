@@ -28,6 +28,7 @@
 package com.verisign.getdns;
 
 import java.util.HashMap;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -73,6 +74,8 @@ public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGet
 	public HashMap<String, Object> get() throws InterruptedException, ExecutionException {
 		if (exception != null)
 			throw new ExecutionException(exception);
+		if(isCancelled)
+			throw new CancellationException("This request is already cancelled");
 		return response;
 	}
 
@@ -81,12 +84,12 @@ public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGet
 			TimeoutException {
 		if (unit == null)
 			throw new IllegalArgumentException("Timeunit cannot be null");
+		
 		synchronized (this) {
-			if (response == null && exception == null)
+			if (!isCancelled && response == null && exception == null)
 				this.wait(unit.toMillis(timeout));
 		}
 		return get();
-		// throw new UnsupportedOperationException("We do not support this as yet");
 	}
 
 	@Override
