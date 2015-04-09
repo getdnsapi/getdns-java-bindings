@@ -62,7 +62,7 @@ init_util_methods(JNIEnv* env, struct util_methods* methods) {
 			"booleanValue", "()Z");
 
 	methods->callbackHandleResponse = (*env)->GetMethodID(env,
-			methods->callbackClass, "handleResponse", "(Ljava/util/HashMap;)V");
+			methods->callbackClass, "handleResponse", "(Ljava/util/HashMap;Ljava/lang/RuntimeException;)V");
 
 	if (methods->listInit == NULL || methods->listAdd == NULL
 			|| methods->mapInit == NULL || methods->mapPut == NULL

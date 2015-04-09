@@ -549,7 +549,7 @@ void callbackfn(struct getdns_context *context,
 		return;
 
 	(*env)->CallObjectMethod(env, callbackObj, methods.callbackHandleResponse,
-			convertToJavaMap(env, &methods, response));
+			convertToJavaMap(env, &methods, response), NULL);
 
 	/*
 	 * Cleaning up.
