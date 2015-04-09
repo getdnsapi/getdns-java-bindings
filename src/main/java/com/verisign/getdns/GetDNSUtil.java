@@ -32,9 +32,7 @@ import java.util.Map;
 
 /**
  * 
- * This class generally extracts the DNS response and gives the required output
- * 
- * @author Vinay Soni
+ * This class extracts the DNS response and gives the required output
  *
  */
 public class GetDNSUtil {
@@ -143,7 +141,7 @@ public class GetDNSUtil {
 	private static Object getListObject(Map<String, Object> map, String path) {
 		Object value = null;
 		int indexOfArrayPath = path.indexOf('[');
-		//System.out.println("indexofArrayPath:  " + indexOfArrayPath);
+		// System.out.println("indexofArrayPath:  " + indexOfArrayPath);
 		if (indexOfArrayPath != -1) {
 			Object val = map.get(path.substring(0, indexOfArrayPath));
 			// System.out.println("val:  " + val);

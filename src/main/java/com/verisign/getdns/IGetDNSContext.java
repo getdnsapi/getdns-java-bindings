@@ -32,8 +32,6 @@ import java.util.HashMap;
 /**
  * 
  * This interface contains all the getdns function
- * 
- * @author Prithvi
  *
  */
 public interface IGetDNSContext {

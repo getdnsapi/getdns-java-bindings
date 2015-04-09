@@ -35,8 +35,6 @@ import java.util.concurrent.TimeoutException;
 /**
  * 
  * This is used for Asyc call implementation
- * 
- * @author Pritvhi
  *
  */
 public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGetDNSCallback {

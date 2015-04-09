@@ -29,9 +29,6 @@ package com.verisign.getdns;
 /**
  * This class contains important constants for keys and values for GetDNS
  * request and responses.
- * 
- * @author Prithvi
- * @modified Vinay Soni
  *
  */
 public interface GetDNSConstants {

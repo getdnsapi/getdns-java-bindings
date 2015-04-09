@@ -28,9 +28,7 @@ package com.verisign.getdns;
 
 /**
  * 
- * Handles all JNI exceptions
- * 
- * @author Prithvi
+ * It Handles all JNI exceptions
  *
  */
 public class GetDNSException extends RuntimeException {

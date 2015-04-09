@@ -29,7 +29,6 @@ import java.util.HashMap;
 
 /**
  * This class contains RRype
- * @author Prithvi
  *
  */
 public class RRType {
