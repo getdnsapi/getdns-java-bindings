@@ -1,4 +1,4 @@
-package com.verisign.getdns.example;
+package com.verisign.getdns.example.sync;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,20 +9,15 @@ import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
 
 /*
- * 
  * Given a DNS name and type, return the records in the DNS answer section 
- * 
- * 
  * 
  */
 
-public class GetDNSService {
+public class GetDNSServiceSync {
 
 	public static void main(String[] args) {
 		final IGetDNSContext context = GetDNSFactory.create(1);
-		if (args.length != 1)
-			throw new IllegalArgumentException("Need to pass address");
-		String queryString = args[0];
+		String queryString = "_xmpp-server._tcp.google.com.";
 		try {
 			HashMap<String, Object> info = context.serviceSync(queryString, null);
 
@@ -54,17 +49,17 @@ public class GetDNSService {
 	public static void printAnswer(HashMap<String, Object> info) {
 		boolean foundSRV = false;
 		if (info != null) {
-                        ArrayList<Map<String, Object>> answers = GetDNSUtil.getAsListOfMap(info, "/replies_tree[0]/answer");
-                        if (answers != null) {
-                            for (Map<String, Object> answer : answers) {
-                                if (answer != null && answer.get("type") != null && answer.get("type").toString().equals("33")) {
-                                    HashMap<String, Object> rdata = GetDNSUtil.getAsMap(answer, "/rdata");
-                                    System.out.println("SRV " + answer.get("name") + ", Priority: " + rdata.get("priority") + ", "
-                                                         + " port: " + rdata.get("port") + " target: " + rdata.get("target"));
-                                    foundSRV = true;
-                                }
-                            }
-                        }
+			ArrayList<Map<String, Object>> answers = GetDNSUtil.getAsListOfMap(info, "/replies_tree[0]/answer");
+			if (answers != null) {
+				for (Map<String, Object> answer : answers) {
+					if (answer != null && answer.get("type") != null && answer.get("type").toString().equals("33")) {
+						HashMap<String, Object> rdata = GetDNSUtil.getAsMap(answer, "/rdata");
+						System.out.println("SRV " + answer.get("name") + ", Priority: " + rdata.get("priority") + ", " + " port: "
+								+ rdata.get("port") + " target: " + rdata.get("target"));
+						foundSRV = true;
+					}
+				}
+			}
 		}
 		if (!foundSRV)
 			System.out.println("No SRV records found");

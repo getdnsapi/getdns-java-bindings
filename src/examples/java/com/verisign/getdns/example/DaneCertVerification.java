@@ -139,14 +139,9 @@ public class DaneCertVerification {
 	 */
 	public static void main(String[] args) {
 		final String TCP = "tcp";
-		String hostname = null;
-		int port = -1;
-		if (args.length != 2)
-			throw new IllegalArgumentException("Please enter a hostname and port number");
-		if (args[0] != null && args[1] != null) {
-			hostname = args[0];
-			port = Integer.parseInt(args[1]);
-		}
+
+		String hostname = "good.dane.verisignlabs.com";
+		int port = 443;
 		try {
 			if (hostname != null && port > 0) {
 

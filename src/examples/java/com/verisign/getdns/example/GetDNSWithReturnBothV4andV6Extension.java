@@ -13,10 +13,8 @@ public class GetDNSWithReturnBothV4andV6Extension {
 
 	public static void main(String args[]) {
 
-		if (args.length != 2)
-			throw new IllegalArgumentException("Need to pass string and type");
-		String queryString = args[0];
-		String type = args[1];
+		String queryString = "getdnsapi.net";
+		String type = "A";
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 		extensions.put(ExtensionName.RETURN_BOTH_V4_AND_V6, GetDNSConstants.GETDNS_EXTENSION_TRUE);

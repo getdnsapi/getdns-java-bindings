@@ -1,13 +1,11 @@
-package com.verisign.getdns.example;
+package com.verisign.getdns.example.asyncwithcallback;
 
 import java.util.HashMap;
 
-import com.verisign.getdns.GetDNSException;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSCallback;
 import com.verisign.getdns.IGetDNSContextWithCallback;
-import com.verisign.getdns.RRType;
 
 /*
  * 
@@ -17,28 +15,24 @@ import com.verisign.getdns.RRType;
  * 
  */
 
-public class GetDNSAddressAsyncCallback {
+public class GetDNSHostnameAsyncCallback {
 
 	public static void main(String[] args) {
 		final IGetDNSContextWithCallback context = GetDNSFactory.createWithCallback(1, null);
-		if (args.length != 1)
-			throw new IllegalArgumentException("Need to pass address");
-		final String queryString = args[0];
+		final String queryString = "8.8.8.8";
 
 		try {
 			IGetDNSCallback callback = new IGetDNSCallback() {
-				
+
 				@Override
 				public void handleResponse(HashMap<String, Object> response, RuntimeException exception) {
-					GetDNSIP.printAnswer(response);
+					System.out.println(response);
+					System.out.println(GetDNSUtil.getObject(response, "/canonical_name"));
+					System.out.println(GetDNSUtil.getdnsStatus(response));
 				}
 			};
-			context.addressAsync(queryString, null, callback);
-//			HashMap<String, Object> info = null;
-//			info = result.get(5000, TimeUnit.MILLISECONDS);
+			context.hostnameAsync(queryString, null, callback);
 			Thread.sleep(10000);
-
-//			checkResponse(queryString, type, info);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

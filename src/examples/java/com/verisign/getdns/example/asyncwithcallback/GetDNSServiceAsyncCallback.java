@@ -1,13 +1,12 @@
-package com.verisign.getdns.example;
+package com.verisign.getdns.example.asyncwithcallback;
 
 import java.util.HashMap;
 
-import com.verisign.getdns.GetDNSException;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSCallback;
 import com.verisign.getdns.IGetDNSContextWithCallback;
-import com.verisign.getdns.RRType;
+import com.verisign.getdns.example.sync.GetDNSServiceSync;
 
 /*
  * 
@@ -21,24 +20,23 @@ public class GetDNSServiceAsyncCallback {
 
 	public static void main(String[] args) {
 		final IGetDNSContextWithCallback context = GetDNSFactory.createWithCallback(1, null);
-		if (args.length != 1)
-			throw new IllegalArgumentException("Need to pass address");
-		final String queryString = args[0];
+		final String queryString = "_xmpp-server._tcp.google.com.";
 
 		try {
 			IGetDNSCallback callback = new IGetDNSCallback() {
-				
+
 				@Override
 				public void handleResponse(HashMap<String, Object> response, RuntimeException exception) {
-					GetDNSService.printAnswer(response);
+					GetDNSServiceSync.printAnswer(response);
+					System.out.println(GetDNSUtil.getdnsStatus(response));
 				}
 			};
 			context.serviceAsync(queryString, null, callback);
-//			HashMap<String, Object> info = null;
-//			info = result.get(5000, TimeUnit.MILLISECONDS);
+			// HashMap<String, Object> info = null;
+			// info = result.get(5000, TimeUnit.MILLISECONDS);
 			Thread.sleep(10000);
 
-//			checkResponse(queryString, type, info);
+			// checkResponse(queryString, type, info);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

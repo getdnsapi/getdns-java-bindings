@@ -25,10 +25,8 @@ public class GetDNSCustomRRType {
 		options.put(ContextOptionName.STUB, true);
 		options.put(ContextOptionName.DNS_TRANSPORT, 542);
 		final IGetDNSContext context = GetDNSFactory.create(1, options);
-		if (args.length != 2)
-			throw new IllegalArgumentException("Need to pass string and type");
-		String queryString = args[0];
-		String type = args[1];
+		String queryString = "getdnsapi.net";
+		String type = "A";
 		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 		extensions.put(ExtensionName.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 

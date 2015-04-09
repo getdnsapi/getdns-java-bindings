@@ -1,4 +1,4 @@
-package com.verisign.getdns.example;
+package com.verisign.getdns.example.async;
 
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
@@ -10,21 +10,15 @@ import com.verisign.getdns.IGetDNSContext;
 import com.verisign.getdns.RRType;
 
 /*
- * 
- * Given a DNS name and type, return the records in the DNS answer section 
- * 
- * 
- * 
+ * Given a DNS name and type, return the records in the DNS answer section  
  */
 
 public class GetDNSGeneralAsync {
 
 	public static void main(String[] args) {
 		final IGetDNSContext context = GetDNSFactory.create(1);
-		if (args.length != 2)
-			throw new IllegalArgumentException("Need to pass string and type");
-		String queryString = args[0];
-		String type = args[1];
+		String queryString = "verisigninc.com";
+		String type = "A";
 
 		try {
 			GetDNSFutureResult result = context.generalAsync(queryString, RRType.valueOf(type), null);
@@ -54,23 +48,4 @@ public class GetDNSGeneralAsync {
 		System.exit(0);
 
 	}
-
-	// public static void printAnswer(HashMap<String, Object> info) {
-	// if (info != null) {
-	// ArrayList<HashMap<String, Object>> answers = (ArrayList<HashMap<String,
-	// Object>>) info
-	// .get("just_address_answers");
-	// for (HashMap<String, Object> answer : answers) {
-	//
-	// if (answer != null) {
-	// System.out.println(answer.get("address_type") + ": " +
-	// answer.get("address_data"));
-	// }
-	//
-	// }
-	//
-	// }
-	//
-	// }
-
 }

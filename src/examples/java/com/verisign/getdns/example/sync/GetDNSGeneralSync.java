@@ -1,4 +1,4 @@
-package com.verisign.getdns.example;
+package com.verisign.getdns.example.sync;
 
 import java.util.HashMap;
 
@@ -8,21 +8,19 @@ import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
 import com.verisign.getdns.RRType;
 
-/**
+/*
  * Given a DNS name and type, return the records in the DNS answer section
  */
 
-public class GetDNSGeneral {
+public class GetDNSGeneralSync {
 
 	public static void main(String[] args) {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
 		options.put(ContextOptionName.DNS_TRANSPORT, 542);
 		final IGetDNSContext context = GetDNSFactory.create(1, options);
-		if (args.length != 2)
-			throw new IllegalArgumentException("Need to pass string and type");
-		String queryString = args[0];
-		String type = args[1];
+		String queryString = "verisigninc.com";
+		String type = "A";
 
 		try {
 			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type), null);
@@ -45,5 +43,4 @@ public class GetDNSGeneral {
 		System.exit(0);
 
 	}
-
 }

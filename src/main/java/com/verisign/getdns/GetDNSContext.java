@@ -102,8 +102,8 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 	}
 
 	private HashMap<String, Object> getExtension(HashMap<ExtensionName, Object> extensions) {
-		HashMap<String, Object> extension = new HashMap<String, Object>();
 		if (extensions != null) {
+			HashMap<String, Object> extension = new HashMap<String, Object>();
 			for (ExtensionName extensionName : extensions.keySet()) {
 				extension.put(extensionName.getName(), extensions.get(extensionName));
 			}
@@ -115,23 +115,19 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 
 	public HashMap<String, Object> generalSync(String name, RRType requestType, HashMap<ExtensionName, Object> extensions)
 			throws GetDNSException {
-		HashMap<String, Object> extension = new HashMap<String, Object>();
-		extension = getExtension(extensions);
-		return generalSync(context, name, requestType.getValue(), extension);
+		return generalSync(context, name, requestType.getValue(), getExtension(extensions));
 	}
 
 	private native HashMap<String, Object> generalSync(Object context, String name, int requestType,
 			HashMap<String, Object> extensions) throws GetDNSException;
-	
+
 	public GetDNSFutureResult generalAsync(String name, RRType requestType, HashMap<ExtensionName, Object> extensions)
 			throws GetDNSException {
 		if (eventBase == null) {
 			throw new RuntimeException("Error during eventing init. Cannot invoke async, try sync API");
 		}
-		HashMap<String, Object> extension = new HashMap<String, Object>();
-		extension = getExtension(extensions);
 		GetDNSFutureResult result = new GetDNSFutureResult(this);
-		long transactionId = generalAsync(context, name, requestType.getValue(), extension, result);
+		long transactionId = generalAsync(context, name, requestType.getValue(), getExtension(extensions), result);
 		result.setTransactionId(transactionId);
 		synchronized (eventBase) {
 			eventBase.notify();
@@ -147,9 +143,7 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 
 	public HashMap<String, Object> addressSync(String name, HashMap<ExtensionName, Object> extensions)
 			throws GetDNSException {
-		HashMap<String, Object> extension = new HashMap<String, Object>();
-		extension = getExtension(extensions);
-		return addressSync(context, name, extension);
+		return addressSync(context, name, getExtension(extensions));
 	}
 
 	private native HashMap<String, Object> serviceSync(Object context, String name, HashMap<String, Object> extensions)
@@ -158,9 +152,7 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 	@Override
 	public HashMap<String, Object> serviceSync(String name, HashMap<ExtensionName, Object> extensions)
 			throws GetDNSException {
-		HashMap<String, Object> extension = new HashMap<String, Object>();
-		extension = getExtension(extensions);
-		return serviceSync(context, name, extension);
+		return serviceSync(context, name, getExtension(extensions));
 
 	}
 
@@ -170,9 +162,7 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 	@Override
 	public HashMap<String, Object> hostnameSync(String address, HashMap<ExtensionName, Object> extensions)
 			throws GetDNSException, UnknownHostException {
-		HashMap<String, Object> extension = new HashMap<String, Object>();
-		extension = getExtension(extensions);
-		return hostnameSync(context, address, extension);
+		return hostnameSync(context, address, getExtension(extensions));
 	}
 
 	@Override
@@ -181,9 +171,7 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 			throw new RuntimeException("Error during eventing init. Cannot invoke async, try sync API");
 		}
 		GetDNSFutureResult result = new GetDNSFutureResult(this);
-		HashMap<String, Object> extension = new HashMap<String, Object>();
-		extension = getExtension(extensions);
-		long transactionId = addressAsync(context, name, extension, result);
+		long transactionId = addressAsync(context, name, getExtension(extensions), result);
 		result.setTransactionId(transactionId);
 		synchronized (eventBase) {
 			eventBase.notify();
@@ -199,10 +187,8 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 		if (eventBase == null) {
 			throw new RuntimeException("Error during eventing init. Cannot invoke async, try sync API");
 		}
-		HashMap<String, Object> extension = new HashMap<String, Object>();
-		extension = getExtension(extensions);
 		GetDNSFutureResult result = new GetDNSFutureResult(this);
-		long transactionId = serviceAsync(context, name, extension, result);
+		long transactionId = serviceAsync(context, name, getExtension(extensions), result);
 		result.setTransactionId(transactionId);
 		synchronized (eventBase) {
 			eventBase.notify();
@@ -220,57 +206,56 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 			throw new RuntimeException("Error during eventing init. Cannot invoke async, try sync API");
 		}
 		GetDNSFutureResult result = new GetDNSFutureResult(this);
-		HashMap<String, Object> extension = new HashMap<String, Object>();
-		extension = getExtension(extensions);
-		long transactionId = hostnameAsync(context, address, extension, result);
+		long transactionId = hostnameAsync(context, address, getExtension(extensions), result);
 		result.setTransactionId(transactionId);
 		synchronized (eventBase) {
 			eventBase.notify();
 		}
 		return result;
 	}
-	
+
 	@Override
 	public void setExecutor(ExecutorService executor) {
 		this.executor = executor;
 	}
-	
-	void sendToCallback(final IGetDNSCallback callback, final HashMap<String, Object> response, final RuntimeException exception){
-		if(executor != null)
+
+	void sendToCallback(final IGetDNSCallback callback, final HashMap<String, Object> response,
+			final RuntimeException exception) {
+		if (executor != null)
 			executor.submit(new Runnable() {
 				public void run() {
-					if(response != null)
+					if (response != null)
 						callback.handleResponse(response, exception);
 				}
 			});
 		else
 			callback.handleResponse(response, exception);
 	}
-	
+
 	public Long generalAsync(String name, RRType requestType, HashMap<ExtensionName, Object> extensions,
 			IGetDNSCallback callback) throws GetDNSException {
 		return postProcessingForCallback(generalAsync(name, requestType, extensions), callback);
 	}
-	
+
 	@Override
-	public Long addressAsync(String name, HashMap<ExtensionName, Object> extensions, 
-			IGetDNSCallback callback) throws GetDNSException {
+	public Long addressAsync(String name, HashMap<ExtensionName, Object> extensions, IGetDNSCallback callback)
+			throws GetDNSException {
 		return postProcessingForCallback(addressAsync(name, extensions), callback);
 	}
-	
+
 	@Override
-	public Long serviceAsync(String name, HashMap<ExtensionName, Object> extensions, 
-			IGetDNSCallback callback) throws GetDNSException {
+	public Long serviceAsync(String name, HashMap<ExtensionName, Object> extensions, IGetDNSCallback callback)
+			throws GetDNSException {
 		return postProcessingForCallback(serviceAsync(name, extensions), callback);
 	}
-	
+
 	@Override
-	public Long hostnameAsync(String address, HashMap<ExtensionName, Object> extensions, 
-			IGetDNSCallback callback) throws GetDNSException, UnknownHostException{
+	public Long hostnameAsync(String address, HashMap<ExtensionName, Object> extensions, IGetDNSCallback callback)
+			throws GetDNSException, UnknownHostException {
 		return postProcessingForCallback(hostnameAsync(address, extensions), callback);
 	}
 
-	Long postProcessingForCallback(GetDNSFutureResult result, IGetDNSCallback callback){
+	Long postProcessingForCallback(GetDNSFutureResult result, IGetDNSCallback callback) {
 		result.setCallback(callback);
 		result.setExecutors(executor);
 		return result.getTransactionId();
@@ -286,7 +271,7 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 			Object callbackObj) throws GetDNSException;
 
 	void applyContextOptions(HashMap<ContextOptionName, Object> contextOptions) {
-		if(contextOptions == null){
+		if (contextOptions == null) {
 			return;
 		}
 		for (ContextOptionName optionName : contextOptions.keySet()) {

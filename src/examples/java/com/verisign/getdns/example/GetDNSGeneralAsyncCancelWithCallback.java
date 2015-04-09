@@ -12,7 +12,7 @@ import com.verisign.getdns.RRType;
  * Given a DNS name and type, return the records in the DNS answer section  
  */
 
-public class GetDNSGeneralAsyncCancel {
+public class GetDNSGeneralAsyncCancelWithCallback {
 
 	public static void main(String[] args) {
 		final IGetDNSContext context = GetDNSFactory.create(1);

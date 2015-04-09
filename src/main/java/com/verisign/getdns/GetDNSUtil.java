@@ -113,7 +113,7 @@ public class GetDNSUtil {
 	static public String getdnsStatus(HashMap<String, Object> info) {
 		int getDnsStatus = (int) getObject(info, "/status");
 		GetDNSReturn ret = GetDNSReturn.fromInt(getDnsStatus);
-		return "\n" + ret.toString();
+		return "\nstatus: " + ret.toString();
 	}
 
 	/**

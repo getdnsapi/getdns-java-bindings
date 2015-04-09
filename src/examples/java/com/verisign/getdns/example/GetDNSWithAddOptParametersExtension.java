@@ -11,11 +11,8 @@ import com.verisign.getdns.RRType;
 public class GetDNSWithAddOptParametersExtension {
 
 	public static void main(String args[]) {
-
-		if (args.length != 2)
-			throw new IllegalArgumentException("Need to pass string and type");
-		String queryString = args[0];
-		String type = args[1];
+		String queryString = "getdnsapi.net";
+		String type = "A";
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		HashMap<String, Object> optParams = new HashMap<String, Object>();
 		optParams.put(ExtensionName.ADD_OPT_PARAM_EXTENDED_RCODE.getName(), 128);

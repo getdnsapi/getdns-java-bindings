@@ -12,17 +12,13 @@ import com.verisign.getdns.RRType;
 public class GetDNSWithDNSSECReturnOnlyExtension {
 
 	public static void main(String args[]) {
-
-		if (args.length != 2)
-			throw new IllegalArgumentException("Need to pass string and type");
-		String queryString = args[0];
-		String type = args[1];
+		String queryString = "getdnsapi.net";
+		String type = "A";
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 		extensions.put(ExtensionName.DNSSEC_RETURN_ONLY_SECURE, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {
-			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type),
-					extensions);
+			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type), extensions);
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 					System.out.println(GetDNSUtil.getDnssecStatus(info));
