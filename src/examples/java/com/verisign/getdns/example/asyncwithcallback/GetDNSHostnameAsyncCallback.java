@@ -26,13 +26,12 @@ public class GetDNSHostnameAsyncCallback {
 
 				@Override
 				public void handleResponse(HashMap<String, Object> response, RuntimeException exception) {
-					System.out.println(response);
 					System.out.println(GetDNSUtil.getObject(response, "/canonical_name"));
 					System.out.println(GetDNSUtil.getdnsStatus(response));
 				}
 			};
 			context.hostnameAsync(queryString, null, callback);
-			Thread.sleep(10000);
+			Thread.sleep(5000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

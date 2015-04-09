@@ -16,7 +16,7 @@ public class GetDNSHostnameAsync {
 
 	public static void main(String[] args) {
 		final IGetDNSContext context = GetDNSFactory.create(1);
-		String queryString = "216.58.220.46";
+		String queryString = "8.8.8.8";
 		try {
 			GetDNSFutureResult result = context.hostnameAsync(queryString, null);
 			HashMap<String, Object> info = null;
