@@ -1,7 +1,6 @@
 package com.verisign.getdns.example.asyncwithcallback;
 
 import java.util.HashMap;
-import java.util.concurrent.Executors;
 
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
@@ -10,33 +9,38 @@ import com.verisign.getdns.IGetDNSContextWithCallback;
 import com.verisign.getdns.RRType;
 
 /*
+ * 
  * Given a DNS name and type, return the records in the DNS answer section 
+ * 
+ * 
+ * 
  */
 
-public class GetDNSGeneralAsyncCallbackWithThreadPool {
+public class GetDNSGeneralAsyncCallbackWithCancel {
 
 	public static void main(String[] args) {
 		final IGetDNSContextWithCallback context = GetDNSFactory.createWithCallback(1, null);
-		context.setExecutor(Executors.newFixedThreadPool(5));
 
 		try {
-			String[] domains = { "verisign.com", "verisigninc.com", "google.com", "yahoo.com", "facebook.com" };
-			for (final String domain : domains) {
-				context.generalAsync(domain, RRType.valueOf("A"), null, new IGetDNSCallback() {
+			final String queryString = "verisigninc.com";
+			long transactionId = context.generalAsync(queryString, RRType.valueOf("A"), null, new IGetDNSCallback() {
 
-					@Override
-					public void handleResponse(HashMap<String, Object> response, RuntimeException exception) {
-						checkResponse(domain, "A", response);
-						try {
-							Thread.sleep(5000);
-							System.out.println("Completed processing for: " + domain);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
+				@Override
+				public void handleResponse(HashMap<String, Object> response, RuntimeException exception) {
+					System.out.println("response:  " + response);
+					checkResponse(queryString, "A", response);
+					try {
+						Thread.sleep(5000);
+						System.out.println("Completed processing for: " + queryString);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
 					}
-				});
-			}
-			Thread.sleep(10000);
+				}
+			});
+			context.cancelRequest(transactionId);
+			Thread.sleep(20000);
+			System.out
+					.println("Respnose didn't come within 20 secs, it shows that the Request had been succesfully canceled");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -49,7 +53,7 @@ public class GetDNSGeneralAsyncCallbackWithThreadPool {
 	private static void checkResponse(String queryString, String type, HashMap<String, Object> info) {
 		if (info != null) {
 			if (Integer.parseInt(info.get("status").toString()) == 900) {
-				System.out.println("Queried: " + queryString + " status: " + GetDNSUtil.getdnsStatus(info));
+				System.out.println(GetDNSUtil.getdnsStatus(info));
 			}
 
 			else if (Integer.parseInt(info.get("status").toString()) == 901) {

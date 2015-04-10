@@ -32,6 +32,7 @@ public class GetDNSAddressAsyncCallback {
 					System.out.println(GetDNSUtil.getdnsStatus(response));
 				}
 			};
+
 			context.addressAsync(queryString, null, callback);
 			Thread.sleep(10000);
 		} catch (Exception e) {

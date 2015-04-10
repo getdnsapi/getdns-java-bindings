@@ -36,7 +36,7 @@ import java.util.concurrent.TimeoutException;
 
 /**
  * 
- * This is used for Asyc call implementation
+ * <p>This is used for Asyc call implementation. it implements java <a href="http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html" target="_blank">future</a><p>
  *
  */
 public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGetDNSCallback {
