@@ -1,4 +1,4 @@
-package com.verisign.getdns.test;
+package com.verisign.getdns.Async.test;
 
 
 import java.util.concurrent.ExecutionException;
@@ -13,27 +13,26 @@ import com.verisign.getdns.GetDNSException;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSFutureResult;
 import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.RRType;
+import com.verisign.getdns.test.ErrorCodeMatcher;
+import com.verisign.getdns.test.IGetDNSTestConstants;
 
-/*
- * 
- */
-public class ServiceAsyncNegativeTest implements IGetDNSTestConstants{
-	
+public class GeneralAsyncNegitiveTest implements IGetDNSTestConstants{
 	
 	@Rule
     public ExpectedException thrown = ExpectedException.none();
-	
+
 	
 	
 	@Test
-	public void testGetDNSAsyncNULLDomain() throws ExecutionException, TimeoutException  {
+	public void testGetDNSASyncNULLDomain() throws ExecutionException, TimeoutException  {
 		
 		final IGetDNSContext context = GetDNSFactory.create(1);		
 	
 		try{
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			GetDNSFutureResult futureResult = context.serviceAsync(null , null);
+			GetDNSFutureResult futureResult = context.generalAsync(null, RRType.A, null);
 		
 			try {
 				futureResult.get(5000, TimeUnit.MILLISECONDS);
@@ -46,14 +45,14 @@ public class ServiceAsyncNegativeTest implements IGetDNSTestConstants{
 	}
 	
 	@Test
-	public void testGetDNSAsyncLongDomain(){
+	public void testGetDNSASyncLongDomain(){
 	
 		final IGetDNSContext context = GetDNSFactory.create(1);		
 		try{
 			
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_BAD_DOMAIN_NAME"));
-			context.serviceAsync(TOOLONGDOMAINNAME, null);
+			context.generalAsync(TOOLONGDOMAINNAME, RRType.A,  null);
 			 
 		}finally {
 			context.close();
@@ -62,14 +61,13 @@ public class ServiceAsyncNegativeTest implements IGetDNSTestConstants{
 	
 
 	@Test
-	public void testGetDNSAsyncForTooManyOctets(){
-		System.out.println("Junit 3");
+	public void testGetDNSSyncForTooManyOctets(){
 		final IGetDNSContext context = GetDNSFactory.create(1);		
 		try{
 			
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_BAD_DOMAIN_NAME"));
-			context.serviceAsync(TOOMANYOCTETS, null);
+			context.generalAsync(TOOMANYOCTETS,RRType.A, null);
 			 
 		}finally {
 			context.close();

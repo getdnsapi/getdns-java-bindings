@@ -1,4 +1,4 @@
-package com.verisign.getdns.test;
+package com.verisign.getdns.Async.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -16,6 +16,7 @@ import com.verisign.getdns.GetDNSFutureResult;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSContext;
 import com.verisign.getdns.RRType;
+import com.verisign.getdns.test.IGetDNSTestConstants;
 
 public class AddressAsyncPositiveWithRecursiveTest implements IGetDNSTestConstants {
 

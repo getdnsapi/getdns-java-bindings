@@ -1,4 +1,4 @@
-package com.verisign.getdns.test;
+package com.verisign.getdns.Sync.test;
 
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -10,6 +10,7 @@ import org.junit.rules.ExpectedException;
 import com.verisign.getdns.GetDNSException;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.test.ErrorCodeMatcher;
 
 public class HostnameSyncNegativeTest {
 	

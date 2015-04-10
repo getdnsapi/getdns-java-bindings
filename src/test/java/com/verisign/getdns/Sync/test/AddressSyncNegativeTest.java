@@ -1,4 +1,4 @@
-package com.verisign.getdns.test;
+package com.verisign.getdns.Sync.test;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -7,6 +7,8 @@ import org.junit.rules.ExpectedException;
 import com.verisign.getdns.GetDNSException;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.test.ErrorCodeMatcher;
+import com.verisign.getdns.test.IGetDNSTestConstants;
 
 /*
  * 

@@ -1,4 +1,4 @@
-package com.verisign.getdns.test;
+package com.verisign.getdns.Async.test;
 
 import static com.verisign.getdns.test.IGetDNSTestConstants.DOMAIN_NAME;
 import static com.verisign.getdns.test.IGetDNSTestConstants.UNREGDOMAIN;
