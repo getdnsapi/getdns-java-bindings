@@ -1,4 +1,4 @@
-package com.verisign.getdns.Async.test;
+package com.verisign.getdns.async.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

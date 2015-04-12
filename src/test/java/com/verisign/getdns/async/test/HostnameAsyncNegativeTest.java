@@ -1,4 +1,4 @@
-package com.verisign.getdns.Async.test;
+package com.verisign.getdns.async.test;
 
 import java.util.concurrent.TimeUnit;
 

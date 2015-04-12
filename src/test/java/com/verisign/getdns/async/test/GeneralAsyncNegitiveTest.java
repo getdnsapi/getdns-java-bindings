@@ -1,8 +1,9 @@
-package com.verisign.getdns.Sync.test;
+package com.verisign.getdns.async.test;
 
-import static org.junit.Assert.assertNotNull;
 
-import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -10,83 +11,63 @@ import org.junit.rules.ExpectedException;
 
 import com.verisign.getdns.GetDNSException;
 import com.verisign.getdns.GetDNSFactory;
+import com.verisign.getdns.GetDNSFutureResult;
 import com.verisign.getdns.IGetDNSContext;
 import com.verisign.getdns.RRType;
 import com.verisign.getdns.test.ErrorCodeMatcher;
 import com.verisign.getdns.test.IGetDNSTestConstants;
 
-/*
- * 
- */
-public class GeneralSyncNegativeTest implements IGetDNSTestConstants{
-	
+public class GeneralAsyncNegitiveTest implements IGetDNSTestConstants{
 	
 	@Rule
     public ExpectedException thrown = ExpectedException.none();
-	
+
 	
 	
 	@Test
-	public void testGetDNSSyncNonExistingDomain() {
-	
+	public void testGetDNSASyncNULLDomain() throws ExecutionException, TimeoutException  {
+		
 		final IGetDNSContext context = GetDNSFactory.create(1);		
-		try{
-//			thrown.expect(GetDNSException.class);
-//			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			HashMap<String, Object> info =	context.generalSync(UNREGDOMAIN, RRType.A, null);
-			assertNotNull(info);
-		}finally {
-			context.close();
-		}
-
-	}
 	
-	
-	/*
-	 *check for response for null domain  
-	 */
-
-	@Test
-	public void testGetDNSSyncNULLDomain() {
-	
-		final IGetDNSContext context = GetDNSFactory.create(1);		
 		try{
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			context.generalSync( null, RRType.A, null);
+			GetDNSFutureResult futureResult = context.generalAsync(null, RRType.A, null);
+		
+			try {
+				futureResult.get(5000, TimeUnit.MILLISECONDS);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}finally {
 			context.close();
 		}
-
 	}
-	/*
-	 * check unit test case against invalid domain (label too long)
-	 */
 	
 	@Test
-	public void testGetDNSSyncLongDomain(){
+	public void testGetDNSASyncLongDomain(){
 	
 		final IGetDNSContext context = GetDNSFactory.create(1);		
 		try{
 			
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_BAD_DOMAIN_NAME"));
-			context.generalSync(TOOLONGDOMAINNAME, RRType.A, null);
+			context.generalAsync(TOOLONGDOMAINNAME, RRType.A,  null);
 			 
 		}finally {
 			context.close();
 		}
 	}
 	
+
 	@Test
 	public void testGetDNSSyncForTooManyOctets(){
-		System.out.println("Junit 3");
 		final IGetDNSContext context = GetDNSFactory.create(1);		
 		try{
 			
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_BAD_DOMAIN_NAME"));
-			context.generalSync(TOOMANYOCTETS, RRType.A, null);
+			context.generalAsync(TOOMANYOCTETS,RRType.A, null);
 			 
 		}finally {
 			context.close();

@@ -1,4 +1,4 @@
-package com.verisign.getdns.Sync.test;
+package com.verisign.getdns.sync.test;
 
 import java.net.UnknownHostException;
 import java.util.HashMap;

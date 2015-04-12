@@ -1,4 +1,4 @@
-package com.verisign.getdns.Sync.test;
+package com.verisign.getdns.sync.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -14,23 +14,18 @@ import com.verisign.getdns.IGetDNSContext;
 import com.verisign.getdns.RRType;
 import com.verisign.getdns.test.IGetDNSTestConstants;
 
-public class GeneralSyncPositiveWithStubTest implements IGetDNSTestConstants {
+public class AddressSyncPositiveWithStubTest implements IGetDNSTestConstants {
 
-	/*
-	 * check unit test case for A Record
-	 */
-
-	@Test
-	public void testGetDNSSyncForARecord() {
+	// @Test
+	public void testGetDNSAddrForlocalhost() {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
 		final IGetDNSContext context = GetDNSFactory.create(1, options);
 		try {
 
-			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.A, null);
+			HashMap<String, Object> info = context.addressSync("localhost", null);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			// assertNotNull("Type is null and response was "+info, gettype(info));
 			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
 
 		} finally {
@@ -38,69 +33,53 @@ public class GeneralSyncPositiveWithStubTest implements IGetDNSTestConstants {
 		}
 	}
 
-	/*
-	 * check unit test case for AAAA Record
-	 */
-
 	@Test
-	public void testGetDNSSyncForAAAARecord() {
-
+	public void testGetDNSAddrUnboundDomainZone() {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
 		final IGetDNSContext context = GetDNSFactory.create(1, options);
 		try {
-			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.AAAA, null);
+
+			HashMap<String, Object> info = context.addressSync(DOMAIN_NAME_FROM_UNBOUND_ZONE, null);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			// assertNotNull("Type is null and response was "+info, gettype(info));
-			assertEquals(RRType.AAAA.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
 
 		} finally {
 			context.close();
 		}
 	}
 
-	/*
-	 * check unit test case for txt Record
-	 */
 	@Test
-	public void testGetDNSSyncForTXTRecord() {
+	public void testGetDNAddr() {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
 		final IGetDNSContext context = GetDNSFactory.create(1, options);
 		try {
 
-			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.TXT, null);
+			HashMap<String, Object> info = context.addressSync(DOMAIN_NAME, null);
+			System.out.println("info:  " + info);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			// assertNotNull("Type is null and response was "+info, gettype(info));
-
-			assertEquals(RRType.TXT.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
 
 		} finally {
 			context.close();
 		}
 	}
 
-	/*
-	 * check unit test case for A Record
-	 */
-
 	@Test
-	public void testGetDNSSyncForMXRecord() {
-		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
-		options.put(ContextOptionName.STUB, true);
-		final IGetDNSContext context = GetDNSFactory.create(1, options);
-		try {
-			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.MX, null);
-			assertNotNull(info);
-			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			// assertNotNull("Type is null and response was "+info, gettype(info));
-			assertEquals(RRType.MX.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+	public void testGetDNSSyncNonExistingDomain() {
 
+		final IGetDNSContext context = GetDNSFactory.create(1);
+		try {
+			HashMap<String, Object> info = context.addressSync(UNREGDOMAIN, null);
+			assertNotNull(info);
+			assertEquals("Time out error" + info.get("status"), 901, Integer.parseInt(info.get("status").toString()));
 		} finally {
 			context.close();
 		}
+
 	}
 
 }

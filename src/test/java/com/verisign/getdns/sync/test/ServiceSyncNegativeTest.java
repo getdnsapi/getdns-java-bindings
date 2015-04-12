@@ -1,7 +1,4 @@
-package com.verisign.getdns.Async.test;
-
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
+package com.verisign.getdns.sync.test;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -10,36 +7,20 @@ import org.junit.rules.ExpectedException;
 import com.verisign.getdns.GetDNSException;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.IGetDNSContext;
-import com.verisign.getdns.RRType;
 import com.verisign.getdns.test.ErrorCodeMatcher;
 import com.verisign.getdns.test.IGetDNSTestConstants;
 
 /*
  * 
  */
-public class AddressAsyncNegativeTest implements IGetDNSTestConstants {
+public class ServiceSyncNegativeTest implements IGetDNSTestConstants {
 
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
-	@Test
-	public void testGetDNSSyncNonExistingDomain() throws ExecutionException, TimeoutException, InterruptedException {
-
-		final IGetDNSContext context = GetDNSFactory.create(1);
-		try {
-			thrown.expect(GetDNSException.class);
-			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			context.generalAsync(null, RRType.A, null);
-		} finally {
-			context.close();
-		}
-
-	}
-
-	/*
+	/**
 	 * check for response for null domain
 	 */
-
 	@Test
 	public void testGetDNSSyncNULLDomain() {
 
@@ -47,14 +28,14 @@ public class AddressAsyncNegativeTest implements IGetDNSTestConstants {
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			context.addressAsync(null, null);
+			context.serviceSync(null, null);
 		} finally {
 			context.close();
 		}
 
 	}
 
-	/*
+	/**
 	 * check unit test case against invalid domain (label too long)
 	 */
 
@@ -66,7 +47,7 @@ public class AddressAsyncNegativeTest implements IGetDNSTestConstants {
 
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_BAD_DOMAIN_NAME"));
-			context.addressAsync(TOOLONGDOMAINNAME, null);
+			context.serviceSync(TOOLONGDOMAINNAME, null);
 
 		} finally {
 			context.close();
@@ -75,13 +56,12 @@ public class AddressAsyncNegativeTest implements IGetDNSTestConstants {
 
 	@Test
 	public void testGetDNSSyncForTooManyOctets() {
-
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		try {
 
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_BAD_DOMAIN_NAME"));
-			context.addressAsync(TOOMANYOCTETS, null);
+			context.serviceSync(TOOMANYOCTETS, null);
 
 		} finally {
 			context.close();

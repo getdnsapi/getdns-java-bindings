@@ -1,4 +1,4 @@
-package com.verisign.getdns.Sync.test;
+package com.verisign.getdns.sync.test;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,14 +13,15 @@ import com.verisign.getdns.test.IGetDNSTestConstants;
 /*
  * 
  */
-public class ServiceSyncNegativeTest implements IGetDNSTestConstants {
+public class AddressSyncNegativeTest implements IGetDNSTestConstants {
 
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
-	/**
+	/*
 	 * check for response for null domain
 	 */
+
 	@Test
 	public void testGetDNSSyncNULLDomain() {
 
@@ -28,14 +29,14 @@ public class ServiceSyncNegativeTest implements IGetDNSTestConstants {
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			context.serviceSync(null, null);
+			context.addressSync(null, null);
 		} finally {
 			context.close();
 		}
 
 	}
 
-	/**
+	/*
 	 * check unit test case against invalid domain (label too long)
 	 */
 
@@ -47,7 +48,7 @@ public class ServiceSyncNegativeTest implements IGetDNSTestConstants {
 
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_BAD_DOMAIN_NAME"));
-			context.serviceSync(TOOLONGDOMAINNAME, null);
+			context.addressSync(TOOLONGDOMAINNAME, null);
 
 		} finally {
 			context.close();
@@ -56,12 +57,13 @@ public class ServiceSyncNegativeTest implements IGetDNSTestConstants {
 
 	@Test
 	public void testGetDNSSyncForTooManyOctets() {
+		System.out.println("Junit 3");
 		final IGetDNSContext context = GetDNSFactory.create(1);
 		try {
 
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_BAD_DOMAIN_NAME"));
-			context.serviceSync(TOOMANYOCTETS, null);
+			context.addressSync(TOOMANYOCTETS, null);
 
 		} finally {
 			context.close();
