@@ -31,11 +31,10 @@ public class GetDNSWithExtensionPositiveTest {
 		try {
 			HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 			extensions.put(ExtensionName.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
-			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.A, extensions);
+			HashMap<String, Object> info = context.generalSync("google.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			assertEquals(400, Integer.parseInt(GetDNSUtil.getObject(info, "/replies_tree[0]/dnssec_status").toString()));
-			System.out.println("Output: " + info);
 		} finally {
 			context.close();
 		}
@@ -56,7 +55,6 @@ public class GetDNSWithExtensionPositiveTest {
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			assertEquals(400, Integer.parseInt(GetDNSUtil.getObject(info, "/replies_tree[0]/dnssec_status").toString()));
-			System.out.println("Output: " + info);
 		} finally {
 			context.close();
 		}
