@@ -1,7 +1,6 @@
 package com.verisign.getdns.example.async;
 
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSFutureResult;
@@ -21,7 +20,7 @@ public class GetDNSHostnameAsync {
 			GetDNSFutureResult result = context.hostnameAsync(queryString, null);
 			HashMap<String, Object> info = null;
 			context.run();
-			info = result.get(5000, TimeUnit.MILLISECONDS);
+			info = result.get();
 
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {

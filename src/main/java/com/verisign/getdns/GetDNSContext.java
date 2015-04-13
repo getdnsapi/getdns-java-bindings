@@ -47,25 +47,14 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 	static {
 		System.loadLibrary("getdnsconnector");
 		try {
-			initEventingAndListen();
+			eventBase = createEventBase();
 		} catch (RuntimeException exception) {
 			System.out.println("Error initializing eventing");
 		}
 	}
 
-	private static void initEventingAndListen() {
-		eventBase = createEventBase();
-		if (eventBase != null)
-			new Thread().start();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void run() {
-			startListening(eventBase);
+		startListening(eventBase);
 	}
 
 	GetDNSContext(int setFromOS) throws GetDNSException {
@@ -107,6 +96,33 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 	private native HashMap<String, Object> generalSync(Object context, String name, int requestType,
 			HashMap<String, Object> extensions) throws GetDNSException;
 
+	public HashMap<String, Object> addressSync(String name, HashMap<ExtensionName, Object> extensions)
+			throws GetDNSException {
+		return addressSync(context, name, getExtension(extensions));
+	}
+
+	private native HashMap<String, Object> addressSync(Object context, String name, HashMap<String, Object> extensions)
+	throws GetDNSException;
+
+	@Override
+	public HashMap<String, Object> serviceSync(String name, HashMap<ExtensionName, Object> extensions)
+			throws GetDNSException {
+		return serviceSync(context, name, getExtension(extensions));
+	
+	}
+
+	private native HashMap<String, Object> serviceSync(Object context, String name, HashMap<String, Object> extensions)
+	throws GetDNSException;
+
+	@Override
+	public HashMap<String, Object> hostnameSync(String address, HashMap<ExtensionName, Object> extensions)
+			throws GetDNSException, UnknownHostException {
+		return hostnameSync(context, address, getExtension(extensions));
+	}
+
+	private native HashMap<String, Object> hostnameSync(Object context, String address, HashMap<String, Object> extensions)
+	throws GetDNSException;
+
 	public GetDNSFutureResult generalAsync(String name, RRType requestType, HashMap<ExtensionName, Object> extensions)
 			throws GetDNSException {
 		if (eventBase == null) {
@@ -115,41 +131,11 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 		GetDNSFutureResult result = new GetDNSFutureResult(this);
 		long transactionId = generalAsync(context, name, requestType.getValue(), getExtension(extensions), result);
 		result.setTransactionId(transactionId);
-		synchronized (eventBase) {
-			eventBase.notify();
-		}
 		return result;
 	}
 
 	private native long generalAsync(Object context, String name, int requestType, HashMap<String, Object> extensions,
 			Object callbackObj) throws GetDNSException;
-
-	private native HashMap<String, Object> addressSync(Object context, String name, HashMap<String, Object> extensions)
-			throws GetDNSException;
-
-	public HashMap<String, Object> addressSync(String name, HashMap<ExtensionName, Object> extensions)
-			throws GetDNSException {
-		return addressSync(context, name, getExtension(extensions));
-	}
-
-	private native HashMap<String, Object> serviceSync(Object context, String name, HashMap<String, Object> extensions)
-			throws GetDNSException;
-
-	@Override
-	public HashMap<String, Object> serviceSync(String name, HashMap<ExtensionName, Object> extensions)
-			throws GetDNSException {
-		return serviceSync(context, name, getExtension(extensions));
-
-	}
-
-	private native HashMap<String, Object> hostnameSync(Object context, String address, HashMap<String, Object> extensions)
-			throws GetDNSException;
-
-	@Override
-	public HashMap<String, Object> hostnameSync(String address, HashMap<ExtensionName, Object> extensions)
-			throws GetDNSException, UnknownHostException {
-		return hostnameSync(context, address, getExtension(extensions));
-	}
 
 	@Override
 	public GetDNSFutureResult addressAsync(String name, HashMap<ExtensionName, Object> extensions) throws GetDNSException {
@@ -159,9 +145,6 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 		GetDNSFutureResult result = new GetDNSFutureResult(this);
 		long transactionId = addressAsync(context, name, getExtension(extensions), result);
 		result.setTransactionId(transactionId);
-		synchronized (eventBase) {
-			eventBase.notify();
-		}
 		return result;
 	}
 
@@ -176,9 +159,6 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 		GetDNSFutureResult result = new GetDNSFutureResult(this);
 		long transactionId = serviceAsync(context, name, getExtension(extensions), result);
 		result.setTransactionId(transactionId);
-		synchronized (eventBase) {
-			eventBase.notify();
-		}
 		return result;
 	}
 
@@ -194,28 +174,15 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 		GetDNSFutureResult result = new GetDNSFutureResult(this);
 		long transactionId = hostnameAsync(context, address, getExtension(extensions), result);
 		result.setTransactionId(transactionId);
-		synchronized (eventBase) {
-			eventBase.notify();
-		}
 		return result;
 	}
+
+	private native long hostnameAsync(Object context, String address, HashMap<String, Object> extensions,
+	Object callbackObj) throws GetDNSException;
 
 	@Override
 	public void setExecutor(ExecutorService executor) {
 		this.executor = executor;
-	}
-
-	void sendToCallback(final IGetDNSCallback callback, final HashMap<String, Object> response,
-			final RuntimeException exception) {
-		if (executor != null)
-			executor.submit(new Runnable() {
-				public void run() {
-					if (response != null)
-						callback.handleResponse(response, exception);
-				}
-			});
-		else
-			callback.handleResponse(response, exception);
 	}
 
 	public Long generalAsync(String name, RRType requestType, HashMap<ExtensionName, Object> extensions,
@@ -252,9 +219,6 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 	}
 
 	private native void cancelRequest(Object context, long transactionId) throws GetDNSException;
-
-	private native long hostnameAsync(Object context, String address, HashMap<String, Object> extensions,
-			Object callbackObj) throws GetDNSException;
 
 	void applyContextOptions(HashMap<ContextOptionName, Object> contextOptions) {
 		if (contextOptions == null) {

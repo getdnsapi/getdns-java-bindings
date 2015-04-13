@@ -35,7 +35,6 @@ public class GetDNSAddressAsyncCallback {
 
 			context.addressAsync(queryString, null, callback);
 			context.run();
-			Thread.sleep(10000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

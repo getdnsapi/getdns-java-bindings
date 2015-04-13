@@ -38,7 +38,6 @@ public class GetDNSGeneralAsyncCallbackWithCancel {
 				}
 			});
 			context.cancelRequest(transactionId);
-			context.run();
 			Thread.sleep(20000);
 			System.out
 					.println("Respnose didn't come within 20 secs, it shows that the Request had been succesfully canceled");

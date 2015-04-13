@@ -1,7 +1,5 @@
 package com.verisign.getdns.async.test;
 
-import java.util.concurrent.TimeUnit;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -25,7 +23,7 @@ public class HostnameAsyncNegativeTest {
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
 			GetDNSFutureResult futureResult = context.hostnameAsync(null, null);
 			context.run();
-			futureResult.get(5000, TimeUnit.MILLISECONDS);
+			futureResult.get();
 		} finally {
 			context.close();
 		}

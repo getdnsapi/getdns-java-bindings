@@ -33,7 +33,6 @@ public class GetDNSServiceAsyncCallback {
 			};
 			context.serviceAsync(queryString, null, callback);
 			context.run();
-			Thread.sleep(10000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

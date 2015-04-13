@@ -2,7 +2,6 @@ package com.verisign.getdns.async.test;
 
 
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.junit.Rule;
@@ -36,7 +35,7 @@ public class GeneralAsyncNegitiveTest implements IGetDNSTestConstants{
 		
 			try {
 				context.run();
-				futureResult.get(5000, TimeUnit.MILLISECONDS);
+				futureResult.get();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

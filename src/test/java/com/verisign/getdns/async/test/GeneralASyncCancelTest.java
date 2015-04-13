@@ -4,7 +4,6 @@ import static com.verisign.getdns.test.IGetDNSTestConstants.DOMAIN_NAME;
 import static org.junit.Assert.assertEquals;
 
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.junit.Rule;
@@ -64,7 +63,7 @@ public class GeneralASyncCancelTest {
 			GetDNSFutureResult futureResult = context.generalAsync(DOMAIN_NAME, RRType.A, null);
 			futureResult.cancel(true);
 			context.run();
-			futureResult.get(5000, TimeUnit.MILLISECONDS);
+			futureResult.get();
 		} finally {
 			context.close();
 		}

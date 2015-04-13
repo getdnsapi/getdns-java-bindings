@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNotNull;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.junit.Test;
@@ -30,7 +29,7 @@ public class HostnameAsyncPositiveWithStubTest {
 			HashMap<String, Object> info = null;
 			try {
 				context.run();
-				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
+				info = futureResult.get();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -54,7 +53,7 @@ public class HostnameAsyncPositiveWithStubTest {
 			HashMap<String, Object> info = null;
 			try {
 				context.run();
-				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
+				info = futureResult.get();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

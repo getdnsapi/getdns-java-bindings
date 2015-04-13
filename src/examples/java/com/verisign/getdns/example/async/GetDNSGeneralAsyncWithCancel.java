@@ -1,7 +1,6 @@
 package com.verisign.getdns.example.async;
 
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSFutureResult;
@@ -26,8 +25,7 @@ public class GetDNSGeneralAsyncWithCancel {
 			System.out.println("Cancel status of the request: " + result.isCancelled());
 			HashMap<String, Object> info = null;
 			System.out.println("Now checking for result");
-			context.run();
-			info = result.get(5000, TimeUnit.MILLISECONDS);
+			info = result.get();
 
 			if (info != null) {
 				System.out.println("Something is wrong here, we got a response even after cancellation");

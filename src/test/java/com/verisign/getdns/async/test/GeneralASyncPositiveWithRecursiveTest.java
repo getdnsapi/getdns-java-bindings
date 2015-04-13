@@ -8,7 +8,6 @@ import static org.junit.Assert.assertNotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.junit.Test;
@@ -34,7 +33,7 @@ public class GeneralASyncPositiveWithRecursiveTest {
 			HashMap<String, Object> info = null;
 			try {
 				context.run();
-				info = futureResult.get(10000, TimeUnit.MILLISECONDS);
+				info = futureResult.get();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -59,7 +58,7 @@ public class GeneralASyncPositiveWithRecursiveTest {
 			HashMap<String, Object> info = null;
 			try {
 				context.run();
-				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
+				info = futureResult.get();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -95,7 +94,7 @@ public class GeneralASyncPositiveWithRecursiveTest {
 			for (GetDNSFutureResult result : results) {
 				
 			try {
-				System.out.println(result.get(5000, null));
+				System.out.println(result.get());
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
