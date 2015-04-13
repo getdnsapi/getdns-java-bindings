@@ -20,6 +20,7 @@ public class GetDNSHostnameAsync {
 		try {
 			GetDNSFutureResult result = context.hostnameAsync(queryString, null);
 			HashMap<String, Object> info = null;
+			context.run();
 			info = result.get(5000, TimeUnit.MILLISECONDS);
 
 			if (info != null) {

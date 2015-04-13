@@ -30,6 +30,7 @@ public class AddressAsyncNegativeTest implements IGetDNSTestConstants {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
 			context.generalAsync(null, RRType.A, null);
+			context.run();
 		} finally {
 			context.close();
 		}
@@ -48,6 +49,7 @@ public class AddressAsyncNegativeTest implements IGetDNSTestConstants {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
 			context.addressAsync(null, null);
+			context.run();
 		} finally {
 			context.close();
 		}
@@ -67,6 +69,7 @@ public class AddressAsyncNegativeTest implements IGetDNSTestConstants {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_BAD_DOMAIN_NAME"));
 			context.addressAsync(TOOLONGDOMAINNAME, null);
+			context.run();
 
 		} finally {
 			context.close();
@@ -82,6 +85,7 @@ public class AddressAsyncNegativeTest implements IGetDNSTestConstants {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_BAD_DOMAIN_NAME"));
 			context.addressAsync(TOOMANYOCTETS, null);
+			context.run();
 
 		} finally {
 			context.close();

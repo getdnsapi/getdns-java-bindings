@@ -30,6 +30,7 @@ public class ServiceAsyncPositiveWithRecursiveTest implements IGetDNSTestConstan
 			GetDNSFutureResult futureResult = context.serviceAsync("_xmpp-server._tcp.verisign.com.", null);
 			HashMap<String, Object> info = null;
 			try {
+				context.run();
 				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -54,6 +55,7 @@ public class ServiceAsyncPositiveWithRecursiveTest implements IGetDNSTestConstan
 			GetDNSFutureResult futureResult = context.serviceAsync(UNREGDOMAIN, null);
 			HashMap<String, Object> info = null;
 			try {
+				context.run();
 				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();

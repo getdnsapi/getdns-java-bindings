@@ -24,6 +24,7 @@ public class HostnameAsyncNegativeTest {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
 			GetDNSFutureResult futureResult = context.hostnameAsync(null, null);
+			context.run();
 			futureResult.get(5000, TimeUnit.MILLISECONDS);
 		} finally {
 			context.close();

@@ -30,6 +30,7 @@ public class GeneralASyncCancelTest {
 		try {
 			GetDNSFutureResult futureResult = context.generalAsync(DOMAIN_NAME, RRType.A, null);
 			futureResult.cancel(true);
+			context.run();
 			assertEquals(true, futureResult.isCancelled());
 		} finally {
 			context.close();
@@ -45,6 +46,7 @@ public class GeneralASyncCancelTest {
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_UNKNOWN_TRANSACTION"));
 			GetDNSFutureResult futureResult = context.generalAsync(DOMAIN_NAME, RRType.A, null);
 			futureResult.cancel(true);
+			context.run();
 			futureResult.cancel(true);
 
 		} finally {
@@ -61,6 +63,7 @@ public class GeneralASyncCancelTest {
 			thrown.expectMessage("This request is already cancelled");
 			GetDNSFutureResult futureResult = context.generalAsync(DOMAIN_NAME, RRType.A, null);
 			futureResult.cancel(true);
+			context.run();
 			futureResult.get(5000, TimeUnit.MILLISECONDS);
 		} finally {
 			context.close();

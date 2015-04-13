@@ -32,11 +32,8 @@ public class GetDNSServiceAsyncCallback {
 				}
 			};
 			context.serviceAsync(queryString, null, callback);
-			// HashMap<String, Object> info = null;
-			// info = result.get(5000, TimeUnit.MILLISECONDS);
+			context.run();
 			Thread.sleep(10000);
-
-			// checkResponse(queryString, type, info);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

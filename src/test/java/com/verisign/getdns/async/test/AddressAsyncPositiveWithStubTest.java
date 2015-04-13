@@ -30,6 +30,7 @@ public class AddressAsyncPositiveWithStubTest implements IGetDNSTestConstants {
 			GetDNSFutureResult futureResult = context.addressAsync("localhost", null);
 			HashMap<String, Object> info = null;
 			try {
+				context.run();
 				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -37,7 +38,8 @@ public class AddressAsyncPositiveWithStubTest implements IGetDNSTestConstants {
 			System.out.println(info);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.A.getValue(), Integer.parseInt(GetDNSUtil.getObject(info, "/replies_tree[0]/authority[0]/type").toString()));
+			assertEquals(RRType.A.getValue(),
+					Integer.parseInt(GetDNSUtil.getObject(info, "/replies_tree[0]/authority[0]/type").toString()));
 		} finally {
 			context.close();
 		}
@@ -54,6 +56,7 @@ public class AddressAsyncPositiveWithStubTest implements IGetDNSTestConstants {
 			GetDNSFutureResult futureResult = context.addressAsync(DOMAIN_NAME_FROM_UNBOUND_ZONE, null);
 			HashMap<String, Object> info = null;
 			try {
+				context.run();
 				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -78,6 +81,7 @@ public class AddressAsyncPositiveWithStubTest implements IGetDNSTestConstants {
 			GetDNSFutureResult futureResult = context.addressAsync(DOMAIN_NAME, null);
 			HashMap<String, Object> info = null;
 			try {
+				context.run();
 				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();

@@ -31,6 +31,7 @@ public class GetDNSHostnameAsyncCallback {
 				}
 			};
 			context.hostnameAsync(queryString, null, callback);
+			context.run();
 			Thread.sleep(5000);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -38,6 +38,7 @@ public class ServiceAsyncNegativeTest implements IGetDNSTestConstants{
 			GetDNSFutureResult futureResult = context.serviceAsync(null , null);
 		
 			try {
+				context.run();
 				futureResult.get(5000, TimeUnit.MILLISECONDS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -55,6 +56,7 @@ public class ServiceAsyncNegativeTest implements IGetDNSTestConstants{
 			
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_BAD_DOMAIN_NAME"));
+			context.run();
 			context.serviceAsync(TOOLONGDOMAINNAME, null);
 			 
 		}finally {
@@ -71,6 +73,7 @@ public class ServiceAsyncNegativeTest implements IGetDNSTestConstants{
 			
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_BAD_DOMAIN_NAME"));
+			context.run();
 			context.serviceAsync(TOOMANYOCTETS, null);
 			 
 		}finally {

@@ -42,6 +42,7 @@ public class GeneralASyncWithCallbackTest {
 					}
 				}
 			});
+			context.run();
 			Thread.sleep(10000);
 		} finally {
 			System.out.println("total wating time:  " + (System.currentTimeMillis() - a));
@@ -69,6 +70,7 @@ public class GeneralASyncWithCallbackTest {
 				}
 			});
 			context.cancelRequest(transactionId);
+			context.run();
 			Thread.sleep(10000);
 		} finally {
 			System.out.println("total waiting time:  " + (System.currentTimeMillis() - a));
@@ -98,6 +100,7 @@ public class GeneralASyncWithCallbackTest {
 				}
 			});
 			context.cancelRequest(transactionId);
+			context.run();
 			context.cancelRequest(transactionId);
 			Thread.sleep(10000);
 		} finally {
@@ -127,7 +130,7 @@ public class GeneralASyncWithCallbackTest {
 				}
 			});
 			context.cancelRequest(transactionId);
-
+			context.run();
 			context.generalAsync(domain2, RRType.valueOf("A"), null, new IGetDNSCallback() {
 
 				@Override
@@ -141,7 +144,7 @@ public class GeneralASyncWithCallbackTest {
 					}
 				}
 			});
-
+			context.run();
 			Thread.sleep(10000);
 		} finally {
 			System.out.println("total waiting time:  " + (System.currentTimeMillis() - a));

@@ -38,6 +38,7 @@ public class GetDNSGeneralAsyncCallback {
 					}
 				});
 			}
+			context.run();
 			Thread.sleep(20000);
 		} catch (Exception e) {
 			e.printStackTrace();

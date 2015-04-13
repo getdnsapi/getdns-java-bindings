@@ -36,6 +36,7 @@ public class GetDNSGeneralAsyncCallbackWithThreadPool {
 					}
 				});
 			}
+			context.run();
 			Thread.sleep(10000);
 		} catch (Exception e) {
 			e.printStackTrace();

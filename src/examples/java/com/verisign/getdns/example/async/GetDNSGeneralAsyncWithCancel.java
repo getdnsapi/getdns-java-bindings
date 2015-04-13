@@ -26,6 +26,7 @@ public class GetDNSGeneralAsyncWithCancel {
 			System.out.println("Cancel status of the request: " + result.isCancelled());
 			HashMap<String, Object> info = null;
 			System.out.println("Now checking for result");
+			context.run();
 			info = result.get(5000, TimeUnit.MILLISECONDS);
 
 			if (info != null) {

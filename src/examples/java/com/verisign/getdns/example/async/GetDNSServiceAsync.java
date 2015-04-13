@@ -22,6 +22,7 @@ public class GetDNSServiceAsync {
 		try {
 			GetDNSFutureResult result = context.serviceAsync(queryString, null);
 			HashMap<String, Object> info = null;
+			context.run();
 			info = result.get(5000, TimeUnit.MILLISECONDS);
 
 			if (info != null) {

@@ -29,6 +29,7 @@ public class HostnameAsyncPositiveWithRecursiveTest {
 			GetDNSFutureResult futureResult = context.hostnameAsync("8.8.8.8", null);
 			HashMap<String, Object> info = null;
 			try {
+				context.run();
 				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -52,6 +53,7 @@ public class HostnameAsyncPositiveWithRecursiveTest {
 			GetDNSFutureResult futureResult = context.hostnameAsync("2001:4860:4860::8888", null);
 			HashMap<String, Object> info = null;
 			try {
+				context.run();
 				info = futureResult.get(5000, TimeUnit.MILLISECONDS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();

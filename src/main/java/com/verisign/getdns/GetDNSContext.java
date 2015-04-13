@@ -56,30 +56,16 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 	private static void initEventingAndListen() {
 		eventBase = createEventBase();
 		if (eventBase != null)
-			new Thread() {
-				public void run() {
-					while (true) {
-						synchronized (eventBase) {
-							try {
-								eventBase.wait();
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-								break;
-							}
-						}
-						startListening(eventBase);
-					}
-				}
-			}.start();
-
-		/*
-		 * Initial wait, only for now. Should be eliminated.
-		 */
+			new Thread().start();
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void run() {
+			startListening(eventBase);
 	}
 
 	GetDNSContext(int setFromOS) throws GetDNSException {
