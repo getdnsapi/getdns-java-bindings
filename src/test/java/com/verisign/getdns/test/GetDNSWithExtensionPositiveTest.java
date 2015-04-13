@@ -2,16 +2,15 @@ package com.verisign.getdns.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
 import org.junit.Test;
 
+import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.ExtensionName;
 import com.verisign.getdns.GetDNSConstants;
 import com.verisign.getdns.GetDNSFactory;
@@ -35,7 +34,7 @@ public class GetDNSWithExtensionPositiveTest {
 			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(400, GetDNSUtil.getinfovalues(info, "dnssec_status"));
+			assertEquals(400, Integer.parseInt(GetDNSUtil.getObject(info, "/replies_tree[0]/dnssec_status").toString()));
 			System.out.println("Output: " + info);
 		} finally {
 			context.close();
@@ -56,7 +55,7 @@ public class GetDNSWithExtensionPositiveTest {
 			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(400, GetDNSUtil.getinfovalues(info, "dnssec_status"));
+			assertEquals(400, Integer.parseInt(GetDNSUtil.getObject(info, "/replies_tree[0]/dnssec_status").toString()));
 			System.out.println("Output: " + info);
 		} finally {
 			context.close();
@@ -77,7 +76,7 @@ public class GetDNSWithExtensionPositiveTest {
 			HashMap<String, Object> info = context.generalSync("verisigninc.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertNotNull(GetDNSUtil.getinfovalues(info, "validation_chain"));
+			assertNotNull(GetDNSUtil.getObject(info, "/validation_chain"));
 			System.out.println("Output: " + info);
 		} finally {
 			context.close();
@@ -98,7 +97,7 @@ public class GetDNSWithExtensionPositiveTest {
 			HashMap<String, Object> info = context.generalSync("google.com", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(403, GetDNSUtil.getinfovalues(info, "dnssec_status"));
+			assertEquals(403, Integer.parseInt(GetDNSUtil.getObject(info, "/replies_tree[0]/dnssec_status").toString()));
 			System.out.println("Output: " + info);
 		} finally {
 			context.close();
@@ -112,11 +111,14 @@ public class GetDNSWithExtensionPositiveTest {
 	@Test
 	public void testGetDNSWithDnssecOnlySecureExtension2() {
 		System.out.println("--------DNSSEC_RETURN_ONLY_SECURE--------------");
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, true);
+		final IGetDNSContext context = GetDNSFactory.create(1,options);
 		try {
 			HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 			extensions.put(ExtensionName.DNSSEC_RETURN_ONLY_SECURE, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 			HashMap<String, Object> info = context.generalSync("google.com", RRType.A, extensions);
+			System.out.println(GetDNSUtil.printReadable(info));
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 903, Integer.parseInt(info.get("status").toString()));
 		} finally {
@@ -137,10 +139,11 @@ public class GetDNSWithExtensionPositiveTest {
 			HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 			extensions.put(ExtensionName.DNSSEC_RETURN_VALIDATION_CHAIN, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 			HashMap<String, Object> info = context.generalSync("google.com", RRType.A, extensions);
+			System.out.println("Output: " + info);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertNull(GetDNSUtil.getinfovalues(info, "validation_chain"));
-			System.out.println("Output: " + info);
+			assertEquals(0,GetDNSUtil.getAsListOfMap(info, "/validation_chain").size());
+
 		} finally {
 			context.close();
 		}
@@ -157,11 +160,10 @@ public class GetDNSWithExtensionPositiveTest {
 		try {
 			HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 			extensions.put(ExtensionName.RETURN_BOTH_V4_AND_V6, GetDNSConstants.GETDNS_EXTENSION_TRUE);
-			HashMap<String, Object> info = context.generalSync("google-public-dns-a.google.com.", RRType.A,
-					extensions);
+			HashMap<String, Object> info = context.generalSync("google-public-dns-a.google.com.", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertNotNull(GetDNSUtil.getinfovalues(info, "IPv6"));
+			assertEquals("IPv6", GetDNSUtil.getObject(info, "/just_address_answers[1]/address_type").toString());
 		} finally {
 			context.close();
 		}
@@ -213,7 +215,7 @@ public class GetDNSWithExtensionPositiveTest {
 		final IGetDNSContext context = GetDNSFactory.create(1);
 
 		try {
-			final CountDownLatch latch = new CountDownLatch(1);
+			//final CountDownLatch latch = new CountDownLatch(1);
 			/*
 			 * IGetDNSCallback callback = new IGetDNSCallback() {
 			 * 

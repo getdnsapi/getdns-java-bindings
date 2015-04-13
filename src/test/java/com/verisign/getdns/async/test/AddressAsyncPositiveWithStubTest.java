@@ -37,7 +37,7 @@ public class AddressAsyncPositiveWithStubTest implements IGetDNSTestConstants {
 			System.out.println(info);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.A.getValue(), Integer.parseInt(GetDNSUtil.getinfovalues(info, "type").toString()));
+			assertEquals(RRType.A.getValue(), Integer.parseInt(GetDNSUtil.getObject(info, "/replies_tree[0]/authority[0]/type").toString()));
 		} finally {
 			context.close();
 		}
@@ -61,7 +61,7 @@ public class AddressAsyncPositiveWithStubTest implements IGetDNSTestConstants {
 			System.out.println(info);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.A.getValue(), GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/type"));
 		} finally {
 			context.close();
 		}
@@ -85,7 +85,7 @@ public class AddressAsyncPositiveWithStubTest implements IGetDNSTestConstants {
 			System.out.println(info);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.A.getValue(), GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/type"));
 		} finally {
 			context.close();
 		}

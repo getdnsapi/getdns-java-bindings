@@ -210,7 +210,7 @@ public class ContextOptionsPositiveTest {
 			context = GetDNSFactory.create(1, options);
 			HashMap<String, Object> info = context.addressSync(testDomain, null);
 			assertNotNull(info);
-			assertEquals("Time out error" + info.get("status"), 400, GetDNSUtil.getinfovalues(info, "dnssec_status"));
+			assertEquals("Time out error" + info.get("status"), 400,Integer.parseInt(GetDNSUtil.getObject(info, "/replies_tree[0]/dnssec_status").toString()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

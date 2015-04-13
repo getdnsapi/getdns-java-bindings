@@ -26,7 +26,7 @@ public class HostnameSyncPositiveWithStubTest {
 			System.out.println(info);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.PTR.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.PTR.getValue(), GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/type"));
 
 		} finally {
 			context.close();
@@ -42,7 +42,7 @@ public class HostnameSyncPositiveWithStubTest {
 			System.out.println(info);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.PTR.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.PTR.getValue(), GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/type"));
 
 		} finally {
 			context.close();

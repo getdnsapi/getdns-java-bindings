@@ -2,6 +2,7 @@ package com.verisign.getdns.example;
 
 import java.util.HashMap;
 
+import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.ExtensionName;
 import com.verisign.getdns.GetDNSConstants;
 import com.verisign.getdns.GetDNSFactory;
@@ -14,7 +15,9 @@ public class GetDNSWithDNSSECStatusExtension {
 	public static void main(String args[]) {
 		String queryString = "getdnsapi.net";
 		String type = "A";
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+		options.put(ContextOptionName.STUB, true);
+		final IGetDNSContext context = GetDNSFactory.create(1,options);
 		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 		extensions.put(ExtensionName.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {

@@ -40,7 +40,7 @@ public class GeneralASyncPositiveWithRecursiveTest {
 			
 			assertNotNull(info);
 			assertEquals("Time out error"+info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.A.getValue(),GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.A.getValue(),GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/type"));
 		}finally {
 			context.close();
 		}
@@ -64,8 +64,6 @@ public class GeneralASyncPositiveWithRecursiveTest {
 			
 			assertNotNull(info);
 			System.out.println("-->"+info);
-		//	assertEquals("Time out error"+info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-		//	assertEquals(RRType.GETDNS_RRTYPE_SOA.getValue(),Integer.parseInt(GetDNSUtil.gettype(info)));
 		}finally {
 			Thread.sleep(5000);
 			context.close();

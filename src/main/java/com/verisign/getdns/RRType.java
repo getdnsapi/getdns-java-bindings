@@ -73,11 +73,9 @@ public class RRType {
 		}
 	}
 
-	private final String name;
 	private final int value;
 
 	private RRType(String name, int value) {
-		this.name = name;
 		this.value = value;
 		nameToRRTypeMap.put(name, this);
 		valueToRRTypeMap.put(value, this);

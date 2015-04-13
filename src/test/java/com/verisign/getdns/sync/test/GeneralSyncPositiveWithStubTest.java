@@ -31,7 +31,7 @@ public class GeneralSyncPositiveWithStubTest implements IGetDNSTestConstants {
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			// assertNotNull("Type is null and response was "+info, gettype(info));
-			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.A.getValue(), GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/type"));
 
 		} finally {
 			context.close();
@@ -53,7 +53,7 @@ public class GeneralSyncPositiveWithStubTest implements IGetDNSTestConstants {
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			// assertNotNull("Type is null and response was "+info, gettype(info));
-			assertEquals(RRType.AAAA.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.AAAA.getValue(), GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/type"));
 
 		} finally {
 			context.close();
@@ -75,7 +75,7 @@ public class GeneralSyncPositiveWithStubTest implements IGetDNSTestConstants {
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			// assertNotNull("Type is null and response was "+info, gettype(info));
 
-			assertEquals(RRType.TXT.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.TXT.getValue(), GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/type"));
 
 		} finally {
 			context.close();
@@ -96,7 +96,7 @@ public class GeneralSyncPositiveWithStubTest implements IGetDNSTestConstants {
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			// assertNotNull("Type is null and response was "+info, gettype(info));
-			assertEquals(RRType.MX.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.MX.getValue(), GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/type"));
 
 		} finally {
 			context.close();

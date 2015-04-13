@@ -26,7 +26,7 @@ public class AddressSyncPositiveWithRecursiveTest implements IGetDNSTestConstant
 			HashMap<String, Object> info = context.addressSync("localhost", null);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.A.getValue(), GetDNSUtil.getObject(info, "/replies_tree[0]/authority[0]/type"));
 
 		} finally {
 			context.close();
@@ -43,7 +43,7 @@ public class AddressSyncPositiveWithRecursiveTest implements IGetDNSTestConstant
 			HashMap<String, Object> info = context.addressSync(DOMAIN_NAME_FROM_UNBOUND_ZONE, null);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.A.getValue(), GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/type"));
 
 		} finally {
 			context.close();
@@ -61,7 +61,7 @@ public class AddressSyncPositiveWithRecursiveTest implements IGetDNSTestConstant
 			System.out.println("info:  " + info);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.A.getValue(), GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/type"));
 
 		} finally {
 			context.close();

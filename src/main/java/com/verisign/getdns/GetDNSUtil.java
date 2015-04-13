@@ -39,58 +39,7 @@ import java.util.Map;
  *
  */
 public class GetDNSUtil {
-	@SuppressWarnings("unchecked")
-	static public Object getinfovalues(HashMap<String, Object> info, String name) {
-		HashMap<String, Object> answers = null;
-		if (info != null) {
-
-			if (name.equalsIgnoreCase("IPv6")) {
-				if (info.containsKey("just_address_answers")) {
-					ArrayList ipv6List = (ArrayList) info.get("just_address_answers");
-					if (ipv6List.toString().contains("IPv6")) {
-						return ipv6List.get(1).toString();
-					} else
-						return null;
-				}
-			}
-
-			ArrayList replies_trees = (ArrayList) info.get("replies_tree");
-
-			if (replies_trees != null && replies_trees.size() > 0) {
-				HashMap<String, Object> replies_tree_4 = (HashMap<String, Object>) replies_trees.get(0);
-				if (name.equalsIgnoreCase("dnssec_status")) {
-					return replies_tree_4.get("dnssec_status");
-				}
-				ArrayList answerList = (ArrayList) replies_tree_4.get("answer");
-				if (answerList != null) {
-					HashMap<String, Object> answerMap = (HashMap<String, Object>) answerList.get(0);
-					if (name.equalsIgnoreCase("class")) {
-						return answerMap.get("class");
-					} else if (name.equalsIgnoreCase("type")) {
-						return answerMap.get("type");
-					} else if (name.equalsIgnoreCase("rdata")) {
-						int i = 0;
-						HashMap<String, Object> rdata = null;
-						while (i < answerList.size()) {
-							answerMap = (HashMap<String, Object>) answerList.get(i);
-							rdata = (HashMap<String, Object>) answerMap.get("rdata");
-							if (rdata.containsKey("certificate_usage") && (int) rdata.get("certificate_usage") == 3) {
-								break;
-							} else {
-								rdata = null;
-							}
-							i++;
-						}
-						return rdata;
-					}
-
-				}
-			}
-		}
-
-		return null;
-	}
-
+	
 	/**
 	 * this methods converts bytes array to hex String
 	 * 

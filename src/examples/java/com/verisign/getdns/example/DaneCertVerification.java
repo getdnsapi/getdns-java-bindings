@@ -48,7 +48,6 @@ public class DaneCertVerification {
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
-	@SuppressWarnings("unchecked")
 	public static HashMap<String, Object> GetTlsaRecord(int port, String proto, String hostname)
 			throws UnsupportedEncodingException {
 		String queryString = "_" + port + "._" + proto + "." + hostname;
@@ -61,7 +60,7 @@ public class DaneCertVerification {
 			System.out.println(GetDNSUtil.printReadable(info));
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
-					return ((HashMap<String, Object>) GetDNSUtil.getinfovalues(info, "rdata"));
+					return getRdata(info);
 				} else if (Integer.parseInt(info.get("status").toString()) == 901) {
 					System.out.println("No such name: " + queryString + " with type: " + type + "\n");
 				} else {
@@ -74,6 +73,32 @@ public class DaneCertVerification {
 			context.close();
 		}
 		return null;
+	}
+
+	/*
+	 * 3 -- Certificate usage 3 is used to specify a certificate, or the public
+	 * key of such a certificate, that MUST match the end entity certificate given
+	 * by the server in TLS. This certificate usage is sometimes referred to as
+	 * "domain-issued certificate" because it allows for a domain name
+	 * administrator to issue certificates for a domain without involving a
+	 * third-party CA. The target certificate MUST match the TLSA record. The
+	 * difference between certificate usage 1 and certificate usage 3 is that
+	 * certificate usage 1 requires that the certificate pass PKIX validation, but
+	 * PKIX validation is not tested for certificate usage 3.
+	 */
+	protected static HashMap<String, Object> getRdata(HashMap<String, Object> info) {
+		int i = 0;
+		HashMap<String, Object> rdata = null;
+		while (i < GetDNSUtil.getAsListOfMap(info, "/replies_tree[0]/answer").size()) {
+			rdata = GetDNSUtil.getAsMap(info, "/replies_tree[0]/answer[" + i + "]/rdata");
+			if (rdata.containsKey("certificate_usage") && (int) rdata.get("certificate_usage") == 3) {
+				break;
+			} else {
+				rdata = null;
+			}
+			i++;
+		}
+		return rdata;
 	}
 
 	/**

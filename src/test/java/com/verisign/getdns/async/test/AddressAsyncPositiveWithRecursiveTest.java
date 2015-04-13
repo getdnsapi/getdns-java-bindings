@@ -24,7 +24,7 @@ public class AddressAsyncPositiveWithRecursiveTest implements IGetDNSTestConstan
 	public void testGetDNSAddrForlocalhost() throws ExecutionException, TimeoutException {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, false);
-		final IGetDNSContext context = GetDNSFactory.create(1,options);
+		final IGetDNSContext context = GetDNSFactory.create(1, options);
 
 		try {
 			GetDNSFutureResult futureResult = context.addressAsync("localhost", null);
@@ -37,7 +37,8 @@ public class AddressAsyncPositiveWithRecursiveTest implements IGetDNSTestConstan
 			System.out.println(info);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.A.getValue(), Integer.parseInt(GetDNSUtil.getinfovalues(info, "type").toString()));
+			assertEquals(RRType.A.getValue(),
+					Integer.parseInt(GetDNSUtil.getObject(info, "/replies_tree[0]/authority[0]/type").toString()));
 		} finally {
 			context.close();
 		}
@@ -48,7 +49,7 @@ public class AddressAsyncPositiveWithRecursiveTest implements IGetDNSTestConstan
 	public void testGetDNSAddrUnboundDomainZone() throws ExecutionException, TimeoutException {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, false);
-		final IGetDNSContext context = GetDNSFactory.create(1,options);
+		final IGetDNSContext context = GetDNSFactory.create(1, options);
 
 		try {
 			GetDNSFutureResult futureResult = context.addressAsync(DOMAIN_NAME_FROM_UNBOUND_ZONE, null);
@@ -61,7 +62,7 @@ public class AddressAsyncPositiveWithRecursiveTest implements IGetDNSTestConstan
 			System.out.println(info);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.A.getValue(),GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.A.getValue(), GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/type"));
 		} finally {
 			context.close();
 		}
@@ -72,7 +73,7 @@ public class AddressAsyncPositiveWithRecursiveTest implements IGetDNSTestConstan
 	public void testGetDNAddr() throws ExecutionException, TimeoutException {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, false);
-		final IGetDNSContext context = GetDNSFactory.create(1,options);
+		final IGetDNSContext context = GetDNSFactory.create(1, options);
 
 		try {
 			GetDNSFutureResult futureResult = context.addressAsync(DOMAIN_NAME, null);
@@ -85,7 +86,7 @@ public class AddressAsyncPositiveWithRecursiveTest implements IGetDNSTestConstan
 			System.out.println(info);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
-			assertEquals(RRType.A.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.A.getValue(), GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/type"));
 		} finally {
 			context.close();
 		}

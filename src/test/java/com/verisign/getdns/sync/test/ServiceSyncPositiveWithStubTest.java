@@ -27,7 +27,7 @@ public class ServiceSyncPositiveWithStubTest implements IGetDNSTestConstants {
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			// assertNotNull("Type is null and response was "+info, gettype(info));
-			assertEquals(RRType.SRV.getValue(), GetDNSUtil.getinfovalues(info, "type"));
+			assertEquals(RRType.SRV.getValue(), GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/type"));
 
 		} finally {
 			context.close();
