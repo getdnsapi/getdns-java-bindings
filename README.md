@@ -1,15 +1,12 @@
 #getdns-java-bindings
 getdns java bindings. This is an early version with limited testing and validation. This has been tested on CentOS 6.3 64-bit.
 
-<<<<<<< HEAD
-
 External dependencies
 =====================
 This has been built and tested with Java 1.7
 =======
 ##External dependencies
 This has been built and tested with Java 1.7 and 1.8
->>>>>>> 3b9ea17494788da38c6e08035cb213548a4489a2
 
 Currently building against the getdns 0.1.7 release.
 getdns external dependencies include:
@@ -31,11 +28,6 @@ The file gradle.properties needs to be edited to customize **java home** propert
 ####Building and test
 ```
 ./gradlew clean assemble buildJniLib test
-<<<<<<< HEAD
-
-=======
-```
->>>>>>> 3b9ea17494788da38c6e08035cb213548a4489a2
 As per gradle standard libraries will be available in the folder build/libs.
 
 ##Examples
@@ -58,7 +50,6 @@ javac -cp ./build/libs/getdns-0.1.jar src/examples/java/com/verisign/getdns/exam
 
 LD_LIBRARY_PATH=/usr/local/lib java -cp ./build/libs/getdns-0.1.jar:. -Djava.library.path=build/libs com.verisign.getdns.example.sync.GetDNSGeneralSync
 
-<<<<<<< HEAD
 Below are the commands to run few examples
 
 * ./gradlew --daemon runExample -Dexample=GetDNSIPSecure  -Dargs="['verisigninc.com']"
@@ -70,5 +61,4 @@ Known issues
 ```
 
 ###Known issues
->>>>>>> 3b9ea17494788da38c6e08035cb213548a4489a2
 On some machines some test cases might fail because of timeout issues, we are working on this.

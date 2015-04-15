@@ -28,14 +28,6 @@ sourceSets {
 }
 
 task buildJniLib(type:Exec) {
-<<<<<<< HEAD
-  if(!new File(javahome+'/include/jni.h').exists()) {
-    throw new InvalidUserDataException("Please configure javahome in gradle.properties")
-  }
-
-  workingDir './src/native/jni/'
-=======
->>>>>>> 3b9ea17494788da38c6e08035cb213548a4489a2
 
   if(!new File(javahome+'/include/jni.h').exists()) {
     throw new InvalidUserDataException("Please configure javahome in gradle.properties")
