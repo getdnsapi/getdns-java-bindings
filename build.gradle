@@ -51,29 +51,25 @@ task buildJniLib(type:Exec) {
 
 task runExample(type:JavaExec)  {
     classpath = sourceSets.main.runtimeClasspath + sourceSets.examples.runtimeClasspath 
-    jvmArgs '-Djava.library.path='+System.getProperty("user.dir")+'/build/libs'
+    jvmArgs '-Djava.library.path='+project.libsDir.getPath()
     environment "LD_LIBRARY_PATH", "/usr/local/lib"
     doFirst {
     main = System.getProperty("example")
-    print("main:  "+main)
-    if(System.getProperty("example") == null || System.getProperty("args") == null){
-        println "Usage: -Dexample=<exampleName> -Dargs=\"<args>\"  runExample"
-    	if(main == null || main == "") {
-     		println ("Please provide one of the below exampleName to execute")
-			sourceSets.examples.java.each { File file ->
-			    println file.name.replace(".java","")
-			}
-		}
-        else{
-            println "No arguments provided"
-            }
-    throw new InvalidUserDataException("Insufficient arguments provided")
-     
+    def map = [:]
+    sourceSets.examples.java.each { File file ->
+                            map[file.name.replace(".java","")] = file.getCanonicalPath().replace(project.projectDir.getCanonicalPath()+"/src/examples/java/","").replace(".java","")
+    }
+    if(main == null || map[main] == null){
+        println "Usage: -Dexample=<exampleName> runExample"
+     	println ("Please provide one of the below exampleName to execute")
+        map.each{
+            key, value -> println key;
+        }
+        throw new InvalidUserDataException("Invalid or no example name provided")
+     }
+     else
+         main = map[main]
    }
-    if ( System.getProperty("args") != null) {  
-        args= Eval.me(System.getProperty("args"))  
-    }
-    }
 }
 runExample.dependsOn buildJniLib
 buildJniLib.dependsOn assemble
