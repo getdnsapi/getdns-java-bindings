@@ -1,4 +1,6 @@
 #include "GetDNS_common.h"
+#include "getdns/getdns_extra.h"
+#include <ctype.h>
 
 // Helper to create an address dictionary from string
 // Must be freed by the user

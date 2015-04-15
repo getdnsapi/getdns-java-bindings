@@ -53,5 +53,5 @@ getStringFromArrayWithIndex(JNIEnv *env, jobjectArray value,
 		struct util_methods methods, int index);
 
 int
-getIntArrayFromArrayWithIndex(JNIEnv *env, jobjectArray value,
+getIntFromArrayWithIndex(JNIEnv *env, jobjectArray value,
 		struct util_methods methods, int index);

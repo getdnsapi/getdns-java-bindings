@@ -1,4 +1,5 @@
 #include "getdns_util.h"
+#include "getdns/getdns_extra.h"
 
 /*
  * Method to throw a GetDNSException.
@@ -282,12 +283,12 @@ getdns_list* convertToGetDNSList(JNIEnv *env, jobject thisObj, jobject mapObj) {
 			getdns_list_set_dict(result, idx, subdict);
 			getdns_dict_destroy(subdict);
 		} else if ((*env)->IsAssignableFrom(env,
-				(*env)->FindClass(env, "java/util/List"), valueClass)) { // Map value case.
+				(*env)->FindClass(env, "java/util/List"), valueClass)) { // List value case.
 			getdns_list* sublist = convertToGetDNSList(env, thisObj, jvalue);
 			getdns_list_set_list(result, idx, sublist);
 			getdns_list_destroy(sublist);
 		} else if ((*env)->IsAssignableFrom(env, (*env)->FindClass(env, "[B"),
-				valueClass)) { // Map value case.
+				valueClass)) { // Byte[] value case.
 			int len = 0;
 			unsigned char *bytes = convertByteArrayToUnsignedCharArray(env,
 					jvalue, &len);
