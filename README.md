@@ -35,7 +35,7 @@ Examples can be found in the directory *src/examples/java*
 ```
 #####Below  are the commands to run few examples
 ```
-./gradlew --daemon runExample -Dexample=GetDNSGeneral  -Dargs="['getdnsapi.net','A']"
+./gradlew --daemon runExample -Dexample=GetDNSGeneralSync  -Dargs="['getdnsapi.net','A']"
 
 ./gradlew --daemon runExample -Dexample=GetDNSWithDNSSECStatusExtension  -Dargs="['verisigninc.com','A']"
 
@@ -45,7 +45,7 @@ Examples can be found in the directory *src/examples/java*
 
 ./gradlew --daemon runExample -Dexample=DaneCertVerification  -Dargs="['getdnsapi.net', 443]"
 
-./gradlew --daemon runExample -Dexample=GetDNSIP -Dargs="['getdnsapi.net']"
+./gradlew --daemon runExample -Dexample=GetDNSServiceSync -Dargs="['getdnsapi.net']"
 
 ./gradlew --daemon runExample  -Dexample=GetDNSGeneralForMX  -Dargs="['verisign.com']"
 
