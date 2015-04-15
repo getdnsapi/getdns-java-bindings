@@ -38,7 +38,7 @@ Examples can be found in the directory *src/examples/java*
 ```
 ./gradlew --daemon runExample -Dexample=GetDNSGeneralSync
 
-./gradlew --daemon runExample -Dexample=com.verisign.getdns.example.GetDNSWithDNSSECStatusExtension
+./gradlew --daemon runExample -Dexample=GetDNSWithDNSSECStatusExtension
 
 ```
 ######Run examples with **Java**
