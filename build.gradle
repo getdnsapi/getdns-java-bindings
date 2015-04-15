@@ -1,10 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
-//apply plugin:'application'
 
 
 sourceCompatibility = 1.7
-version = '1.0'
+version = '0.1'
+
 jar {
     manifest {
         attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
@@ -28,13 +28,28 @@ sourceSets {
 }
 
 task buildJniLib(type:Exec) {
+<<<<<<< HEAD
   if(!new File(javahome+'/include/jni.h').exists()) {
     throw new InvalidUserDataException("Please configure javahome in gradle.properties")
   }
 
   workingDir './src/native/jni/'
+=======
+>>>>>>> 3b9ea17494788da38c6e08035cb213548a4489a2
 
-    commandLine 'gcc', '-I'+javahome+'/include', '-I'+javahome+'/include/linux', '-shared','-o',System.getProperty("user.dir")+'/build/libs/libgetdnsconnector.so','-fPIC','-I/usr/local/include','-L/usr/local/lib','-lgetdns','-lldns', '-levent','-lgetdns_ext_event', 'java_util.c', 'GetDNSContext.c', 'getdns_util.c'
+  if(!new File(javahome+'/include/jni.h').exists()) {
+    throw new InvalidUserDataException("Please configure javahome in gradle.properties")
+  }
+
+  workingDir './src/native/jni/'
+  def libraryExtension = 'so'
+  def systemJNIPath = 'linux'
+  
+  if(System.properties['os.name'].toLowerCase().contains('mac')){
+    libraryExtension = 'dylib'
+    systemJNIPath = 'darwin'
+  }
+  commandLine 'gcc', '-I'+javahome+'/include', '-I'+javahome+'/include/'+systemJNIPath, '-shared','-o',project.libsDir.getPath()+'/libgetdnsconnector.'+libraryExtension,'-fPIC','-I/usr/local/include','-L/usr/local/lib', 'java_util.c', 'GetDNSContext.c', 'GetDNS_common.c', 'getdns_util.c', '-lgetdns','-lldns','-lidn', '-levent','-lgetdns_ext_event'
 
   standardOutput = new ByteArrayOutputStream()
   ext.output = {
@@ -44,28 +59,25 @@ task buildJniLib(type:Exec) {
 
 task runExample(type:JavaExec)  {
     classpath = sourceSets.main.runtimeClasspath + sourceSets.examples.runtimeClasspath 
-    jvmArgs '-Djava.library.path='+System.getProperty("user.dir")+'/build/libs'
+    jvmArgs '-Djava.library.path='+project.libsDir.getPath()
     environment "LD_LIBRARY_PATH", "/usr/local/lib"
     doFirst {
     main = System.getProperty("example")
-    if(System.getProperty("example") == null || System.getProperty("args") == null){
-        println "Usage: -Dexample=<exampleName> -Dargs=\"<args>\"  runExample"
-    	if(main == null || main == "") {
-     		println ("Please provide one of the below exampleName to execute")
-			sourceSets.examples.java.each { File file ->
-			    println file.name.replace(".java","")
-			}
-		}
-        else
-            println "No arguments provided"
-    throw new InvalidUserDataException("Insufficient arguments provided")
-     
+    def map = [:]
+    sourceSets.examples.java.each { File file ->
+                            map[file.name.replace(".java","")] = file.getCanonicalPath().replace(project.projectDir.getCanonicalPath()+"/src/examples/java/","").replace(".java","")
+    }
+    if(main == null || map[main] == null){
+        println "Usage: -Dexample=<exampleName> runExample"
+     	println ("Please provide one of the below exampleName to execute")
+        map.each{
+            key, value -> println key;
+        }
+        throw new InvalidUserDataException("Invalid or no example name provided")
+     }
+     else
+         main = map[main]
    }
-   main = "com.verisign.getdns.example."+main
-    if ( System.getProperty("args") != null) {  
-        args= Eval.me(System.getProperty("args"))  
-    }
-    }
 }
 runExample.dependsOn buildJniLib
 buildJniLib.dependsOn assemble

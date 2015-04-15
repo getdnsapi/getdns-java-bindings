@@ -1,38 +1,42 @@
+/*
+ * Copyright (c) 2015, Verisign, Inc.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ * * Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ * * Neither the names of the copyright holders nor the
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL Verisign, Inc. BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 package com.verisign.getdns;
 
 /**
- * This class contains important constants for keys and values for GetDNS request and responses.
- * @author Prithvi
+ * This class contains important constants for keys and values for GetDNS
+ * request and responses.
  *
  */
 public interface GetDNSConstants {
-	
-	/**
-	 * Possible keys to be used in the request for extensions.
-	 */
-	public static final String DNSSEC_RETURN_VALIDATION_CHAIN = "dnssec_return_validation_chain";
-	public static final String DNSSEC_RETURN_ONLY_SECURE = "dnssec_return_only_secure";
-	public static final String DNSSEC_RETURN_STATUS = "dnssec_return_status";
-	public static final String RETURN_BOTH_V4_AND_V6 = "return_both_v4_and_v6";
-	public static final String RETURN_CALL_DEBUGGING = "return_call_debugging";
-	public static final String SPECIFY_CLASS = "specify_class";
-	public static final String ADD_WARNING_FOR_BAD_DNS = "add_warning_for_bad_dns";
-	public static final String ADD_OPT_PARAMETERS = "add_opt_parameters";
-	
-	
+
 	/**
 	 * Possible values for enabling GetDNS extensions.
 	 */
 	public static final int GETDNS_EXTENSION_TRUE = 1000;
 	public static final int GETDNS_EXTENSION_FALSE = 1001;
-	
-	
-	/**
-	 * Constants related to passing address.
-	 */
-	public static final String IPV6 = "IPv6";
-	public static final String IPV4 = "IPv4";
-	public static final String ADDRESS_DATA = "address_data";
-	public static final String ADDRESS_TYPE = "address_type";
-	
+
 }
