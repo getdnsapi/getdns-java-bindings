@@ -1,4 +1,4 @@
-package com.verisign.getdns.example;
+package com.verisign.getdns.example.asyncwithcallback;
 
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;

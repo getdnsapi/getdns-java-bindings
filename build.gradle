@@ -55,6 +55,7 @@ task runExample(type:JavaExec)  {
     environment "LD_LIBRARY_PATH", "/usr/local/lib"
     doFirst {
     main = System.getProperty("example")
+    print("main:  "+main)
     if(System.getProperty("example") == null || System.getProperty("args") == null){
         println "Usage: -Dexample=<exampleName> -Dargs=\"<args>\"  runExample"
     	if(main == null || main == "") {
@@ -69,7 +70,6 @@ task runExample(type:JavaExec)  {
     throw new InvalidUserDataException("Insufficient arguments provided")
      
    }
-   main = "com.verisign.getdns.example."+main
     if ( System.getProperty("args") != null) {  
         args= Eval.me(System.getProperty("args"))  
     }

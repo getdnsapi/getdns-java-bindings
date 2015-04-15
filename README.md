@@ -35,23 +35,23 @@ Examples can be found in the directory *src/examples/java*
 ```
 #####Below  are the commands to run few examples
 ```
-./gradlew --daemon runExample -Dexample=GetDNSGeneralSync  -Dargs="['getdnsapi.net','A']"
+./gradlew --daemon runExample -Dexample=com.verisign.getdns.example.sync.GetDNSGeneralSync  -Dargs="['getdnsapi.net','A']"
 
-./gradlew --daemon runExample -Dexample=GetDNSWithDNSSECStatusExtension  -Dargs="['verisigninc.com','A']"
+./gradlew --daemon runExample -Dexample=com.verisign.getdns.example.GetDNSWithDNSSECStatusExtension  -Dargs="['verisigninc.com','A']"
 
-./gradlew --daemon runExample -Dexample=GetDNSWithDNSSECValidationChainExtension  -Dargs="['verisigninc.com','A']"
+./gradlew --daemon runExample -Dexample=com.verisign.getdns.example.GetDNSWithDNSSECValidationChainExtension  -Dargs="['verisigninc.com','A']"
 
-./gradlew --daemon runExample -Dexample=GetDNSWithReturnBothV4andV6Extension  -Dargs="['verisigninc.com','A']"
+./gradlew --daemon runExample -Dexample=com.verisign.getdns.example.GetDNSWithReturnBothV4andV6Extension  -Dargs="['verisigninc.com','A']"
 
-./gradlew --daemon runExample -Dexample=DaneCertVerification  -Dargs="['getdnsapi.net', 443]"
+./gradlew --daemon runExample -Dexample=com.verisign.getdns.example.DaneCertVerification  -Dargs="['getdnsapi.net', 443]"
 
-./gradlew --daemon runExample -Dexample=GetDNSServiceSync -Dargs="['getdnsapi.net']"
+./gradlew --daemon runExample -Dexample=com.verisign.getdns.example.sync.GetDNSServiceSync -Dargs="['getdnsapi.net']"
 
-./gradlew --daemon runExample  -Dexample=GetDNSGeneralForMX  -Dargs="['verisign.com']"
+./gradlew --daemon runExample  -Dexample=com.verisign.getdns.example.GetDNSGeneralForMX  -Dargs="['verisign.com']"
 
-./gradlew --daemon runExample -Dexample=GetDNSCustomRRType -Dargs="['62d4a9f862867f38a82da911d4747490d560989536b53d2c51e0e336._sign._smimecert.gmadkat.com','TYPE65514']"
+./gradlew --daemon runExample -Dexample=com.verisign.getdns.example.GetDNSCustomRRType -Dargs="['62d4a9f862867f38a82da911d4747490d560989536b53d2c51e0e336._sign._smimecert.gmadkat.com','TYPE65514']"
 
-./gradlew --daemon runExample -Dexample=GetDNSGeneralAsyncCancel  -Dargs="['getdnsapi.net','A']"
+./gradlew --daemon runExample -Dexample=com.verisign.getdns.example.async.GetDNSGeneralAsyncCancel  -Dargs="['getdnsapi.net','A']"
 
 
 ```
