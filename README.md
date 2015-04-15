@@ -46,9 +46,9 @@ Examples can be found in the directory *src/examples/java*
 ```
 ######Run examples with **Java**
 ```
-javac -cp ./build/libs/getdns-0.1.jar src/examples/java/com/verisign/getdns/example/GetDNSGeneral.java -d .
+javac -cp ./build/libs/getdns-java-0.1.jar src/examples/java/com/verisign/getdns/example/sync/GetDNSGeneralSync.java -d .
 
-LD_LIBRARY_PATH=/usr/local/lib java -cp ./build/libs/getdns-0.1.jar:. -Djava.library.path=build/libs com.verisign.getdns.example.sync.GetDNSGeneralSync
+LD_LIBRARY_PATH=/usr/local/lib java -cp ./build/libs/getdns-java-0.1.jar:. -Djava.library.path=build/libs com.verisign.getdns.example.sync.GetDNSGeneralSync
 
 Below are the commands to run few examples
 
