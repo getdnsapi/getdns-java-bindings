@@ -31,7 +31,7 @@ public class GetDNSWithExtensionPositiveTest {
 		try {
 			HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 			extensions.put(ExtensionName.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
-			HashMap<String, Object> info = context.generalSync("google.com", RRType.A, extensions);
+			HashMap<String, Object> info = context.generalSync("getdnsapi.net", RRType.A, extensions);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
 			assertEquals(400, Integer.parseInt(GetDNSUtil.getObject(info, "/replies_tree[0]/dnssec_status").toString()));
@@ -109,9 +109,7 @@ public class GetDNSWithExtensionPositiveTest {
 	@Test
 	public void testGetDNSWithDnssecOnlySecureExtension2() {
 		System.out.println("--------DNSSEC_RETURN_ONLY_SECURE--------------");
-		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
-		options.put(ContextOptionName.STUB, true);
-		final IGetDNSContext context = GetDNSFactory.create(1,options);
+		final IGetDNSContext context = GetDNSFactory.create(1);
 		try {
 			HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 			extensions.put(ExtensionName.DNSSEC_RETURN_ONLY_SECURE, GetDNSConstants.GETDNS_EXTENSION_TRUE);
