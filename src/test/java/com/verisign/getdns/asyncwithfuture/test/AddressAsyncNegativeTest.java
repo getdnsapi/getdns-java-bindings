@@ -1,4 +1,4 @@
-package com.verisign.getdns.async.test;
+package com.verisign.getdns.asyncwithfuture.test;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
@@ -9,7 +9,7 @@ import org.junit.rules.ExpectedException;
 
 import com.verisign.getdns.GetDNSException;
 import com.verisign.getdns.GetDNSFactory;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextAsyncWithFuture;
 import com.verisign.getdns.RRType;
 import com.verisign.getdns.test.ErrorCodeMatcher;
 import com.verisign.getdns.test.IGetDNSTestConstants;
@@ -25,7 +25,7 @@ public class AddressAsyncNegativeTest implements IGetDNSTestConstants {
 	@Test
 	public void testGetDNSSyncNonExistingDomain() throws ExecutionException, TimeoutException, InterruptedException {
 
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		final IGetDNSContextAsyncWithFuture context = GetDNSFactory.createAsyncWithFuture(1,null);
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
@@ -44,7 +44,7 @@ public class AddressAsyncNegativeTest implements IGetDNSTestConstants {
 	@Test
 	public void testGetDNSSyncNULLDomain() {
 
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		final IGetDNSContextAsyncWithFuture context = GetDNSFactory.createAsyncWithFuture(1,null);
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
@@ -63,7 +63,7 @@ public class AddressAsyncNegativeTest implements IGetDNSTestConstants {
 	@Test
 	public void testGetDNSSyncLongDomain() {
 
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		final IGetDNSContextAsyncWithFuture context = GetDNSFactory.createAsyncWithFuture(1,null);
 		try {
 
 			thrown.expect(GetDNSException.class);
@@ -79,7 +79,7 @@ public class AddressAsyncNegativeTest implements IGetDNSTestConstants {
 	@Test
 	public void testGetDNSSyncForTooManyOctets() {
 
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		final IGetDNSContextAsyncWithFuture context = GetDNSFactory.createAsyncWithFuture(1,null);
 		try {
 
 			thrown.expect(GetDNSException.class);

@@ -34,17 +34,18 @@ import java.util.Map;
  * 
  * <p>
  * This class contains helper functions to extract specific data from dns
- * response, you can see in examples
+ * response.
  * </p>
  *
  */
 public class GetDNSUtil {
-	
+
 	/**
-	 * this methods converts bytes array to hex String
+	 * This methods converts byte array to hex String
 	 * 
 	 * @param bytes
-	 * @return
+	 *          input byte array
+	 * @return Hexadecimal String
 	 */
 	public static String bytesToHexString(byte[] bytes) {
 		StringBuilder sb = new StringBuilder();
@@ -55,19 +56,19 @@ public class GetDNSUtil {
 	}
 
 	/**
-	 * this method returns the getDns status txt
+	 * This method returns the getDns status text.
 	 * 
 	 * @param info
 	 * @return
 	 */
-	static public String getdnsStatus(HashMap<String, Object> info) {
+	static public String getDnsStatus(HashMap<String, Object> info) {
 		int getDnsStatus = (int) getObject(info, "/status");
 		GetDNSReturn ret = GetDNSReturn.fromInt(getDnsStatus);
 		return "\nstatus: " + ret.toString();
 	}
 
 	/**
-	 * This method returns DNSSEC status txt
+	 * This method returns DNSSEC status text.
 	 * 
 	 * @param info
 	 * @return DNSSEC Status
@@ -80,6 +81,12 @@ public class GetDNSUtil {
 		return response + " \n\n" + ret.toString();
 	}
 
+	/**
+	 * This method print readable parts of the response to standard output.
+	 * 
+	 * @param info
+	 * @return
+	 */
 	public static String printReadable(Object info) {
 		if (info != null) {
 			return info.toString().replaceAll(",", ",\n").replaceAll("=\\[\\{", "=\\[\n\\{\n").replaceAll("\\}", "\n\\}");
@@ -154,6 +161,25 @@ public class GetDNSUtil {
 		}
 	}
 
+	/**
+	 * <p>
+	 * This method is used to extract an ArrayList from the response by providing
+	 * the path.<br>
+	 * Example:<br>
+	 * {@code
+	 * 1. ArrayList<Object> answers = GetDNSUtil.getAsArrayList(info, "/replies_tree[0]/answer");
+	 * 
+	 * 2. ArrayList<Object> authority = GetDNSUtil.getAsArrayList(info, "/replies_tree[0]/authority");
+	 * 
+	 * }
+	 * 
+	 * 
+	 * 
+	 * 
+	 * @param map
+	 * @param path
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Object> getAsArrayList(Map<String, Object> map, String path) {
 		Object result = getObject(map, path);
@@ -162,6 +188,21 @@ public class GetDNSUtil {
 		return null;
 	}
 
+	/**
+	 * <p>
+	 * This method is used to extract an Map from the response by providing the
+	 * path.<br>
+	 * Example:<br>
+	 * {@code
+	 * 1. ArrayList<Object> rdata = GetDNSUtil.getAsArrayList(info, "/replies_tree[0]/authority[0]/rdata");
+	 * 
+	 * }
+	 * </p>
+	 * 
+	 * @param map
+	 * @param path
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public static HashMap<String, Object> getAsMap(Map<String, Object> map, String path) {
 		Object result = getObject(map, path);
@@ -170,6 +211,21 @@ public class GetDNSUtil {
 		return null;
 	}
 
+	/**
+	 * <p>
+	 * This method is used to extract an Map of ArrayList from the response by providing the
+	 * path.<br>
+	 * Example:<br>
+	 * {@code
+	 * 1. ArrayList<Map<String,Object>> authority = GetDNSUtil.getAsListOfMap(info, "/replies_tree[0]/authority")
+	 * 
+	 * }
+	 * </p>
+	 * 
+	 * @param map
+	 * @param path
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Map<String, Object>> getAsListOfMap(Map<String, Object> map, String path) {
 		Object result = getObject(map, path);

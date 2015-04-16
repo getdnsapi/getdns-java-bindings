@@ -5,7 +5,7 @@ import java.util.HashMap;
 import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextSync;
 import com.verisign.getdns.RRType;
 
 /*
@@ -18,7 +18,7 @@ public class GetDNSGeneralSync {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
 		options.put(ContextOptionName.DNS_TRANSPORT, 542);
-		final IGetDNSContext context = GetDNSFactory.create(1, options);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1, null);
 		String queryString = "verisigninc.com";
 		String type = "A";
 
@@ -27,7 +27,7 @@ public class GetDNSGeneralSync {
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 					System.out.println(GetDNSUtil.printReadable(info));
-					System.out.println(GetDNSUtil.getdnsStatus(info));
+					System.out.println(GetDNSUtil.getDnsStatus(info));
 				} else if (Integer.parseInt(info.get("status").toString()) == 901) {
 					System.out.println("no such name: " + queryString + "with type: " + type);
 				} else {

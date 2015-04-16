@@ -12,7 +12,7 @@ import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.ContextOptionValue;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextSync;
 
 public class ContextOptionsPositiveTest {
 
@@ -26,9 +26,9 @@ public class ContextOptionsPositiveTest {
 		System.out.println("-----------Set_Transport_UDP_Only-------------");
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.DNS_TRANSPORT, ContextOptionValue.GETDNS_TRANSPORT_UDP_ONLY);
-		IGetDNSContext context = null;
+		IGetDNSContextSync context = null;
 		try {
-			context = GetDNSFactory.create(1, options);
+			context = GetDNSFactory.createSync(1, options);
 			HashMap<String, Object> info = context.addressSync(testDomain, null);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
@@ -48,9 +48,9 @@ public class ContextOptionsPositiveTest {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
 		options.put(ContextOptionName.DNS_TRANSPORT, ContextOptionValue.GETDNS_TRANSPORT_TCP_ONLY);
-		IGetDNSContext context = null;
+		IGetDNSContextSync context = null;
 		try {
-			context = GetDNSFactory.create(1, options);
+			context = GetDNSFactory.createSync(1, options);
 			HashMap<String, Object> info = context.addressSync(testDomain, null);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
@@ -69,9 +69,9 @@ public class ContextOptionsPositiveTest {
 		System.out.println("-----------SetResolution-------------");
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.RESOLUTION_TYPE, ContextOptionValue.GETDNS_RESOLUTION_STUB);
-		IGetDNSContext context = null;
+		IGetDNSContextSync context = null;
 		try {
-			context = GetDNSFactory.create(1, options);
+			context = GetDNSFactory.createSync(1, options);
 			HashMap<String, Object> info = context.addressSync(testDomain, null);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 900, Integer.parseInt(info.get("status").toString()));
@@ -90,9 +90,9 @@ public class ContextOptionsPositiveTest {
 		System.out.println("-----------SetResolution-------------");
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.RESOLUTION_TYPE, ContextOptionValue.GETDNS_RESOLUTION_RECURSING);
-		IGetDNSContext context = null;
+		IGetDNSContextSync context = null;
 		try {
-			context = GetDNSFactory.create(1, options);
+			context = GetDNSFactory.createSync(1, options);
 			HashMap<String, Object> info = context.addressSync(testDomain, null);
 			assertNotNull(info);
 			System.out.println("info: " + info);
@@ -114,9 +114,9 @@ public class ContextOptionsPositiveTest {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
 		options.put(ContextOptionName.TIMEOUT, 2000);
-		IGetDNSContext context = null;
+		IGetDNSContextSync context = null;
 		try {
-			context = GetDNSFactory.create(1, options);
+			context = GetDNSFactory.createSync(1, options);
 			HashMap<String, Object> info = context.addressSync(testDomain, null);
 			assertNotNull(info);
 			System.out.println("info: " + info);
@@ -138,9 +138,9 @@ public class ContextOptionsPositiveTest {
 		options.put(ContextOptionName.STUB, true);
 		Object[][] list = { { "8.8.8.8" }, { "127.0.0.1", 80 } };
 		options.put(ContextOptionName.UPSTREAMS, list);
-		IGetDNSContext context = null;
+		IGetDNSContextSync context = null;
 		try {
-			context = GetDNSFactory.create(1, options);
+			context = GetDNSFactory.createSync(1, options);
 			HashMap<String, Object> info = context.addressSync(testDomain, null);
 			assertNotNull(info);
 			System.out.println("info: " + info);
@@ -160,9 +160,9 @@ public class ContextOptionsPositiveTest {
 		System.out.println("-----------SetStub-------------");
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
-		IGetDNSContext context = null;
+		IGetDNSContextSync context = null;
 		try {
-			context = GetDNSFactory.create(1, options);
+			context = GetDNSFactory.createSync(1, options);
 			HashMap<String, Object> info = context.addressSync(testDomain, null);
 			assertNotNull(info);
 			System.out.println("info: " + info);
@@ -182,9 +182,9 @@ public class ContextOptionsPositiveTest {
 		System.out.println("-----------SetUseThread-------------");
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.USE_THREADS, true);
-		IGetDNSContext context = null;
+		IGetDNSContextSync context = null;
 		try {
-			context = GetDNSFactory.create(1, options);
+			context = GetDNSFactory.createSync(1, options);
 			HashMap<String, Object> info = context.addressSync(testDomain, null);
 			assertNotNull(info);
 			System.out.println("info: " + info);
@@ -205,9 +205,9 @@ public class ContextOptionsPositiveTest {
 		System.out.println("-----------SetReturnDnssecStatus-------------");
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.RETURN_DNSSEC_STATUS, true);
-		IGetDNSContext context = null;
+		IGetDNSContextSync context = null;
 		try {
-			context = GetDNSFactory.create(1, options);
+			context = GetDNSFactory.createSync(1, options);
 			HashMap<String, Object> info = context.addressSync(testDomain, null);
 			assertNotNull(info);
 			assertEquals("Time out error" + info.get("status"), 400,Integer.parseInt(GetDNSUtil.getObject(info, "/replies_tree[0]/dnssec_status").toString()));
@@ -226,9 +226,9 @@ public class ContextOptionsPositiveTest {
 		System.out.println("-----------SetExtendedRcode-------------");
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.EDNS_EXTENDED_RCODE, 0);
-		IGetDNSContext context = null;
+		IGetDNSContextSync context = null;
 		try {
-			context = GetDNSFactory.create(1);
+			context = GetDNSFactory.createSync(1,null);
 			HashMap<String, Object> info = context.addressSync(testDomain, null);
 			assertNotNull(info);
 			System.out.println("info: " + info);
@@ -245,7 +245,7 @@ public class ContextOptionsPositiveTest {
 		try {
 			HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 			options.put(ContextOptionName.EDNS_VERSION, 120);
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("if any error occurs");
@@ -258,7 +258,7 @@ public class ContextOptionsPositiveTest {
 		try {
 			HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 			options.put(ContextOptionName.EDNS_DO_BIT, 1);
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("if any error occurs");
@@ -271,7 +271,7 @@ public class ContextOptionsPositiveTest {
 		try {
 			HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 			options.put(ContextOptionName.LIMIT_OUTSTANDING_QUERIES, 120);
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("if any error occurs");
@@ -300,9 +300,9 @@ public class ContextOptionsPositiveTest {
 
 		Object[] namespace = { ContextOptionValue.GETDNS_NAMESPACE_DNS, ContextOptionValue.GETDNS_NAMESPACE_MDNS };
 		options.put(ContextOptionName.NAMESPACE, namespace);
-		IGetDNSContext context = null;
+		IGetDNSContextSync context = null;
 		try {
-			context = GetDNSFactory.create(1, options);
+			context = GetDNSFactory.createSync(1, options);
 			HashMap<String, Object> info = context.addressSync(testDomain, null);
 			assertNotNull(info);
 			System.out.println("info: " + info);
@@ -323,9 +323,9 @@ public class ContextOptionsPositiveTest {
 		System.out.println("-----------SetreDirectFollow-------------");
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.FOLLOW_REDIRECT, ContextOptionValue.GETDNS_REDIRECTS_FOLLOW);
-		IGetDNSContext context = null;
+		IGetDNSContextSync context = null;
 		try {
-			context = GetDNSFactory.create(1, options);
+			context = GetDNSFactory.createSync(1, options);
 			HashMap<String, Object> info = context.addressSync(testDomain, null);
 			assertNotNull(info);
 			System.out.println("info: " + info);
@@ -348,9 +348,9 @@ public class ContextOptionsPositiveTest {
 		options.put(ContextOptionName.APPEND_NAME, ContextOptionValue.GETDNS_APPEND_NAME_ALWAYS);
 		Object[] list = { "www" };
 		options.put(ContextOptionName.SUFFIX, list);
-		IGetDNSContext context = null;
+		IGetDNSContextSync context = null;
 		try {
-			context = GetDNSFactory.create(1, options);
+			context = GetDNSFactory.createSync(1, options);
 			HashMap<String, Object> info = context.addressSync(testDomain, null);
 			assertNotNull(info);
 			System.out.println("info: " + info);
@@ -372,9 +372,9 @@ public class ContextOptionsPositiveTest {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		Object[][] list = { { "8.8.8.8" }, { "2001:4860:4860::8888" } };
 		options.put(ContextOptionName.DNS_ROOT_SERVERS, list);
-		IGetDNSContext context = null;
+		IGetDNSContextSync context = null;
 		try {
-			context = GetDNSFactory.create(1, options);
+			context = GetDNSFactory.createSync(1, options);
 			HashMap<String, Object> info = context.addressSync(testDomain, null);
 			assertNotNull(info);
 			System.out.println("info: " + info);
@@ -396,9 +396,9 @@ public class ContextOptionsPositiveTest {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		Object[] list = { "AQPDzldNmMvZFX4NcNJ0uEnKDg7tmv/F3MyQR0lpBmVcNcsIszxNFxsB fKNW9JYCYqpik8366LE7VbIcNRzfp2h9OO8HRl+H+E08zauK8k7evWEm u/6od+2boggPoiEfGNyvNPaSI7FOIroDsnw/taggzHRX1Z7SOiOiPWPN IwSUyWOZ79VmcQ1GLkC6NlYvG3HwYmynQv6oFwGv/KELSw7ZSdrbTQ0H XvZbqMUI7BaMskmvgm1G7oKZ1YiF7O9ioVNc0+7ASbqmZN7Z98EGU/Qh 2K/BgUe8Hs0XVcdPKrtyYnoQHd2ynKPcMMlTEih2/2HDHjRPJ2aywIpK Nnv4oPo/" };
 		options.put(ContextOptionName.DNSSEC_TRUST_ANCHOR, list);
-		IGetDNSContext context = null;
+		IGetDNSContextSync context = null;
 		try {
-			context = GetDNSFactory.create(1, options);
+			context = GetDNSFactory.createSync(1, options);
 			HashMap<String, Object> info = context.addressSync(testDomain, null);
 			assertNotNull(info);
 			System.out.println("info: " + info);
@@ -419,9 +419,9 @@ public class ContextOptionsPositiveTest {
 		System.out.println("-----------SetDnssecAllowedSkew-------------");
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.DNSSEC_ALLOWED_SKEW, 2);
-		IGetDNSContext context = null;
+		IGetDNSContextSync context = null;
 		try {
-			context = GetDNSFactory.create(1, options);
+			context = GetDNSFactory.createSync(1, options);
 			HashMap<String, Object> info = context.addressSync(testDomain, null);
 			assertNotNull(info);
 			System.out.println("info: " + info);

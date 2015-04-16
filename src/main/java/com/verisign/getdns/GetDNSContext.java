@@ -39,7 +39,7 @@ import java.util.concurrent.ExecutorService;
  * </ul>
  *
  */
-public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback {
+class GetDNSContext implements IGetDNSContextSync, IGetDNSContextAsyncWithFuture, IGetDNSContextAsyncWithCallback {
 	protected static Object eventBase = null;
 	private Object context;
 	private ExecutorService executor;
@@ -53,10 +53,19 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 		}
 	}
 
+	/**
+	 * This method is used to execute start listening the eventbase
+	 */
 	public void run() {
 		startListening(eventBase);
 	}
 
+	/**
+	 * This methods create a default Context
+	 * 
+	 * @param setFromOS
+	 * @throws GetDNSException
+	 */
 	GetDNSContext(int setFromOS) throws GetDNSException {
 		this.context = contextCreate(eventBase, setFromOS);
 	}
@@ -102,17 +111,17 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 	}
 
 	private native HashMap<String, Object> addressSync(Object context, String name, HashMap<String, Object> extensions)
-	throws GetDNSException;
+			throws GetDNSException;
 
 	@Override
 	public HashMap<String, Object> serviceSync(String name, HashMap<ExtensionName, Object> extensions)
 			throws GetDNSException {
 		return serviceSync(context, name, getExtension(extensions));
-	
+
 	}
 
 	private native HashMap<String, Object> serviceSync(Object context, String name, HashMap<String, Object> extensions)
-	throws GetDNSException;
+			throws GetDNSException;
 
 	@Override
 	public HashMap<String, Object> hostnameSync(String address, HashMap<ExtensionName, Object> extensions)
@@ -121,7 +130,7 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 	}
 
 	private native HashMap<String, Object> hostnameSync(Object context, String address, HashMap<String, Object> extensions)
-	throws GetDNSException;
+			throws GetDNSException;
 
 	public GetDNSFutureResult generalAsync(String name, RRType requestType, HashMap<ExtensionName, Object> extensions)
 			throws GetDNSException {
@@ -178,7 +187,7 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 	}
 
 	private native long hostnameAsync(Object context, String address, HashMap<String, Object> extensions,
-	Object callbackObj) throws GetDNSException;
+			Object callbackObj) throws GetDNSException;
 
 	@Override
 	public void setExecutor(ExecutorService executor) {
@@ -262,7 +271,8 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 	 * @return
 	 * @throws GetDNSException
 	 */
-	public static native String ConvertUnicodeToAscii(String unicode) throws GetDNSException;
+	// public static native String ConvertUnicodeToAscii(String unicode) throws
+	// GetDNSException;
 
 	/**
 	 * This methods converts Ascii to Unicode
@@ -271,7 +281,8 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 	 * @return
 	 * @throws GetDNSException
 	 */
-	public static native String ConvertAsciiToUnicode(String ascii) throws GetDNSException;
+	// public static native String ConvertAsciiToUnicode(String ascii) throws
+	// GetDNSException;
 
 	/**
 	 * Default list of trust anchor records that is used by the library to
@@ -280,6 +291,7 @@ public class GetDNSContext implements IGetDNSContext, IGetDNSContextWithCallback
 	 * @return
 	 * @throws GetDNSException
 	 */
-	public static native Object[] GetDnsRootTrustAnchor() throws GetDNSException;
+	// public static native Object[] GetDnsRootTrustAnchor() throws
+	// GetDNSException;
 
 }

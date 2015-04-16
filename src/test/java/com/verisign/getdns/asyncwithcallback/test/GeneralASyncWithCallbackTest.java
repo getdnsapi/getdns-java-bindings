@@ -14,7 +14,7 @@ import org.junit.rules.ExpectedException;
 import com.verisign.getdns.GetDNSException;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.IGetDNSCallback;
-import com.verisign.getdns.IGetDNSContextWithCallback;
+import com.verisign.getdns.IGetDNSContextAsyncWithCallback;
 import com.verisign.getdns.RRType;
 import com.verisign.getdns.test.ErrorCodeMatcher;
 
@@ -25,7 +25,7 @@ public class GeneralASyncWithCallbackTest {
 
 	@Test
 	public void testGetDNSAsyncWithCallback() throws ExecutionException, TimeoutException, InterruptedException {
-		final IGetDNSContextWithCallback context = GetDNSFactory.createWithCallback(1, null);
+		final IGetDNSContextAsyncWithCallback context = GetDNSFactory.createAsyncWithCallback(1, null);
 		final long a = System.currentTimeMillis();
 		try {
 			final String domain = "getdnsapi.net";
@@ -52,7 +52,7 @@ public class GeneralASyncWithCallbackTest {
 
 	@Test
 	public void testGetDNSAsyncCancelWithCallback() throws ExecutionException, TimeoutException, InterruptedException {
-		final IGetDNSContextWithCallback context = GetDNSFactory.createWithCallback(1, null);
+		final IGetDNSContextAsyncWithCallback context = GetDNSFactory.createAsyncWithCallback(1, null);
 		final long a = System.currentTimeMillis();
 		try {
 			final String domain = "getdnsapi.net";
@@ -80,7 +80,7 @@ public class GeneralASyncWithCallbackTest {
 
 	@Test
 	public void testGetDNSAsyncCancelWithCallback1() throws ExecutionException, TimeoutException, InterruptedException {
-		final IGetDNSContextWithCallback context = GetDNSFactory.createWithCallback(1, null);
+		final IGetDNSContextAsyncWithCallback context = GetDNSFactory.createAsyncWithCallback(1, null);
 		final long a = System.currentTimeMillis();
 		try {
 			thrown.expect(GetDNSException.class);
@@ -111,7 +111,7 @@ public class GeneralASyncWithCallbackTest {
 
 	@Test
 	public void testGetDNSAsyncCancelWithCallback2() throws ExecutionException, TimeoutException, InterruptedException {
-		final IGetDNSContextWithCallback context = GetDNSFactory.createWithCallback(1, null);
+		final IGetDNSContextAsyncWithCallback context = GetDNSFactory.createAsyncWithCallback(1, null);
 		final long a = System.currentTimeMillis();
 		try {
 			final String domain1 = "getdnsapi.net";

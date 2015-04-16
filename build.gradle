@@ -6,8 +6,8 @@ sourceCompatibility = 1.7
 version = '0.1'
 
 jar {
-	baseName = 'getdns-java'
-	version =  '0.1'
+baseName = 'getdns-java'
+version =  '0.1'
     manifest {
         attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
     }

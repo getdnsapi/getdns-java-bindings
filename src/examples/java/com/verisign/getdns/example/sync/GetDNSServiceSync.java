@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextSync;
 
 /*
  * Given a DNS name and type, return the records in the DNS answer section 
@@ -16,7 +16,7 @@ import com.verisign.getdns.IGetDNSContext;
 public class GetDNSServiceSync {
 
 	public static void main(String[] args) {
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1, null);
 		String queryString = "_xmpp-server._tcp.google.com.";
 		try {
 			HashMap<String, Object> info = context.serviceSync(queryString, null);
@@ -24,7 +24,7 @@ public class GetDNSServiceSync {
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 					printAnswer(info);
-					System.out.println(GetDNSUtil.getdnsStatus(info));
+					System.out.println(GetDNSUtil.getDnsStatus(info));
 				}
 
 				else if (Integer.parseInt(info.get("status").toString()) == 901) {

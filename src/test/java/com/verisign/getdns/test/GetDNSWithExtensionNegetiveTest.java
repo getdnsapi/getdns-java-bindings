@@ -10,7 +10,7 @@ import com.verisign.getdns.ExtensionName;
 import com.verisign.getdns.GetDNSConstants;
 import com.verisign.getdns.GetDNSException;
 import com.verisign.getdns.GetDNSFactory;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextSync;
 import com.verisign.getdns.RRType;
 
 public class GetDNSWithExtensionNegetiveTest {
@@ -24,7 +24,7 @@ public class GetDNSWithExtensionNegetiveTest {
 	@Test
 	public void testGetDNSWithDnssecStatusExtension() {
 		System.out.println("--------DNSSEC_RETURN_STATUS TEST--------------");
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1,null);
 		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 		extensions.put(ExtensionName.DNSSEC_RETURN_STATUS, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {
@@ -43,7 +43,7 @@ public class GetDNSWithExtensionNegetiveTest {
 	@Test
 	public void testGetDNSWithDnssecOnlySecureExtension() {
 		System.out.println("--------DNSSEC_RETURN_ONLY_SECURE--------------");
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1,null);
 		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 		extensions.put(ExtensionName.DNSSEC_RETURN_ONLY_SECURE, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {
@@ -62,7 +62,7 @@ public class GetDNSWithExtensionNegetiveTest {
 	@Test
 	public void testGetDNSWithDnssecValidationChainExtension() {
 		System.out.println("--------DNSSEC_RETURN_VALIDATIONCHAIN--------------");
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1,null);
 		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 		extensions.put(ExtensionName.DNSSEC_RETURN_VALIDATION_CHAIN, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {

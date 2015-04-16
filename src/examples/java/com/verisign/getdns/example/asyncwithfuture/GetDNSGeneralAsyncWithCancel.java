@@ -1,21 +1,20 @@
-package com.verisign.getdns.example.asyncwithcallback;
+package com.verisign.getdns.example.asyncwithfuture;
 
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSFutureResult;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextAsyncWithFuture;
 import com.verisign.getdns.RRType;
 
 /*
  * Given a DNS name and type, return the records in the DNS answer section  
  */
 
-public class GetDNSGeneralAsyncCancelWithCallback {
+public class GetDNSGeneralAsyncWithCancel {
 
 	public static void main(String[] args) {
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		final IGetDNSContextAsyncWithFuture context = GetDNSFactory.createAsyncWithFuture(1,null);
 		String queryString = "getdnsapi.net";
 		String type = "A";
 
@@ -26,7 +25,7 @@ public class GetDNSGeneralAsyncCancelWithCallback {
 			System.out.println("Cancel status of the request: " + result.isCancelled());
 			HashMap<String, Object> info = null;
 			System.out.println("Now checking for result");
-			info = result.get(5000, TimeUnit.MILLISECONDS);
+			info = result.get();
 
 			if (info != null) {
 				System.out.println("Something is wrong here, we got a response even after cancellation");

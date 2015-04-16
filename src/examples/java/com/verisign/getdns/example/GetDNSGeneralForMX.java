@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextSync;
 import com.verisign.getdns.RRType;
 
 /*
@@ -18,7 +18,7 @@ import com.verisign.getdns.RRType;
 public class GetDNSGeneralForMX {
 
 	public static void main(String[] args) {
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1,null);
 		String queryString = "verisigninc.com";
 
 		try {
@@ -28,7 +28,7 @@ public class GetDNSGeneralForMX {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
 
 					System.out.println(GetDNSUtil.getObject(info, "/replies_tree[0]/answer[0]/rdata/exchange"));
-					System.out.println(GetDNSUtil.getdnsStatus(info));
+					System.out.println(GetDNSUtil.getDnsStatus(info));
 
 				}
 

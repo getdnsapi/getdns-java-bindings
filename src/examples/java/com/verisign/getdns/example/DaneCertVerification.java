@@ -14,7 +14,7 @@ import javax.net.ssl.SSLSocketFactory;
 import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextSync;
 import com.verisign.getdns.RRType;
 
 public class DaneCertVerification {
@@ -54,7 +54,7 @@ public class DaneCertVerification {
 		String type = "TLSA";
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
-		final IGetDNSContext context = GetDNSFactory.create(1, options);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1, options);
 		try {
 			HashMap<String, Object> info = context.generalSync(queryString, RRType.valueOf(type), null);
 			System.out.println(GetDNSUtil.printReadable(info));

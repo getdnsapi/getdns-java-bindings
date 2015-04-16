@@ -32,7 +32,7 @@ import java.util.HashMap;
  * <p>
  * This class contains list of <a
  * href="http://en.wikipedia.org/wiki/List_of_DNS_record_types"
- * target="_blank">resource record types</a>
+ * target="_blank">resource record types</a>.
  * </p>
  *
  */
@@ -82,7 +82,7 @@ public class RRType {
 	}
 
 	/**
-	 * Returns value of a RRtype
+	 * This method returns value of a RRtype
 	 * 
 	 * @param value
 	 * @return
@@ -95,7 +95,7 @@ public class RRType {
 	}
 
 	/**
-	 * Return value of a RRtype
+	 * This method returns value of a RRtype
 	 * 
 	 * @param name
 	 * @return

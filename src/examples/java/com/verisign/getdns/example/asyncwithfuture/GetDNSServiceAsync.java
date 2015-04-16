@@ -1,38 +1,37 @@
-package com.verisign.getdns.example.async;
+package com.verisign.getdns.example.asyncwithfuture;
 
 import java.util.HashMap;
 
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSFutureResult;
 import com.verisign.getdns.GetDNSUtil;
-import com.verisign.getdns.IGetDNSContext;
-import com.verisign.getdns.RRType;
+import com.verisign.getdns.IGetDNSContextAsyncWithFuture;
+import com.verisign.getdns.example.sync.GetDNSServiceSync;
 
 /*
- * Given a DNS name and type, return the records in the DNS answer section  
+ *Given a DNS name and type, return the records in the DNS answer section 
+ * 
  */
 
-public class GetDNSGeneralAsync {
+public class GetDNSServiceAsync {
 
 	public static void main(String[] args) {
-		final IGetDNSContext context = GetDNSFactory.create(1);
-		String queryString = "verisigninc.com";
-		String type = "A";
-
+		final IGetDNSContextAsyncWithFuture context = GetDNSFactory.createAsyncWithFuture(1,null);
+		String queryString = "_xmpp-server._tcp.google.com.";
 		try {
-			GetDNSFutureResult result = context.generalAsync(queryString, RRType.valueOf(type), null);
+			GetDNSFutureResult result = context.serviceAsync(queryString, null);
 			HashMap<String, Object> info = null;
 			context.run();
 			info = result.get();
 
 			if (info != null) {
 				if (Integer.parseInt(info.get("status").toString()) == 900) {
-					System.out.println(GetDNSUtil.printReadable(info));
-					System.out.println(GetDNSUtil.getdnsStatus(info));
+					GetDNSServiceSync.printAnswer(info);
+					System.out.println(GetDNSUtil.getDnsStatus(info));
 				}
 
 				else if (Integer.parseInt(info.get("status").toString()) == 901) {
-					System.out.println("no such name: " + queryString + "with type: " + type);
+					System.out.println("no such name: " + queryString);
 				} else {
 
 					System.out.println("Error in query GETDNS Status =" + info.get("status").toString());

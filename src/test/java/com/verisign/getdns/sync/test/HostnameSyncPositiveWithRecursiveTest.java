@@ -11,7 +11,7 @@ import org.junit.Test;
 import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextSync;
 import com.verisign.getdns.RRType;
 
 public class HostnameSyncPositiveWithRecursiveTest {
@@ -20,7 +20,7 @@ public class HostnameSyncPositiveWithRecursiveTest {
 	public void testGetHostnameIPV6() throws UnknownHostException {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, false);
-		final IGetDNSContext context = GetDNSFactory.create(1, options);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1,options);
 		try {
 			HashMap<String, Object> info = context.hostnameSync("2001:4860:4860::8888", null);
 			System.out.println(info);
@@ -37,7 +37,7 @@ public class HostnameSyncPositiveWithRecursiveTest {
 	public void testGetHostnameINPV4() throws UnknownHostException {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, false);
-		final IGetDNSContext context = GetDNSFactory.create(1,options);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1,options);
 		try {
 
 			HashMap<String, Object> info = context.hostnameSync("8.8.8.8", null);

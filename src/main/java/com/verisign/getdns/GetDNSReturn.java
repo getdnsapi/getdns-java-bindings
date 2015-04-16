@@ -31,7 +31,7 @@ import java.util.Map;
 
 /**
  * <p>
- * It contains response text for each response status code
+ * This contains possible values for response status code.
  * </p>
  */
 public enum GetDNSReturn {

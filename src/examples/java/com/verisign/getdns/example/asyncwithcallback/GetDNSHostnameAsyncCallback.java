@@ -5,7 +5,7 @@ import java.util.HashMap;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSCallback;
-import com.verisign.getdns.IGetDNSContextWithCallback;
+import com.verisign.getdns.IGetDNSContextAsyncWithCallback;
 
 /*
  * 
@@ -18,7 +18,7 @@ import com.verisign.getdns.IGetDNSContextWithCallback;
 public class GetDNSHostnameAsyncCallback {
 
 	public static void main(String[] args) {
-		final IGetDNSContextWithCallback context = GetDNSFactory.createWithCallback(1, null);
+		final IGetDNSContextAsyncWithCallback context = GetDNSFactory.createAsyncWithCallback(1, null);
 		final String queryString = "8.8.8.8";
 
 		try {
@@ -27,7 +27,7 @@ public class GetDNSHostnameAsyncCallback {
 				@Override
 				public void handleResponse(HashMap<String, Object> response, RuntimeException exception) {
 					System.out.println(GetDNSUtil.getObject(response, "/canonical_name"));
-					System.out.println(GetDNSUtil.getdnsStatus(response));
+					System.out.println(GetDNSUtil.getDnsStatus(response));
 				}
 			};
 			context.hostnameAsync(queryString, null, callback);

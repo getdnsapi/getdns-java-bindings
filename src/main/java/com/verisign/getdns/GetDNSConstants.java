@@ -27,14 +27,13 @@
 package com.verisign.getdns;
 
 /**
- * This class contains important constants for keys and values for GetDNS
- * request and responses.
+ * This interface contains constants value for configuring getdns API.
  *
  */
 public interface GetDNSConstants {
 
 	/**
-	 * Possible values for enabling GetDNS extensions.
+	 * value to be passed for enabling getdNS extensions.
 	 */
 	public static final int GETDNS_EXTENSION_TRUE = 1000;
 	public static final int GETDNS_EXTENSION_FALSE = 1001;

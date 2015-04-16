@@ -29,12 +29,7 @@ package com.verisign.getdns;
 
 /**
  * <p>
- * Creates a context, an opaque object which describes the environment within
- * which a DNS query executes. This includes namespaces, root servers,
- * resolution types, and so on. These are accessed programmatically through the
- * attributes described below. <br>
- * (<b>Note:</b> you can find various context option values in
- * <i>ContextOptionValues.java</i> file
+ * This contains possible context option names that can be used while configuring the context manually. 
  * </p>
  * 
  */
@@ -81,8 +76,8 @@ public enum ContextOptionName {
 
 	/**
 	 * <p>
-	 * Its value must be an integer specifying a timeout for a query, expressed in
-	 * milliseconds.
+	 * This takes values as an integer specifying a timeout for a query,
+	 * expressed in milliseconds.
 	 * </p>
 	 */
 	TIMEOUT("timeout"),
@@ -92,10 +87,10 @@ public enum ContextOptionName {
 	 * Specifies what transport is used for DNS lookups. The value must be one of
 	 * getdns:
 	 * <ul>
-	 * <li>GETDNS_TRANSPORT_UDP_FIRST_AND_FALL_BACK_TO_TCP</li>
-	 * <li>getdns.GETDNS_TRANSPORT_UDP_ONLY</li>
-	 * <li>getdns.GETDNS_TRANSPORT_TCP_ONLY</li>
-	 * <li>getdns.GETDNS_TRANSPORT_TCP_ONLY_KEEP_CONNECTIONS_OPEN</li>
+	 * <li>ContextOptionValue.GETDNS_TRANSPORT_UDP_FIRST_AND_FALL_BACK_TO_TCP</li>
+	 * <li>ContextOptionValue.GETDNS_TRANSPORT_UDP_ONLY</li>
+	 * <li>ContextOptionValue.GETDNS_TRANSPORT_TCP_ONLY</li>
+	 * <li>ContextOptionValue.GETDNS_TRANSPORT_TCP_ONLY_KEEP_CONNECTIONS_OPEN</li>
 	 * </ul>
 	 * </p>
 	 */
@@ -125,14 +120,14 @@ public enum ContextOptionName {
 
 	/**
 	 * <p>
-	 * Its value must be an boolean either true or false.
+	 * This takes values as an boolean either true or false.
 	 * </p>
 	 */
 	USE_THREADS("use_threads"),
 
 	/**
 	 * <p>
-	 * Specifies whether user want DNSSEC status in dns response or not.<br>
+	 * Specifies whether DNSSEC status should be returned in dns response <br>
 	 * the value is either true or false
 	 * </p>
 	 */
@@ -147,15 +142,15 @@ public enum ContextOptionName {
 	 * <p>
 	 * The allowed values are:
 	 * <ul>
-	 * <li>getdns.GETDNS_NAMESPACE_DNS</li>
+	 * <li>ContextOptionValue.GETDNS_NAMESPACE_DNS</li>
 	 * <li>
-	 * getdns.GETDNS_NAMESPACE_LOCALNAMES</li>
+	 * ContextOptionValue.GETDNS_NAMESPACE_LOCALNAMES</li>
 	 * <li>
-	 * getdns.GETDNS_NAMESPACE_NETBIOS</li>
+	 * ContextOptionValue.GETDNS_NAMESPACE_NETBIOS</li>
 	 * <li>
-	 * getdns.GETDNS_NAMESPACE_MDNS</li>
+	 * ContextOptionValue.GETDNS_NAMESPACE_MDNS</li>
 	 * <li>
-	 * getdns.GETDNS_NAMESPACE_NIS</li>
+	 * ContextOptionValue.GETDNS_NAMESPACE_NIS</li>
 	 * </p>
 	 * <p>
 	 * When a normal lookup is done, the API does the lookups in the order given
@@ -182,15 +177,15 @@ public enum ContextOptionName {
 
 	/**
 	 * <p>
-	 * Specifies whether to append a suffix to the query string before the API
+	 * This is used to Specify a suffix to the query string before the API
 	 * starts resolving a name. Its value must be one of
 	 * <ul>
-	 * <li>getdns.GETDNS_APPEND_NAME_ALWAYS</li>
-	 * <li>getdns.GETDNS_APPEND_NAME_ONLY_TO_SINGLE_LABEL_AFTER_FAILURE</li>
+	 * <li>ContextOptionValue..GETDNS_APPEND_NAME_ALWAYS</li>
+	 * <li>ContextOptionValue..GETDNS_APPEND_NAME_ONLY_TO_SINGLE_LABEL_AFTER_FAILURE</li>
 	 * <li>
-	 * getdns.GETDNS_APPEND_NAME_ONLY_TO_MULTIPLE_LABEL_NAME_AFTER_FAILURE</li>
+	 * ContextOptionValue..GETDNS_APPEND_NAME_ONLY_TO_MULTIPLE_LABEL_NAME_AFTER_FAILURE</li>
 	 * <li>
-	 * getdns.GETDNS_APPEND_NAME_NEVER</li>
+	 * ContextOptionValue..GETDNS_APPEND_NAME_NEVER</li>
 	 * </ul>
 	 * This controls whether or not to append the suffix given by suffix.
 	 * </p>
@@ -222,48 +217,49 @@ public enum ContextOptionName {
 
 	/**
 	 * <p>
-	 * Its value is a list of strings to be appended based on append_name. The
-	 * list elements must follow the rules in RFC 4343
+	 * This takes values as a list of strings to be appended based on
+	 * append_name. The list elements must follow the rules in RFC 4343
 	 * </p>
 	 */
 	SUFFIX("suffix"),
 
 	/**
 	 * <p>
-	 * Its value is a list of DNSSEC trust anchors, expressed as RDATAs from
-	 * DNSKEY resource records.
+	 * This takes values as a list of DNSSEC trust anchors, expressed as
+	 * RDATAs from DNSKEY resource records.
 	 * </p>
 	 */
 	DNSSEC_TRUST_ANCHOR("dnssec_trust_anchor"),
 
 	/**
 	 * <p>
-	 * Its value is the number of seconds of skew that is allowed in either
-	 * direction when checking an RRSIG’s Expiration and Inception fields. The
-	 * default is 0.
+	 * This takes values as number of seconds of skew that is allowed in
+	 * either direction when checking an RRSIG’s Expiration and Inception fields.
+	 * The default is 0.
 	 * </p>
 	 */
 	DNSSEC_ALLOWED_SKEW("dnssec_allowed_skew"),
 
 	/**
 	 * <p>
-	 * Its value must be an integer between 0 and 255, inclusive. The default is
-	 * 0.
+	 * This takes values as an integer between 0 and 255, inclusive. The
+	 * default is 0.
 	 * </p>
 	 */
 	EDNS_EXTENDED_RCODE("edns_extended_rcode"),
 
 	/**
 	 * <p>
-	 * Its value must be an integer between 0 and 255, inclusive. The default is
-	 * 0.
+	 * This takes values as an integer between 0 and 255, inclusive. The
+	 * default is 0.
 	 * </p>
 	 */
 	EDNS_VERSION("edns_version"),
 
 	/**
 	 * <p>
-	 * Its value must be an integer valued either 0 or 1. The default is 0.
+	 * This takes values as an integer valued either 0 or 1. The default is
+	 * 0.
 	 * </p>
 	 */
 	EDNS_DO_BIT("edns_do_bit"),
@@ -281,8 +277,8 @@ public enum ContextOptionName {
 
 	/**
 	 * <p>
-	 * Its value must be an integer between 512 and 65535, inclusive. The default
-	 * is 512.
+	 * This takes values as an integer between 512 and 65535, inclusive.
+	 * The default is 512.
 	 * </p>
 	 */
 	EDNS_MAXIMUM_UDP_PAYLOADSIZE("edns_maximum_udp_payloadSize");

@@ -28,11 +28,7 @@ package com.verisign.getdns;
 
 /**
  * <p>
- * Extensions are java HashMap, with the keys being the names of the extensions.
- * The definition of each extension describes the values that may be assigned to
- * that extension. For most extensions it is a Boolean, and since the default
- * value is “False” it will most often take the value
- * getdns.GETDNS_EXTENSION_TRUE.
+ * This contains extension names that can be used during any query.
  * </p>
  *
  */
@@ -40,8 +36,8 @@ public enum ExtensionName {
 
 	/**
 	 * <p>
-	 * Applications that want to do their own validation will want to have the
-	 * DNSSEC-related records for a particular response. Use the
+	 * This is used by applications that want to handle their own validation by
+	 * getting DNSSEC-related records for a particular response. Use the
 	 * dnssec_return_validation_chain extension. Set the extension’s value to
 	 * getdns.GETDNS_EXTENSION_TRUE to cause a set of additional DNSSEC-related
 	 * records needed for validation to be returned in the response object. This
@@ -70,8 +66,8 @@ public enum ExtensionName {
 
 	/**
 	 * <p>
-	 * To return the DNSSEC status for each DNS record in the replies_tree list,
-	 * use the dnssec_return_status extension. Set the extension’s value to
+	 * This is used to return the DNSSEC status for DNS record in the replies_tree
+	 * list, use the dnssec_return_status extension. Set the extension’s value to
 	 * getdns.GETDNS_EXTENSION_TRUE to cause the returned status to have the name
 	 * dnssec_status added to the other names in the record’s dictionary
 	 * (“header”, “question”, and so on). The potential values for that name are
@@ -83,7 +79,7 @@ public enum ExtensionName {
 
 	/**
 	 * <p>
-	 * Many applications want to get both IPv4 and IPv6 addresses in a single call
+	 * This is used to get both IPV4 and IPV6 address in single call. Many applications want to get both IPv4 and IPv6 addresses in a single call
 	 * so that the results can be processed together. The address() method is able
 	 * to do this automatically. If you are using the general() method, you can
 	 * enable this with the return_both_v4_and_v6 extension. The extension’s value
@@ -198,7 +194,7 @@ public enum ExtensionName {
 	 * 
 	 * options:</b>
 	 * 
-	 * a list containing dictionaries for each option to be specified. Each
+	 * take a list containing dictionaries for each option to be specified. Each
 	 * dictionary contains two keys: option_code (an integer) and option_data (in
 	 * the form appropriate for that option code).</li>
 	 * </ul>
@@ -214,11 +210,12 @@ public enum ExtensionName {
 	 * </p>
 	 * 
 	 * <pre>
-	 * {@code
-	 * HashMap<String, Object> optParams = new HashMap<String, Object>();
-	 * optParams.put(ExtensionNames.ADD_OPT_PARAM_EXTENDED_RCODE.getName(), 128);
-	 * HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
-	 * extensions.put(ExtensionNames.ADD_OPT_PARAMETERS, optParams);
+	 * {
+	 * 	&#064;code
+	 * 	HashMap&lt;String, Object&gt; optParams = new HashMap&lt;String, Object&gt;();
+	 * 	optParams.put(ExtensionNames.ADD_OPT_PARAM_EXTENDED_RCODE.getName(), 128);
+	 * 	HashMap&lt;ExtensionNames, Object&gt; extensions = new HashMap&lt;ExtensionNames, Object&gt;();
+	 * 	extensions.put(ExtensionNames.ADD_OPT_PARAMETERS, optParams);
 	 * }
 	 * </pre>
 	 */
@@ -226,38 +223,39 @@ public enum ExtensionName {
 
 	/**
 	 * <p>
-	 * an integer between 512 and 65535 inclusive. If not specified it defaults to
-	 * the value in the getdns context.
+	 * This takes values as an integer between 512 and 65535 inclusive. If not
+	 * specified it defaults to the value in the getdns context.
 	 * </p>
 	 */
 	ADD_OPT_PARAM_MAX_UDP_PAYLOAD("maximum_udp_payload_size"),
 
 	/**
 	 * <p>
-	 * an integer between 0 and 255 inclusive. If not specified it defaults to the
-	 * value in the getdns context.
+	 * This takes values as an integer between 0 and 255 inclusive. If not
+	 * specified it defaults to the value in the getdns context.
 	 * </p>
 	 */
 	ADD_OPT_PARAM_EXTENDED_RCODE("extended_rcode"),
 
 	/**
 	 * <p>
-	 * an integer betwen 0 and 255 inclusive. If not specified it defaults to 0.
+	 * This takes values as an integer betwen 0 and 255 inclusive. If not
+	 * specified it defaults to 0.
 	 * </p>
 	 */
 	ADD_OPT_PARAM_VERSION("version"),
 
 	/**
 	 * <p>
-	 * must be either 0 or 1. If not specified it defaults to the value in the
-	 * getdns context.
+	 * This takes value either 0 or 1. If not specified it defaults to the value
+	 * in the getdns context.
 	 * </p>
 	 */
 	ADD_OPT_PARAM_DO_BIT("do_bit"),
 
 	/**
 	 * <p>
-	 * a list containing dictionaries for each option to be specified. Each
+	 * take a list containing dictionaries for each option to be specified. Each
 	 * dictionary contains two keys: option_code (an integer) and option_data (in
 	 * the form appropriate for that option code).
 	 * </p>

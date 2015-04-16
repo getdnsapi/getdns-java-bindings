@@ -1,5 +1,5 @@
 #getdns-java-bindings
-getdns java bindings. This is an early version with limited testing and validation. This has been tested on CentOS 6.3 64-bit.
+This is an early version with limited testing and validation. This has been tested on CentOS 6.3 64-bit.
 
 ##External dependencies
 This has been built and tested with Java 1.7 and 1.8
@@ -48,6 +48,8 @@ javac -cp ./build/libs/getdns-java-0.1.jar src/examples/java/com/verisign/getdns
 LD_LIBRARY_PATH=/usr/local/lib java -cp ./build/libs/getdns-java-0.1.jar:. -Djava.library.path=build/libs com.verisign.getdns.example.sync.GetDNSGeneralSync
 
 ```
+#####documentation 
+Javadoc for getdns-java binding can be found [here](http://getdns-java.github.io/)
 
 ###Known issues
 On some machines some test cases might fail because of timeout issues, we are working on this.

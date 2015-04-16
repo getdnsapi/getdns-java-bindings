@@ -11,7 +11,7 @@ import org.junit.Test;
 import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextSync;
 import com.verisign.getdns.RRType;
 
 public class HostnameSyncPositiveWithStubTest {
@@ -20,7 +20,7 @@ public class HostnameSyncPositiveWithStubTest {
 	public void testGetHostnameIPV6() throws UnknownHostException {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
-		final IGetDNSContext context = GetDNSFactory.create(1,options);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1, options);
 		try {
 			HashMap<String, Object> info = context.hostnameSync("2001:4860:4860::8888", null);
 			System.out.println(info);
@@ -35,7 +35,7 @@ public class HostnameSyncPositiveWithStubTest {
 
 	@Test
 	public void testGetHostnameINPV4() throws UnknownHostException {
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1, null);
 		try {
 
 			HashMap<String, Object> info = context.hostnameSync("8.8.8.8", null);

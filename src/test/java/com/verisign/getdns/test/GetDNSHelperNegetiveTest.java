@@ -1,12 +1,7 @@
 package com.verisign.getdns.test;
 
-import static org.junit.Assert.assertNull;
-
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import com.verisign.getdns.GetDNSContext;
 
 public class GetDNSHelperNegetiveTest {
 
@@ -21,7 +16,7 @@ public class GetDNSHelperNegetiveTest {
 	final String unicode1 = "xn--オンラインショップ.コム";
 
 	// final String ascii1 = "ecコムkl4b8bzf2dl3fc.xn--tckwe";
-
+/*
 	@Test
 	public void GetDNSUnicodeToAsciitest() {
 		String ascii = GetDNSContext.ConvertUnicodeToAscii(unicode);
@@ -43,5 +38,5 @@ public class GetDNSHelperNegetiveTest {
 
 		}
 	}
-
+*/
 }

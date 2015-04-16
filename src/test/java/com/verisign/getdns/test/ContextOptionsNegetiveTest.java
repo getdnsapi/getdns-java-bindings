@@ -14,7 +14,7 @@ import com.verisign.getdns.ContextOptionValue;
 import com.verisign.getdns.GetDNSException;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextSync;
 
 public class ContextOptionsNegetiveTest {
 
@@ -29,7 +29,7 @@ public class ContextOptionsNegetiveTest {
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_CONTEXT_UPDATE_FAIL"));
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -43,7 +43,7 @@ public class ContextOptionsNegetiveTest {
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_CONTEXT_UPDATE_FAIL"));
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -57,7 +57,7 @@ public class ContextOptionsNegetiveTest {
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -76,7 +76,7 @@ public class ContextOptionsNegetiveTest {
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_CONTEXT_UPDATE_FAIL"));
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -93,7 +93,7 @@ public class ContextOptionsNegetiveTest {
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -110,7 +110,7 @@ public class ContextOptionsNegetiveTest {
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -124,9 +124,9 @@ public class ContextOptionsNegetiveTest {
 		System.out.println("-----------SetReturnDnssecStatus-------------");
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.RETURN_DNSSEC_STATUS, true);
-		IGetDNSContext context = null;
+		IGetDNSContextSync context = null;
 		try {
-			context = GetDNSFactory.create(1, options);
+			context = GetDNSFactory.createSync(1, options);
 			HashMap<String, Object> info = context.addressSync("google.com", null);
 			System.out.println(info);
 			assertNotNull(info);
@@ -149,7 +149,7 @@ public class ContextOptionsNegetiveTest {
 		try {
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -166,7 +166,7 @@ public class ContextOptionsNegetiveTest {
 			options.put(ContextOptionName.EDNS_VERSION, "");
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -180,7 +180,7 @@ public class ContextOptionsNegetiveTest {
 			options.put(ContextOptionName.EDNS_DO_BIT, 2);
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_CONTEXT_UPDATE_FAIL"));
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -197,7 +197,7 @@ public class ContextOptionsNegetiveTest {
 			options.put(ContextOptionName.LIMIT_OUTSTANDING_QUERIES, "four");
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -211,7 +211,7 @@ public class ContextOptionsNegetiveTest {
 			options.put(ContextOptionName.EDNS_MAXIMUM_UDP_PAYLOADSIZE, "");
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -227,7 +227,7 @@ public class ContextOptionsNegetiveTest {
 		try {
 			Object[] namespace = { ContextOptionValue.GETDNS_NAMESPACE_DNS, ContextOptionValue.GETDNS_NAMESPACE_MDNS };
 			options.put(ContextOptionName.NAMESPACE, namespace);
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -244,7 +244,7 @@ public class ContextOptionsNegetiveTest {
 			options.put(ContextOptionName.FOLLOW_REDIRECT, 999);
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -261,7 +261,7 @@ public class ContextOptionsNegetiveTest {
 	 *       list = { { "www" } }; options.put(GetDNSConstants.CONTEXT_SET_SUFFIX,
 	 *       list); thrown.expect(GetDNSException.class); thrown.expect(new
 	 *       ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-	 *       GetDNSFactory.create(1, options); } catch (Exception e) {
+	 *       GetDNSFactory.createSync(1, options); } catch (Exception e) {
 	 *       e.printStackTrace(); } }
 	 */
 	/**
@@ -276,7 +276,7 @@ public class ContextOptionsNegetiveTest {
 			options.put(ContextOptionName.DNS_ROOT_SERVERS, list);
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -294,7 +294,7 @@ public class ContextOptionsNegetiveTest {
 			options.put(ContextOptionName.DNSSEC_TRUST_ANCHOR, list);
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 
 		} catch (Exception e) {
 			throw e;
@@ -312,7 +312,7 @@ public class ContextOptionsNegetiveTest {
 			options.put(ContextOptionName.DNSSEC_ALLOWED_SKEW, true);
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
-			GetDNSFactory.create(1, options);
+			GetDNSFactory.createSync(1, options);
 		} catch (Exception e) {
 			throw e;
 		}

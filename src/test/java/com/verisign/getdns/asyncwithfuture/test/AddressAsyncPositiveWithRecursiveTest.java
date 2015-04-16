@@ -1,4 +1,4 @@
-package com.verisign.getdns.async.test;
+package com.verisign.getdns.asyncwithfuture.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -13,7 +13,7 @@ import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSFutureResult;
 import com.verisign.getdns.GetDNSUtil;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextAsyncWithFuture;
 import com.verisign.getdns.RRType;
 import com.verisign.getdns.test.IGetDNSTestConstants;
 
@@ -23,7 +23,7 @@ public class AddressAsyncPositiveWithRecursiveTest implements IGetDNSTestConstan
 	public void testGetDNSAddrForlocalhost() throws ExecutionException, TimeoutException {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, false);
-		final IGetDNSContext context = GetDNSFactory.create(1, options);
+		final IGetDNSContextAsyncWithFuture context = GetDNSFactory.createAsyncWithFuture(1,options);
 
 		try {
 			GetDNSFutureResult futureResult = context.addressAsync("localhost", null);
@@ -49,7 +49,7 @@ public class AddressAsyncPositiveWithRecursiveTest implements IGetDNSTestConstan
 	public void testGetDNSAddrUnboundDomainZone() throws ExecutionException, TimeoutException {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, false);
-		final IGetDNSContext context = GetDNSFactory.create(1, options);
+		final IGetDNSContextAsyncWithFuture context = GetDNSFactory.createAsyncWithFuture(1,options);
 
 		try {
 			GetDNSFutureResult futureResult = context.addressAsync(DOMAIN_NAME_FROM_UNBOUND_ZONE, null);
@@ -74,7 +74,7 @@ public class AddressAsyncPositiveWithRecursiveTest implements IGetDNSTestConstan
 	public void testGetDNAddr() throws ExecutionException, TimeoutException {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, false);
-		final IGetDNSContext context = GetDNSFactory.create(1, options);
+		final IGetDNSContextAsyncWithFuture context = GetDNSFactory.createAsyncWithFuture(1,options);
 
 		try {
 			GetDNSFutureResult futureResult = context.addressAsync(DOMAIN_NAME, null);

@@ -6,7 +6,7 @@ import com.verisign.getdns.ExtensionName;
 import com.verisign.getdns.GetDNSConstants;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextSync;
 import com.verisign.getdns.RRType;
 
 public class GetDNSWithDNSSECReturnOnlyExtension {
@@ -14,7 +14,7 @@ public class GetDNSWithDNSSECReturnOnlyExtension {
 	public static void main(String args[]) {
 		String queryString = "getdnsapi.net";
 		String type = "A";
-		final IGetDNSContext context = GetDNSFactory.create(1);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1, null);
 		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();
 		extensions.put(ExtensionName.DNSSEC_RETURN_ONLY_SECURE, GetDNSConstants.GETDNS_EXTENSION_TRUE);
 		try {

@@ -1,4 +1,4 @@
-package com.verisign.getdns.async.test;
+package com.verisign.getdns.asyncwithfuture.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -14,16 +14,16 @@ import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSFutureResult;
 import com.verisign.getdns.GetDNSUtil;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextAsyncWithFuture;
 import com.verisign.getdns.RRType;
 
-public class HostnameAsyncPositiveWithRecursiveTest {
+public class HostnameAsyncPositiveWithStubTest {
 
 	@Test
 	public void testGetHostnameIPV4() throws UnknownHostException, ExecutionException, TimeoutException {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
-		options.put(ContextOptionName.STUB,false);
-		final IGetDNSContext context = GetDNSFactory.create(1,options);
+		options.put(ContextOptionName.STUB,true);
+		final IGetDNSContextAsyncWithFuture context = GetDNSFactory.createAsyncWithFuture(1, options);
 		try {
 			GetDNSFutureResult futureResult = context.hostnameAsync("8.8.8.8", null);
 			HashMap<String, Object> info = null;
@@ -46,8 +46,8 @@ public class HostnameAsyncPositiveWithRecursiveTest {
 	 @Test
 	public void testGetHostnameIPV6() throws UnknownHostException, ExecutionException, TimeoutException {
 		 HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
-			options.put(ContextOptionName.STUB,false);
-		final IGetDNSContext context = GetDNSFactory.create(1,options);
+			options.put(ContextOptionName.STUB,true);
+			final IGetDNSContextAsyncWithFuture context = GetDNSFactory.createAsyncWithFuture(1, options);
 		try {
 			GetDNSFutureResult futureResult = context.hostnameAsync("2001:4860:4860::8888", null);
 			HashMap<String, Object> info = null;

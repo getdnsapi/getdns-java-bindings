@@ -28,8 +28,17 @@ package com.verisign.getdns;
 
 import java.util.HashMap;
 
+/**
+ * This interface should be implemented to handle response from methods invoked on <a href="com/verisign">IGetDNSContextAsyncWithCallback</a>.
+ */
 public interface IGetDNSCallback {
-	void handleResponse(HashMap<String, Object> response, RuntimeException exception);
-
-//	void handleException(GetDNSException exception);
+	
+	/**
+	 * This method will be invoked when the response to a dns query is ready.
+	 * @param response
+	 *This is response from the dns query
+	 * @param exception
+	 * This parameter will be non-null, in case there was a problem during the dns query.
+	 */
+	public void handleResponse(HashMap<String, Object> response, RuntimeException exception);
 }

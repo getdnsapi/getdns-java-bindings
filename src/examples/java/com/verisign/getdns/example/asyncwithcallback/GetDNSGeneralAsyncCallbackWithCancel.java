@@ -5,7 +5,7 @@ import java.util.HashMap;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
 import com.verisign.getdns.IGetDNSCallback;
-import com.verisign.getdns.IGetDNSContextWithCallback;
+import com.verisign.getdns.IGetDNSContextAsyncWithCallback;
 import com.verisign.getdns.RRType;
 
 /*
@@ -19,7 +19,7 @@ import com.verisign.getdns.RRType;
 public class GetDNSGeneralAsyncCallbackWithCancel {
 
 	public static void main(String[] args) {
-		final IGetDNSContextWithCallback context = GetDNSFactory.createWithCallback(1, null);
+		final IGetDNSContextAsyncWithCallback context = GetDNSFactory.createAsyncWithCallback(1, null);
 
 		try {
 			final String queryString = "verisigninc.com";
@@ -53,7 +53,7 @@ public class GetDNSGeneralAsyncCallbackWithCancel {
 	private static void checkResponse(String queryString, String type, HashMap<String, Object> info) {
 		if (info != null) {
 			if (Integer.parseInt(info.get("status").toString()) == 900) {
-				System.out.println(GetDNSUtil.getdnsStatus(info));
+				System.out.println(GetDNSUtil.getDnsStatus(info));
 			}
 
 			else if (Integer.parseInt(info.get("status").toString()) == 901) {

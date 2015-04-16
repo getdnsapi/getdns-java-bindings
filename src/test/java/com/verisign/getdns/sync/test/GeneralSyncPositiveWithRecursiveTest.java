@@ -10,7 +10,7 @@ import org.junit.Test;
 import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextSync;
 import com.verisign.getdns.RRType;
 import com.verisign.getdns.test.IGetDNSTestConstants;
 
@@ -24,7 +24,7 @@ public class GeneralSyncPositiveWithRecursiveTest implements IGetDNSTestConstant
 	public void testGetDNSSyncForARecord() {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, false);
-		final IGetDNSContext context = GetDNSFactory.create(1, options);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1,options);
 		try {
 
 			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.A, null);
@@ -47,7 +47,7 @@ public class GeneralSyncPositiveWithRecursiveTest implements IGetDNSTestConstant
 
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, false);
-		final IGetDNSContext context = GetDNSFactory.create(1, options);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1,options);
 		try {
 			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.AAAA, null);
 			assertNotNull(info);
@@ -67,7 +67,7 @@ public class GeneralSyncPositiveWithRecursiveTest implements IGetDNSTestConstant
 	public void testGetDNSSyncForTXTRecord() {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, false);
-		final IGetDNSContext context = GetDNSFactory.create(1, options);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1,options);
 		try {
 
 			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.TXT, null);
@@ -90,7 +90,7 @@ public class GeneralSyncPositiveWithRecursiveTest implements IGetDNSTestConstant
 	public void testGetDNSSyncForMXRecord() {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, false);
-		final IGetDNSContext context = GetDNSFactory.create(1, options);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1,options);
 		try {
 			HashMap<String, Object> info = context.generalSync(DOMAIN_NAME, RRType.MX, null);
 			assertNotNull(info);

@@ -27,8 +27,8 @@
 package com.verisign.getdns;
 
 /**
- * It contains predefined context options values, required at the time of
- * manual context configuration
+ * This contains predefined context options values that can be used while
+ * configuring the context manually.
  */
 public enum ContextOptionValue {
 

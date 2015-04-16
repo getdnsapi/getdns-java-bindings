@@ -10,7 +10,7 @@ import org.junit.Test;
 import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextSync;
 import com.verisign.getdns.RRType;
 import com.verisign.getdns.test.IGetDNSTestConstants;
 
@@ -20,7 +20,7 @@ public class ServiceSyncPositiveWithStubTest implements IGetDNSTestConstants {
 	public void testGetService() {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
-		final IGetDNSContext context = GetDNSFactory.create(1, options);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1, options);
 		try {
 
 			HashMap<String, Object> info = context.serviceSync("_xmpp-server._tcp.google.com", null);

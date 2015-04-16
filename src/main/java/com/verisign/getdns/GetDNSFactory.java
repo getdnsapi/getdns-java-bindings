@@ -28,55 +28,45 @@ package com.verisign.getdns;
 
 import java.util.HashMap;
 
+/**
+ * This class is used to create a getdns context
+ * 
+ * <p>
+ * Many calls in the DNS API require a DNS context. A DNS context contains the
+ * information that the API needs in order to process DNS calls, such as the
+ * locations of upstream DNS servers, DNSSEC trust anchors, and so on. The
+ * internal structure of the DNS context is opaque, and might be different on
+ * each OS. A typical application using this API doesn't need to know anything
+ * about contexts. Basically, the application creates a default context, uses
+ * its functions, and then closes it when done. Context manipulation is
+ * available for more DNS-aware programs, but is unlikely to be of interest to
+ * applications that just want the results of lookups for A, AAAA, SRV, and PTR
+ * records. It is expected that contexts in implementations of the API will not
+ * necessarily be thread-safe, but they will not be thread-hostile.
+ * </p>
+ * </p>A context should not be used by multiple threads: create a new context
+ * for use on a different thread. It is just fine for an application to have
+ * many contexts, and some DNS-heavy applications will certainly want to have
+ * many even if the application uses a single thread. See below for the methods
+ * for creating contexts. When the context is used in the API for the first time
+ * and setFromOs is 1, the API starts replacing some of the values with values
+ * from the OS, such as those that would be found in res_query(3),
+ * /etc/resolv.conf, and so on, then proceeds with the new function. Some
+ * advanced users will not want the API to change the values to the OS's
+ * defaults; if setFromOs is 0, the API will not do any updates to the initial
+ * values based on changes in the OS. For example, this might be useful if the
+ * API is acting as a stub resolver that is using a specific upstream recursive
+ * resolver chosen by the application, not the one that might come back from
+ * DHCP. </p>
+ * 
+ */
 public class GetDNSFactory {
 
 	/**
 	 * <p>
-	 * Many calls in the DNS API require a DNS context. A DNS context contains the
-	 * information that the API needs in order to process DNS calls, such as the
-	 * locations of upstream DNS servers, DNSSEC trust anchors, and so on. The
-	 * internal structure of the DNS context is opaque, and might be different on
-	 * each OS. When a context is passed to any function, it must be an allocated
-	 * context; the context must not be NULL. A typical application using this API
-	 * doesn't need to know anything about contexts. Basically, the application
-	 * creates a default context, uses it in the functions that require a context,
-	 * and then deallocates it when done. Context manipulation is available for
-	 * more DNS-aware programs, but is unlikely to be of interest to applications
-	 * that just want the results of lookups for A, AAAA, SRV, and PTR records. It
-	 * is expected that contexts in implementations of the API will not
-	 * necessarily be thread-safe, but they will not be thread-hostile.
-	 * </p>
-	 * </p>A context should not be used by multiple threads: create a new context
-	 * for use on a different thread. It is just fine for an application to have
-	 * many contexts, and some DNS-heavy applications will certainly want to have
-	 * many even if the application uses a single thread. See above for the method
-	 * for creating and destroying contexts. When the context is used in the API
-	 * for the first time and set_from_os is 1, if set_from_os is 0, the API will
-	 * not do any updates to the initial values based on changes in the OS. For
-	 * example, this might be useful if the API is acting as a stub resolver that
-	 * is using a specific upstream recursive resolver chosen by the application,
-	 * not the one that might come back from DHCP. </p>
-	 * 
-	 * <pre>
-	 * {@code
-	 * context = GetDNSFactory.create(1);
-	 * }
-	 * </pre>
-	 * 
-	 * @param setFromOs
-	 * @return
-	 * @throws GetDNSException
-	 */
-	public static IGetDNSContext create(int setFromOs) throws GetDNSException {
-		return new GetDNSContext(setFromOs);
-	}
-
-	/**
-	 * <p>
-	 * Setting specific values in a context are done with value-specific
-	 * functions. The setting functions all return either GETDNS_RETURN_GOOD for
-	 * success or GETDNS_RETURN_CONTEXT_UPDATE_FAIL for a failure to update the
-	 * context.
+	 * Creates a context for calling the API synchronously.<br>
+	 * That is, when an application calls one of these synchronous functions, the
+	 * API gathers all the required information and then returns the result
 	 * </p>
 	 * 
 	 * <pre>
@@ -90,13 +80,12 @@ public class GetDNSFactory {
 	 * @return
 	 * @throws GetDNSException
 	 */
-	public static IGetDNSContext create(int setFromOs, HashMap<ContextOptionName, Object> contextOptions)
+	public static IGetDNSContextSync createSync(int setFromOs, HashMap<ContextOptionName, Object> contextOptions)
 			throws GetDNSException {
 		return createContext(setFromOs, contextOptions);
 	}
 
-	private static GetDNSContext createContext(int setFromOs,
-			HashMap<ContextOptionName, Object> contextOptions) {
+	private static GetDNSContext createContext(int setFromOs, HashMap<ContextOptionName, Object> contextOptions) {
 		GetDNSContext context = new GetDNSContext(setFromOs);
 		try {
 			context.applyContextOptions(contextOptions);
@@ -107,9 +96,43 @@ public class GetDNSFactory {
 		}
 		return context;
 	}
-	
-	public static IGetDNSContextWithCallback createWithCallback(int setFromOs, HashMap<ContextOptionName, Object> contextOptions)
-			throws GetDNSException {
+
+	/**
+	 * <p>
+	 * Creates a context for calling the API asynchronously using <a href=
+	 * "http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html"
+	 * target="_blank">Future</a>.<br>
+	 * That is, when an application calls one of these asynchronous functions, the
+	 * API returns a future object which will be populated with the response or
+	 * exception when <a href="com/verisign/getdns/IGetDNSContextAsyncWithFuture.html">run()</a> is invoked
+	 * </p>
+	 * 
+	 * @param setFromOs
+	 * @param contextOptions
+	 * @return
+	 * @throws GetDNSException
+	 */
+	public static IGetDNSContextAsyncWithFuture createAsyncWithFuture(int setFromOs,
+			HashMap<ContextOptionName, Object> contextOptions) throws GetDNSException {
+		return createContext(setFromOs, contextOptions);
+	}
+
+	/**
+	 * <p>
+	 * Creates a context for calling the API asynchronously using a <a href="com/verisign/getdns/IGetDNSCallback.html">callback</a> mechanism.<br>
+	 * That is, when an application calls one of these asynchronous functions and
+	 * provides a <a>callback</a>, the API will invoke the callback with the
+	 * response or exception when <a href="com/verisign/getdns/IGetDNSContextAsyncWithCallback.html">run()</a> is invoked
+	 * </p>
+	 * 
+	 * 
+	 * @param setFromOs
+	 * @param contextOptions
+	 * @return
+	 * @throws GetDNSException
+	 */
+	public static IGetDNSContextAsyncWithCallback createAsyncWithCallback(int setFromOs,
+			HashMap<ContextOptionName, Object> contextOptions) throws GetDNSException {
 		return createContext(setFromOs, contextOptions);
 	}
 }

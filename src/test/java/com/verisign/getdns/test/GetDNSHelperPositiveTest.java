@@ -1,11 +1,5 @@
 package com.verisign.getdns.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import org.junit.Test;
-
-import com.verisign.getdns.GetDNSContext;
 
 public class GetDNSHelperPositiveTest {
 
@@ -20,7 +14,7 @@ public class GetDNSHelperPositiveTest {
 	// Russian Script
 	final String unicode2 = "онлайнмагазин.ком";
 	final String ascii2 = "xn--80aaalvgcolgdgb.xn--j1aef";
-
+/*
 	@Test
 	public void GetDNSUnicodeToAsciitest() {
 		String ascii = GetDNSContext.ConvertUnicodeToAscii(unicode);
@@ -67,4 +61,5 @@ public class GetDNSHelperPositiveTest {
 	public void GetDnsRootTrustAnchorTest() {
 		assertNotNull(GetDNSContext.GetDnsRootTrustAnchor());
 	}
+	*/
 }

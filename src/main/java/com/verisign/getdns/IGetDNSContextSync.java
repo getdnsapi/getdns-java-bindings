@@ -3,22 +3,25 @@ package com.verisign.getdns;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 
-interface IGetDNSContextSync {
+/**
+ * <p>This interface is for calling the API synchronously using a <a href="com/verisign/getdns/IGetDNSCallback.html">callback</a> mechanism.</p>
+ * 
+ */
+public interface IGetDNSContextSync extends IGetDNSContextBase{
 	/**
 	 * <p>
-	 * This method is used for looking up any type of DNS record.
+	 * This API call is used for looking up any type of DNS record.
 	 * </p>
 	 * 
 	 * <pre>
 	 * {@code
-	 * 	HashMap<String, Object> info = context.generalSync("gmadkat.com", RRType.valueOf("CNAME"), null);
+	 * 	HashMap<String, Object> info = context.generalSync("getdnsapi.net", RRType.valueOf("CNAME"), null);
 	 * 
 	 * }
 	 * </pre>
 	 * 
 	 * @param name
-	 *          a representation of the query term; usually a string but must be a
-	 *          dict (as described below) in the case of a PTR record lookup
+	 *          a representation of the query term; usually a string 
 	 * @param requestType
 	 *          a DNS RR type as a getdns constant (listed here)
 	 * @param extensions
@@ -32,21 +35,20 @@ interface IGetDNSContextSync {
 	/**
 	 * 
 	 * <p>
-	 * The name argument can only take a host name.
+	 * This API call takes argument only as a host name.
 	 * </p>
 	 * 
 	 * 
 	 * <p>
-	 * There are three critical differences between getdns_address() and
-	 * getdns_general() beyond the missing request_type argument:
+	 * There are three critical differences between addressSync() and
+	 * getdnsSync() beyond the missing request_type argument:
 	 * <ul>
-	 * <li><b>In getdns_address()</b>, the name argument can only take a host
+	 * <li><b>In addressSync()</b>, the name argument can only take a host
 	 * name.
 	 * <li>You do not need to include a return_both_v4_and_v6 extension with the
-	 * call in getdns_address(): it will always return both IPv4 and IPv6
+	 * call in addressSync(): it will always return both IPv4 and IPv6
 	 * addresses.</li>
-	 * <li>getdns_address() always uses all of namespaces from the context (to
-	 * better emulate getaddrinfo()), while getdns_general() only uses the DNS
+	 * <li>addressSync() always uses all of namespaces from the context, while generalSync() only uses the DNS
 	 * namespace</li>
 	 * </ul>
 	 * </p>
@@ -62,7 +64,7 @@ interface IGetDNSContextSync {
 	HashMap<String, Object> addressSync(String name, HashMap<ExtensionName, Object> extensions) throws GetDNSException;
 
 	/**
-	 * it must be a domain name for an SRV lookup. The call returns the relevant
+	 * This API call takes arguments as a domain name for an SRV lookup. The call returns the relevant
 	 * SRV information for the name
 	 * 
 	 * @param name
@@ -76,7 +78,7 @@ interface IGetDNSContextSync {
 
 	/**
 	 * <p>
-	 * it takes both IPV4 AND IPV6 address.
+	 * This API call takes both IPV4 AND IPV6 address.
 	 * </p>
 	 * 
 	 * <pre>

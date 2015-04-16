@@ -1,4 +1,4 @@
-package com.verisign.getdns.async.test;
+package com.verisign.getdns.asyncwithfuture.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -13,7 +13,7 @@ import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSFutureResult;
 import com.verisign.getdns.GetDNSUtil;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextAsyncWithFuture;
 import com.verisign.getdns.RRType;
 import com.verisign.getdns.test.IGetDNSTestConstants;
 
@@ -23,7 +23,7 @@ public class ServiceAsyncPositiveWithRecursiveTest implements IGetDNSTestConstan
 	public void testGetDNSService() throws ExecutionException, TimeoutException, InterruptedException {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, false);
-		final IGetDNSContext context = GetDNSFactory.create(1, options);
+		final IGetDNSContextAsyncWithFuture context = GetDNSFactory.createAsyncWithFuture(1, options);
 
 		try {
 			GetDNSFutureResult futureResult = context.serviceAsync("_xmpp-server._tcp.verisign.com.", null);
@@ -48,7 +48,7 @@ public class ServiceAsyncPositiveWithRecursiveTest implements IGetDNSTestConstan
 	public void testGetDNSNXDDomain() throws ExecutionException, TimeoutException {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, false);
-		final IGetDNSContext context = GetDNSFactory.create(1, options);
+		final IGetDNSContextAsyncWithFuture context = GetDNSFactory.createAsyncWithFuture(1, options);
 
 		try {
 			GetDNSFutureResult futureResult = context.serviceAsync(UNREGDOMAIN, null);

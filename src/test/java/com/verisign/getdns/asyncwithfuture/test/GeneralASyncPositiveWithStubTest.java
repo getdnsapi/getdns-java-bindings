@@ -1,4 +1,4 @@
-package com.verisign.getdns.async.test;
+package com.verisign.getdns.asyncwithfuture.test;
 
 import static com.verisign.getdns.test.IGetDNSTestConstants.DOMAIN_NAME;
 import static com.verisign.getdns.test.IGetDNSTestConstants.UNREGDOMAIN;
@@ -16,7 +16,7 @@ import com.verisign.getdns.ContextOptionName;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSFutureResult;
 import com.verisign.getdns.GetDNSUtil;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextAsyncWithFuture;
 import com.verisign.getdns.RRType;
 
 public class GeneralASyncPositiveWithStubTest {
@@ -26,7 +26,7 @@ public class GeneralASyncPositiveWithStubTest {
 	{
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
-		final IGetDNSContext context = GetDNSFactory.create(1,options);		
+		final IGetDNSContextAsyncWithFuture context = GetDNSFactory.createAsyncWithFuture(1, options);
 	
 		try{
 			GetDNSFutureResult futureResult = context.generalAsync(DOMAIN_NAME, RRType.A, null);
@@ -51,7 +51,7 @@ public class GeneralASyncPositiveWithStubTest {
 	{
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
-		final IGetDNSContext context = GetDNSFactory.create(1,options);		
+		final IGetDNSContextAsyncWithFuture context = GetDNSFactory.createAsyncWithFuture(1, options);
 	
 		try{
 			GetDNSFutureResult futureResult = context.generalAsync(UNREGDOMAIN, RRType.SOA, null);
@@ -78,7 +78,7 @@ public class GeneralASyncPositiveWithStubTest {
 		System.out.println("---------Starting testGetDNSAsync bulk");
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
-		final IGetDNSContext context = GetDNSFactory.create(1,options);		
+		final IGetDNSContextAsyncWithFuture context = GetDNSFactory.createAsyncWithFuture(1, options);	
 	
 		try{
 			long currentTime = System.currentTimeMillis();

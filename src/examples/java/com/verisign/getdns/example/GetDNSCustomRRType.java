@@ -7,7 +7,7 @@ import com.verisign.getdns.ExtensionName;
 import com.verisign.getdns.GetDNSConstants;
 import com.verisign.getdns.GetDNSFactory;
 import com.verisign.getdns.GetDNSUtil;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextSync;
 import com.verisign.getdns.RRType;
 
 /*
@@ -24,7 +24,7 @@ public class GetDNSCustomRRType {
 		HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
 		options.put(ContextOptionName.STUB, true);
 		options.put(ContextOptionName.DNS_TRANSPORT, 542);
-		final IGetDNSContext context = GetDNSFactory.create(1, options);
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1, options);
 		String queryString = "getdnsapi.net";
 		String type = "A";
 		HashMap<ExtensionName, Object> extensions = new HashMap<ExtensionName, Object>();

@@ -10,7 +10,7 @@ import org.junit.rules.ExpectedException;
 
 import com.verisign.getdns.GetDNSException;
 import com.verisign.getdns.GetDNSFactory;
-import com.verisign.getdns.IGetDNSContext;
+import com.verisign.getdns.IGetDNSContextSync;
 import com.verisign.getdns.RRType;
 import com.verisign.getdns.test.ErrorCodeMatcher;
 import com.verisign.getdns.test.IGetDNSTestConstants;
@@ -29,7 +29,7 @@ public class GeneralSyncNegativeTest implements IGetDNSTestConstants{
 	@Test
 	public void testGetDNSSyncNonExistingDomain() {
 	
-		final IGetDNSContext context = GetDNSFactory.create(1);		
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1,null);
 		try{
 //			thrown.expect(GetDNSException.class);
 //			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
@@ -49,7 +49,7 @@ public class GeneralSyncNegativeTest implements IGetDNSTestConstants{
 	@Test
 	public void testGetDNSSyncNULLDomain() {
 	
-		final IGetDNSContext context = GetDNSFactory.create(1);		
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1,null);		
 		try{
 			thrown.expect(GetDNSException.class);
 			thrown.expect(new ErrorCodeMatcher("GETDNS_RETURN_INVALID_PARAMETER"));
@@ -66,7 +66,7 @@ public class GeneralSyncNegativeTest implements IGetDNSTestConstants{
 	@Test
 	public void testGetDNSSyncLongDomain(){
 	
-		final IGetDNSContext context = GetDNSFactory.create(1);		
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1,null);		
 		try{
 			
 			thrown.expect(GetDNSException.class);
@@ -81,7 +81,7 @@ public class GeneralSyncNegativeTest implements IGetDNSTestConstants{
 	@Test
 	public void testGetDNSSyncForTooManyOctets(){
 		System.out.println("Junit 3");
-		final IGetDNSContext context = GetDNSFactory.create(1);		
+		final IGetDNSContextSync context = GetDNSFactory.createSync(1,null);	
 		try{
 			
 			thrown.expect(GetDNSException.class);

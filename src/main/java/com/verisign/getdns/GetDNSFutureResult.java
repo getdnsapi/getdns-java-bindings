@@ -36,7 +36,14 @@ import java.util.concurrent.TimeoutException;
 
 /**
  * 
- * <p>This is used for Asyc call implementation. it implements java <a href="http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html" target="_blank">future</a><p>
+ * <p>
+ * This is used to consume response from methods invoked on <a
+ * href="com/verisign/getdns/IGetDNSContextAsyncWithFuture.html"
+ * >IGetDNSContextAsyncWithFuture</a> call implementation. it implements java <a
+ * href
+ * ="http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html"
+ * target="_blank">future.</a>
+ * <p>
  *
  */
 public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGetDNSCallback {
@@ -49,10 +56,13 @@ public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGet
 	private IGetDNSCallback callback;
 	private ExecutorService executor;
 
-	public GetDNSFutureResult(GetDNSContext context) {
+	 GetDNSFutureResult(GetDNSContext context) {
 		this.context = context;
 	}
 
+	/**
+	 * This method can be invoked to cancel the request
+	 */
 	@Override
 	public boolean cancel(boolean mayInterruptIfRunning) throws GetDNSException {
 		context.cancelRequest(transactionId);
@@ -60,31 +70,43 @@ public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGet
 		return isCancelled;
 	}
 
+	/**
+	 * This method will return true in case the dns request is canceled.
+	 */
 	@Override
 	public boolean isCancelled() {
 		return isCancelled;
 	}
 
+	/**
+	 * This method will return true when the dns lookup is complete
+	 */
 	@Override
 	public boolean isDone() {
 		return response != null;
 	}
 
+	/**
+	 * This method will return response of a dns lookup.
+	 */
 	@Override
 	public HashMap<String, Object> get() throws InterruptedException, ExecutionException {
 		if (exception != null)
 			throw new ExecutionException(exception);
-		if(isCancelled)
+		if (isCancelled)
 			throw new CancellationException("This request is already cancelled");
 		return response;
 	}
 
+	/**
+	 * This method will return response of a dns lookup.
+	 */
 	@Override
 	public HashMap<String, Object> get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException,
 			TimeoutException {
 		if (unit == null)
 			throw new IllegalArgumentException("Timeunit cannot be null");
-		
+
 		synchronized (this) {
 			if (!isCancelled && response == null && exception == null)
 				this.wait(unit.toMillis(timeout));
@@ -92,6 +114,9 @@ public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGet
 		return get();
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void handleResponse(HashMap<String, Object> response, RuntimeException exception) {
 		synchronized (this) {
@@ -102,10 +127,9 @@ public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGet
 		sendToCallback(response, exception);
 	}
 
-	private void sendToCallback(final HashMap<String, Object> response,
-			final RuntimeException exception) {
-		if(callback != null){
-			if(this.executor != null)
+	private void sendToCallback(final HashMap<String, Object> response, final RuntimeException exception) {
+		if (callback != null) {
+			if (this.executor != null)
 				executor.submit(new Runnable() {
 					public void run() {
 						callback.handleResponse(response, exception);
@@ -127,8 +151,8 @@ public class GetDNSFutureResult implements Future<HashMap<String, Object>>, IGet
 	void setCallback(IGetDNSCallback callback) {
 		this.callback = callback;
 	}
-	
-	void setExecutors(ExecutorService executor){
+
+	void setExecutors(ExecutorService executor) {
 		this.executor = executor;
 	}
 
