@@ -30,6 +30,11 @@ package com.verisign.getdns;
 /**
  * <p>
  * This contains possible context option names that can be used while configuring the context manually. 
+ * <pre>
+ * HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+ * options.put(ContextOptionName.DNS_TRANSPORT, ContextOptionValue.GETDNS_TRANSPORT_UDP_ONLY);
+ * IGetDNSContextSync context = GetDNSFactory.createSync(1, options);
+ * </pre>
  * </p>
  * 
  */

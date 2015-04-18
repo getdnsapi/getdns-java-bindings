@@ -69,12 +69,6 @@ public class GetDNSFactory {
 	 * API gathers all the required information and then returns the result
 	 * </p>
 	 * 
-	 * <pre>
-	 * {@code
-	 * context = GetDNSFactory.create(1,options);
-	 * }
-	 * </pre>
-	 * 
 	 * @param setFromOs
 	 * @param contextOptions
 	 * @return

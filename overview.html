@@ -1,0 +1,90 @@
+<body>
+<h2> Table of Contents</h2>
+<ul>
+<li><a href="#intro">Introduction</a></li>
+<li><a href="#depend">Dependencies</a></li>
+<li><a href="#build">Building</a></li>
+<li><a href="#use">Using getdns</a></li>
+<li><a href="#known">Known issues</a></li>
+
+</ul>
+<h3 id='intro'>Introduction</h3>
+<p>
+getdns Java bindings is an implementation of Java language bindings for the <a href="https://getdnsapi.net/spec.html" target="_blank">getdns API</a>, 
+built on top of the <a href="https://github.com/getdnsapi/getdns/" target="_blank">getdns implementation</a>. getdns is a modern, asynchronous DNS API that simplifies access to advanced DNS features, including DNSSEC. The API specification was developed by Paul Hoffman. getdns is built on top of the getdns implementation developed as a joint project between <a href='http://labs.verisigninc.com/en_US/innovation/verisign-labs/index.xhtml'>Verisign Labs</a> and <a href='http://nlnetlabs.nl/'>NLnet Labs</a>.
+To explore further, refer <a href="com/verisign/getdns/GetDNSFactory.html">GetDnsFactory</a>
+</p>
+<h3 id='depend'>Dependencies</h3>
+<p>This has been built and tested with Java 1.7 and 1.8</p>
+
+<p>Currently building against the getdns 0.1.7 release.
+getdns external dependencies include:</p>
+
+<ul class="task-list">
+<li>  <a href="https://www.nlnetlabs.nl/projects/ldns/">libldns from NLnet Labs</a> version 1.6.17 or later (ldns requires ope
+nssl headers and libraries)</li>
+<li>  <a href="http://www.gnu.org/software/libidn/">libidn from the FSF</a> version 1.29</li>
+<li>  <a href="http://expat.sourceforge.net/">libexpat</a> for libunbound.</li>
+<li>  <a href="http://www.nlnetlabs.nl/projects/unbound/">libunbound from NLnet Labs</a> version 1.4.22 or later</li>
+<li>
+<a href="http://libevent.org">libevent</a> version 2.0.22 stable</li>
+</ul>
+
+<p>Note that getdns <strong>MUST</strong> be built with the --with-libevent flag to configure.</p>
+<h3 id= 'build'>Building </h3>
+<p> The code repository for getdns is available at: <a href='https://github.com/getdnsapi/getdns-java-bindings'>https://github.com/getdnsapi/getdns-java-bindings</a> <br/>
+<h4 id='preconfig'><u>Pre-configuration </u></h4>
+The file gradle.properties needs to be edited to customize java home property.
+<h4 id='preconfig'><u>Running gradle build </u></h4>
+<pre>./gradlew clean assemble buildJniLib<BR></pre>
+</p> 
+<h3 id='use'>Using getdns</h3>
+<p>
+<h4 id='preconfig'><u>Libraries</u></h4>
+As per gradle standard libraries will be available in the folder build/libs.
+<ul>
+<li>libgetdnsconnector.so is used to connect to getdns and dependent libraries from Java layer. This needs to be placed at location that can be passed as java.library.path parameter during java invocation</li>
+<li>getdns-java-0.1.jar should be placed in the classpath.</li>
+</ul>
+</p>
+<h4 id='example'><u>Examples</u></h4>
+<p>
+In this example, we do a simple address lookup and dump the results to the screen:<BR/>
+<div style='text-align:right;BORDER-TOP: #ccc 1px dashed'></div>
+<div style='background:#FFFFFF; font-family: Courier New, Courier; font-size: 10pt; COLOR: #000000; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px;'><strong><font color='#7f0055'>import</font></strong>&nbsp;java.util.HashMap;
+<br/>
+<br/><strong><font color='#7f0055'>import</font></strong>&nbsp;com.verisign.getdns.ContextOptionName;
+<br/><strong><font color='#7f0055'>import</font></strong>&nbsp;com.verisign.getdns.GetDNSFactory;
+<br/><strong><font color='#7f0055'>import</font></strong>&nbsp;com.verisign.getdns.GetDNSUtil;
+<br/><strong><font color='#7f0055'>import</font></strong>&nbsp;com.verisign.getdns.IGetDNSContextSync;
+<br/><strong><font color='#7f0055'>import</font></strong>&nbsp;com.verisign.getdns.RRType;
+<br/>
+<br/><font color='#3f7f5f'>/*
+<br/>&nbsp;*&nbsp;Given&nbsp;a&nbsp;DNS&nbsp;name&nbsp;and&nbsp;type,&nbsp;return&nbsp;the&nbsp;records&nbsp;in&nbsp;the&nbsp;DNS&nbsp;answer&nbsp;section
+<br/>&nbsp;*/</font>
+<br/>
+<br/><strong><font color='#7f0055'>public</font></strong>&nbsp;<strong><font color='#7f0055'>class</font></strong>&nbsp;GetDNSGeneralSync&nbsp;{
+<br/>
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;<strong><font color='#7f0055'>public</font></strong>&nbsp;<strong><font color='#7f0055'>static</font></strong>&nbsp;<strong><font color='#7f0055'>void</font></strong>&nbsp;main(String[]&nbsp;args)&nbsp;{
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><font color='#7f0055'>final</font></strong>&nbsp;IGetDNSContextSync&nbsp;context&nbsp;=&nbsp;GetDNSFactory.createSync(1,&nbsp;<strong><font color='#7f0055'>null</font></strong>);&nbsp;&nbsp;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><font color='#7f0055'>try</font></strong>&nbsp;{
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HashMap&nbsp;info&nbsp;=&nbsp;context.generalSync(<font color='#2a00ff'>"getdnsapi.net"</font>,&nbsp;RRType.A,&nbsp;<strong><font color='#7f0055'>null</font></strong>);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><font color='#7f0055'>if</font></strong>&nbsp;(info&nbsp;!=&nbsp;<strong><font color='#7f0055'>null</font></strong>)&nbsp;{
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><font color='#7f0055'>if</font></strong>&nbsp;(Integer.parseInt(info.get(<font color='#2a00ff'>"status"</font>).toString())&nbsp;==&nbsp;900)&nbsp;{
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(GetDNSUtil.printReadable(info));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(GetDNSUtil.getdnsStatus(info));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<strong><font color='#7f0055'>else</font></strong>&nbsp;<strong><font color='#7f0055'>if</font></strong>&nbsp;(Integer.parseInt(info.get(<font color='#2a00ff'>"status"</font>).toString())&nbsp;==&nbsp;901)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color='#2a00ff'>"no&nbsp;such&nbsp;name:&nbsp;"</font>);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><font color='#7f0055'>else</font></strong>
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color='#2a00ff'>"Error&nbsp;in&nbsp;query&nbsp;GETDNS&nbsp;Status&nbsp;="</font>&nbsp;+&nbsp;info.get(<font color='#2a00ff'>"status"</font>).toString());
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<strong><font color='#7f0055'>else</font></strong>
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color='#2a00ff'>"No&nbsp;response&nbsp;form&nbsp;DNS&nbsp;SERVER"</font>);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<strong><font color='#7f0055'>finally</font></strong>&nbsp;{
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;context.close();
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.exit(0);&nbsp;
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;}
+<br/>}<div style='text-align:right;BORDER-TOP: #ccc 1px dashed'></div></div>
+<h3 id='known'>Known issues</h3>
+<p>On some machines some test cases might fail because of timeout issues.</p>
+</body>

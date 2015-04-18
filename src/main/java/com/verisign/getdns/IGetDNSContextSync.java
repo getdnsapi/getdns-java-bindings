@@ -4,7 +4,7 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 
 /**
- * <p>This interface is for calling the API synchronously using a <a href="com/verisign/getdns/IGetDNSCallback.html">callback</a> mechanism.</p>
+ * <p>This interface is for calling the API synchronously.</p>
  * 
  */
 public interface IGetDNSContextSync extends IGetDNSContextBase{
