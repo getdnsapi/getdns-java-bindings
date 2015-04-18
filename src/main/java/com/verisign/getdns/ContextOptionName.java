@@ -72,7 +72,7 @@ public enum ContextOptionName {
 	 * contain tsig_algorithm (a bindata) that is the name of the TSIG hash
 	 * algorithm, and tsig_secret (a bindata) that is the TSIG key.
 	 */
-	UPSTREAMS_RECURSIVE_SERVERS("upstream_recursive_servers"),
+	UPSTREAM_RECURSIVE_SERVERS("upstream_recursive_servers"),
 
 	/**
 	 * <p>
