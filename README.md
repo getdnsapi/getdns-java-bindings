@@ -21,7 +21,7 @@ Note that getdns **MUST** be built with the --with-libevent flag to configure.
 
 The file gradle.properties needs to be edited to customize **javahome** property pointing to JDK_HOME so that gradle can find jni header files under JDK_HOME/include directory.
 
-####Building and test
+####Build, install and verification
 ```
 ./gradlew clean assemble buildJniLib
 sudo ./gradlew installJniLib
