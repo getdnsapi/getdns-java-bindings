@@ -35,6 +35,14 @@ task buildJniLib(type:Exec) {
     throw new InvalidUserDataException("Please configure javahome in gradle.properties")
   }
 
+  if(!new File('/usr/local/include/getdns/getdns.h').exists()) {
+    throw new InvalidUserDataException("Please install getdns 0.1.7 release or above configured with --with-libevent.")
+  }
+
+  if(!new File('/usr/local/include/getdns/getdns_ext_libevent.h').exists()) {
+    throw new InvalidUserDataException("It looks like getdns is not configured with libevent. Please install getdns 0.1.7 release or above configured with --with-libevent.")
+  }
+
   workingDir './src/native/jni/'
   def libraryExtension = 'so'
   def systemJNIPath = 'linux'

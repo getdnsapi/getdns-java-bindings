@@ -23,7 +23,7 @@ The file gradle.properties needs to be edited to customize **javahome** property
 
 ####Building and test
 ```
-./gradlew clean assemble buildJniLib test
+./gradlew clean assemble buildJniLib runExample -Dexample=GetDNSGeneralSync
 ```
 As per gradle standard libraries will be available in the folder build/libs.
 
