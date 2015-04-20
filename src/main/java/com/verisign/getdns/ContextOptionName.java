@@ -42,42 +42,20 @@ public enum ContextOptionName {
 	/**
 	 * <p>
 	 * An application can change the quering mechanism of a context to be to act
-	 * as a stub resolver. Such an application might first get the default
-	 * information to make this change from the operating system, probably through
-	 * DHCP. Note that if a context is changed to being a stub resolver, this
-	 * automatically prevents the application from using the extenstions for
-	 * DNSSEC. An application that wants to both do DNSSEC and stub resolution
-	 * must do its own DNSSEC processing, possibly with the
-	 * getdns_validate_dnssec() function. The list of dicts define where a stub
-	 * resolver will send queries. Each dict contains address_data (whose value is
-	 * a bindata). For IPv6 link-local addresses, a scope_id name (a bindata) can
-	 * be provided. It might also contain port to specify which port to use to
-	 * contact these DNS servers; the default is 53. If the stub and a recursive
-	 * resolver both support TSIG (RFC 2845), the upstream_list entry can also
-	 * contain tsig_algorithm (a bindata) that is the name of the TSIG hash
-	 * algorithm, and tsig_secret (a bindata) that is the TSIG key.
+	 * as a stub resolver.
+	 * <pre>
+	 * Usage:
+	 * {@code
+	 *   HashMap<ContextOptionName, Object> options = new HashMap<ContextOptionName, Object>();
+	 *   options.put(ContextOptionName.STUB, true);
+	 *   Object[][] list = { { "8.8.8.8" }, { "127.0.0.1", 80 } };
+	 *   options.put(ContextOptionName.UPSTREAMS, list);
+	 *   IGetDNSContextSync context = GetDNSFactory.createSync(1, options);
+	 * </pre>
+	 *
 	 * </p>
 	 */
 	UPSTREAMS("upstreams"),
-
-	/**
-	 * An application can change the quering mechanism of a context to be to act
-	 * as a stub resolver. Such an application might first get the default
-	 * information to make this change from the operating system, probably through
-	 * DHCP. Note that if a context is changed to being a stub resolver, this
-	 * automatically prevents the application from using the extenstions for
-	 * DNSSEC. An application that wants to both do DNSSEC and stub resolution
-	 * must do its own DNSSEC processing, possibly with the
-	 * getdns_validate_dnssec() function. The list of dicts define where a stub
-	 * resolver will send queries. Each dict contains address_data (whose value is
-	 * a bindata). For IPv6 link-local addresses, a scope_id name (a bindata) can
-	 * be provided. It might also contain port to specify which port to use to
-	 * contact these DNS servers; the default is 53. If the stub and a recursive
-	 * resolver both support TSIG (RFC 2845), the upstream_list entry can also
-	 * contain tsig_algorithm (a bindata) that is the name of the TSIG hash
-	 * algorithm, and tsig_secret (a bindata) that is the TSIG key.
-	 */
-	UPSTREAM_RECURSIVE_SERVERS("upstream_recursive_servers"),
 
 	/**
 	 * <p>
