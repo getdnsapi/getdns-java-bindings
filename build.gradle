@@ -59,6 +59,18 @@ task buildJniLib(type:Exec) {
   }
 }
 
+task installJniLib(type:Copy) {
+  def libraryExtension = 'so'
+  def systemJNIPath = 'linux'
+
+  if(System.properties['os.name'].toLowerCase().contains('mac')){
+    libraryExtension = 'dylib'
+    systemJNIPath = 'darwin'
+  }
+  from project.libsDir.getPath()+'/libgetdnsconnector.'+libraryExtension
+  into '/usr/local/lib'
+}
+
 task runExample(type:JavaExec)  {
     classpath = sourceSets.main.runtimeClasspath + sourceSets.examples.runtimeClasspath 
     jvmArgs '-Djava.library.path='+project.libsDir.getPath()
