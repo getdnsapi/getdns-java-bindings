@@ -32,7 +32,7 @@ sourceSets {
 task buildJniLib(type:Exec) {
 
   if(!new File(javahome+'/include/jni.h').exists()) {
-    throw new InvalidUserDataException("Please configure javahome in gradle.properties")
+    throw new InvalidUserDataException("Please configure javahome in gradle.properties pointing to JDK_HOME so that gradle can find jni header files under JDK_HOME/include directory.")
   }
 
   if(!new File('/usr/local/include/getdns/getdns.h').exists()) {
