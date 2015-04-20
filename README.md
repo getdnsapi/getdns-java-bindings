@@ -1,5 +1,5 @@
 #getdns-java-bindings
-This is an early version with limited testing and validation. This has been tested on CentOS 6.3 64-bit.
+getdns Java bindings is an implementation of Java language bindings for the [getdns API](https://getdnsapi.net/spec.html), built on top of the [getdns implementation](https://github.com/getdnsapi/getdns/). getdns is a modern, asynchronous DNS API that simplifies access to advanced DNS features, including DNSSEC. The API specification was developed by Paul Hoffman. getdns is built on top of the getdns implementation developed as a joint project between [Verisign Labs](http://labs.verisigninc.com/en_US/innovation/verisign-labs/index.xhtml) and [NLnet Labs](http://nlnetlabs.nl/).
 
 ##External dependencies
 This has been built and tested with JDK 1.7 and 1.8
