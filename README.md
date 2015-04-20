@@ -50,7 +50,7 @@ javac -cp ./build/libs/getdns-java-0.1.jar src/examples/java/com/verisign/getdns
 LD_LIBRARY_PATH=/usr/local/lib java -cp ./build/libs/getdns-java-0.1.jar:. -Djava.library.path=build/libs com.verisign.getdns.example.sync.GetDNSGeneralSync
 
 ```
-#####documentation 
+#####Documentation 
 Javadoc for getdns-java binding can be found [here](http://getdns-java.github.io/)
 
 ###Known issues
