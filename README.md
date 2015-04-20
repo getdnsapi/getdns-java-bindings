@@ -23,9 +23,9 @@ The file gradle.properties needs to be edited to customize **javahome** property
 
 ####Build, install and verification
 ```
-./gradlew clean assemble buildJniLib
-sudo ./gradlew installJniLib
-./gradlew runExample -Dexample=GetDNSGeneralSync
+./gradlew --daemonclean assemble buildJniLib
+sudo ./gradlew --daemon installJniLib
+./gradlew --daemon runExample -Dexample=GetDNSGeneralSync
 ```
 As per gradle standard libraries will be available in the folder build/libs.
 
