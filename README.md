@@ -23,7 +23,7 @@ The file gradle.properties needs to be edited to customize **javahome** property
 
 ####Build, install and verification
 ```
-./gradlew --daemonclean assemble buildJniLib
+./gradlew --daemon clean assemble buildJniLib
 sudo ./gradlew --daemon installJniLib
 ./gradlew --daemon runExample -Dexample=GetDNSGeneralSync
 ```
