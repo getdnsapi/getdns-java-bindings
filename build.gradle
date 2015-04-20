@@ -73,8 +73,9 @@ task installJniLib(type:Copy) {
 
 task runExample(type:JavaExec)  {
     classpath = sourceSets.main.runtimeClasspath + sourceSets.examples.runtimeClasspath 
-//    jvmArgs '-Djava.library.path='+project.libsDir.getPath()
+    jvmArgs '-Djava.library.path='+project.libsDir.getPath()
     environment "LD_LIBRARY_PATH", "/usr/local/lib"
+    environment "DYLD_LIBRARY_PATH", "/usr/local/lib"
     doFirst {
     main = System.getProperty("example")
     def map = [:]
@@ -104,6 +105,7 @@ task printBuildInfo << {
 test {
     jvmArgs '-Djava.library.path='+System.getProperty("user.dir")+'/build/libs'
     environment "LD_LIBRARY_PATH", "/usr/local/lib"
+    environment "DYLD_LIBRARY_PATH", "/usr/local/lib"
 }
 
 
