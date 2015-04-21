@@ -44,15 +44,15 @@ public interface IGetDNSContextAsyncWithFuture extends IGetDNSContextBase{
 	 * 
 	 * 
 	 * <p>
-	 * There are three critical differences between addressSync() and
-	 * getdnsSync() beyond the missing request_type argument:
+	 * There are three critical differences between addressAsync() and
+	 * GeneralAsync() beyond the missing request_type argument:
 	 * <ul>
-	 * <li><b>In addressSync()</b>, the name argument can only take a host
+	 * <li><b>In addressAsync()</b>, the name argument can only take a host
 	 * name.
 	 * <li>You do not need to include a return_both_v4_and_v6 extension with the
-	 * call in addressSync(): it will always return both IPv4 and IPv6
+	 * call in addressAsync(): it will always return both IPv4 and IPv6
 	 * addresses.</li>
-	 * <li>addressSync() always uses all of namespaces from the context, while generalSync() only uses the DNS
+	 * <li>addressAsync() always uses all of namespaces from the context, while generalSync() only uses the DNS
 	 * namespace</li>
 	 * </ul>
 	 * </p>
@@ -91,6 +91,7 @@ public interface IGetDNSContextAsyncWithFuture extends IGetDNSContextBase{
 	 * @param extensions
 	 * (optional) a dictionary containing attribute/value pairs
 	 * @return
+	 * GetDNSFutureResult
 	 * @throws GetDNSException
 	 * @throws UnknownHostException
 	 */

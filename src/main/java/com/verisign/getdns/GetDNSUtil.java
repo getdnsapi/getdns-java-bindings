@@ -126,6 +126,25 @@ public class GetDNSUtil {
 		return value;
 	}
 
+	/**
+	 * <p>
+	 * This method is used to extract an Object from the response by providing
+	 * the path.<br>
+	 * Example:<br>
+	 * <pre>
+	 * {@code
+	 * 1. Object data = GetDNSUtil.getObject(info, "/replies_tree[0]/authority[1]/rdata/rdata_raw").toString());
+	 * 
+	 * }
+	 * 
+	 * </pre>
+	 * </p>
+	 * 
+	 * 
+	 * @param map Response object.
+	 * @param path Path to be searched in the map.
+	 * @return Extracted Object
+	 */
 	@SuppressWarnings("unchecked")
 	public static Object getObject(Map<String, Object> map, String path) {
 		// System.out.println("path:  " + path);
@@ -165,8 +184,8 @@ public class GetDNSUtil {
 	 * <p>
 	 * This method is used to extract an ArrayList from the response by providing
 	 * the path.<br>
-	 * Example:<br>
 	 * <pre>
+	 * Example:<br>
 	 * {@code
 	 * 1. ArrayList<Object> answers = GetDNSUtil.getAsArrayList(info, "/replies_tree[0]/answer");
 	 * 
@@ -175,7 +194,7 @@ public class GetDNSUtil {
 	 * }
 	 * 
 	 * </pre>
-	 * 
+	 * </p>
 	 * 
 	 * 
 	 * @param map Response object.
@@ -194,14 +213,14 @@ public class GetDNSUtil {
 	 * <p>
 	 * This method is used to extract an Map from the response by providing the
 	 * path.<br>
-	 * Example:<br>
 	 * <pre>
+	 * Example:<br>
 	 * {@code
 	 * 1. HashMap<String, Object> rdata = GetDNSUtil.getAsMap(info, "/replies_tree[0]/authority[0]/rdata");
 	 * 
 	 * }
-	 * </p>
 	 * </pre>
+	 * </p>
 	 * @param map Response object.
 	 * @param path Path to be searched in the map.
 	 * @return Extracted Map.
@@ -219,8 +238,8 @@ public class GetDNSUtil {
 	 * This method is used to extract an Map of ArrayList from the response by providing the
 	 * path.<br>
 	 *
-	 * Example:<br>
 	 * <pre>
+	 * Example:<br>
 	 * {@code
 	 * 1. ArrayList<Map<String,Object>> authority = GetDNSUtil.getAsListOfMap(info, "/replies_tree[0]/authority");
 	 * 

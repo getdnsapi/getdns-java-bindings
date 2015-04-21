@@ -92,7 +92,7 @@ public interface IGetDNSContextSync extends IGetDNSContextBase{
 	 *          IPV4 or IPV6 Address
 	 * @param extensions
 	 * (optional) a dictionary containing attribute/value pairs
-	 * @return
+	 * @return DNS response
 	 * @throws GetDNSException
 	 * @throws UnknownHostException
 	 */

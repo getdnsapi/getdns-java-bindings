@@ -85,7 +85,7 @@ public class RRType {
 	 * This method returns value of a RRtype
 	 * 
 	 * @param value
-	 * @return
+	 * @return RRType value.
 	 */
 	public static final RRType valueOf(int value) {
 		if (valueToRRTypeMap.containsKey(value))
@@ -98,7 +98,7 @@ public class RRType {
 	 * This method returns value of a RRtype
 	 * 
 	 * @param name
-	 * @return
+	 * @return RRType value.
 	 */
 	public static final RRType valueOf(String name) {
 		if (nameToRRTypeMap.containsKey(name))
