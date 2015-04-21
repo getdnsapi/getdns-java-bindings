@@ -39,10 +39,10 @@ import java.util.concurrent.TimeoutException;
  * <p>
  * This is used to consume response from methods invoked on <a
  * href="com/verisign/getdns/IGetDNSContextAsyncWithFuture.html"
- * >IGetDNSContextAsyncWithFuture</a> call implementation. it implements java <a
+ * >IGetDNSContextAsyncWithFuture</a> call implementation. It implements java <a
  * href
  * ="http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html"
- * target="_blank">future.</a>
+ * target="_blank">Future.</a>
  * <p>
  *
  */

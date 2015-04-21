@@ -86,13 +86,6 @@ public interface IGetDNSContextAsyncWithFuture extends IGetDNSContextBase{
 	 * This API call takes both IPV4 AND IPV6 address.
 	 * </p>
 	 * 
-	 * <pre>
-	 * {@code
-	 * 	HashMap<String, Object> info = context.hostnameAsync("2001:4860:4860::8888", null);
-	 * 
-	 * }
-	 * </pre>
-	 * 
 	 * @param address
 	 *          IPV4 or IPV6 Address
 	 * @param extensions

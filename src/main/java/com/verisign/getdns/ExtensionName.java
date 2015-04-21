@@ -156,7 +156,7 @@ public enum ExtensionName {
 	/**
 	 * <p>
 	 * For lookups that need an OPT resource record in the Additional Data
-	 * section, use theadd_opt_parameters extension. The extension’s value (a
+	 * section, use the add_opt_parameters extension. The extension’s value (a
 	 * dict) contains the parameters; these are described in more detail in RFC
 	 * 2671.
 	 * </p>
@@ -200,24 +200,23 @@ public enum ExtensionName {
 	 * </ul>
 	 * 
 	 * It is very important to note that the OPT resource record specified in
-	 * theadd_opt_parameters extension might not be the same the one that the API
+	 * the add_opt_parameters extension might not be the same the one that the API
 	 * sends in the query. For example, if the application also includes any of
 	 * the DNSSEC extensions, the API will make sure that the OPT resource record
 	 * sets the resource record appropriately, making the needed changes to the
 	 * settings from the add_opt_parameters extension.
 	 * 
 	 * 
-	 * </p>
 	 * 
 	 * <pre>
-	 * {
-	 * 	&#064;code
-	 * 	HashMap&lt;String, Object&gt; optParams = new HashMap&lt;String, Object&gt;();
+	 * {@code
+	 * 	HashMap<String, Object> optParams = new HashMap<String, Object>();
 	 * 	optParams.put(ExtensionNames.ADD_OPT_PARAM_EXTENDED_RCODE.getName(), 128);
-	 * 	HashMap&lt;ExtensionNames, Object&gt; extensions = new HashMap&lt;ExtensionNames, Object&gt;();
+	 * 	HashMap<ExtensionNames, Object> extensions = new HashMap<ExtensionNames, Object>();
 	 * 	extensions.put(ExtensionNames.ADD_OPT_PARAMETERS, optParams);
 	 * }
 	 * </pre>
+	 * </p>
 	 */
 	ADD_OPT_PARAMETERS("add_opt_parameters"),
 

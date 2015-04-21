@@ -70,8 +70,11 @@ public class GetDNSFactory {
 	 * </p>
 	 * 
 	 * @param setFromOs
+	 *        Specify 1 to use values from the OS, such as those that would be found in res_query(3), /etc/resolv.conf, and so on.
 	 * @param contextOptions
+	 *        Default options to initialize the context.
 	 * @return
+	 *        Sync context.
 	 * @throws GetDNSException
 	 */
 	public static IGetDNSContextSync createSync(int setFromOs, HashMap<ContextOptionName, Object> contextOptions)
@@ -102,8 +105,11 @@ public class GetDNSFactory {
 	 * </p>
 	 * 
 	 * @param setFromOs
+	 *        Specify 1 to use values from the OS, such as those that would be found in res_query(3), /etc/resolv.conf, and so on.
 	 * @param contextOptions
+	 *        Default options to initialize the context.
 	 * @return
+	 *        Future based Async context.
 	 * @throws GetDNSException
 	 */
 	public static IGetDNSContextAsyncWithFuture createAsyncWithFuture(int setFromOs,
@@ -121,8 +127,11 @@ public class GetDNSFactory {
 	 * 
 	 * 
 	 * @param setFromOs
+	 *        Specify 1 to use values from the OS, such as those that would be found in res_query(3), /etc/resolv.conf, and so on.
 	 * @param contextOptions
+	 *        Default options to initialize the context.
 	 * @return
+	 *        Callback based Async context.
 	 * @throws GetDNSException
 	 */
 	public static IGetDNSContextAsyncWithCallback createAsyncWithCallback(int setFromOs,

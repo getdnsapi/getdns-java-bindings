@@ -51,6 +51,7 @@ public enum ContextOptionName {
 	 *   Object[][] list = { { "8.8.8.8" }, { "127.0.0.1", 80 } };
 	 *   options.put(ContextOptionName.UPSTREAMS, list);
 	 *   IGetDNSContextSync context = GetDNSFactory.createSync(1, options);
+	 *   }
 	 * </pre>
 	 *
 	 * </p>

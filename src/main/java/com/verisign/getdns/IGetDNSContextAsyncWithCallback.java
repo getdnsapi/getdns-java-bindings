@@ -18,11 +18,12 @@ public interface IGetDNSContextAsyncWithCallback extends IGetDNSContextBase{
 	 * <pre>{@code
 	 * context.generalAsync("getdnsapi.net", RRType.valueOf("A"), null, new IGetDNSCallback() {
 	 * 
-	 * &#64;Override
 	 * public void handleResponse(HashMap<String, Object> response, RuntimeException exception) {
 	 * checkResponse(domain, "A", response);
 	 * });
 	 * context.run();
+	 * });
+	 * }
 	 * </pre>
 	 * 
 	 * @param name
@@ -52,11 +53,12 @@ public interface IGetDNSContextAsyncWithCallback extends IGetDNSContextBase{
 	 * <pre>{@code
 	 * context.generalAsync("getdnsapi.net", RRType.valueOf("A"), null, new IGetDNSCallback() {
 	 * 
-	 * &#64;Override
 	 * public void handleResponse(HashMap<String, Object> response, RuntimeException exception) {
 	 * checkResponse(domain, "A", response);
 	 * });
 	 * context.run();
+	 * });
+	 * }
 	 * </pre>
 	 * 
 	 * @param name
@@ -83,11 +85,12 @@ public interface IGetDNSContextAsyncWithCallback extends IGetDNSContextBase{
 	 * <pre>{@code
 	 * context.generalAsync("getdnsapi.net", RRType.valueOf("A"), null, new IGetDNSCallback() {
 	 * 
-	 * &#64;Override
 	 * public void handleResponse(HashMap<String, Object> response, RuntimeException exception) {
 	 * checkResponse(domain, "A", response);
 	 * });
 	 * context.run();
+	 * });
+	 * }
 	 * </pre>
 	 * 
 	 * @param name
@@ -114,11 +117,12 @@ public interface IGetDNSContextAsyncWithCallback extends IGetDNSContextBase{
 	 * <pre>{@code
 	 * context.generalAsync("getdnsapi.net", RRType.valueOf("A"), null, new IGetDNSCallback() {
 	 * 
-	 * &#64;Override
 	 * public void handleResponse(HashMap<String, Object> response, RuntimeException exception) {
 	 * checkResponse(domain, "A", response);
 	 * });
 	 * context.run();
+	 * });
+	 * }
 	 * </pre>
 	 * 
 	 * @param name
