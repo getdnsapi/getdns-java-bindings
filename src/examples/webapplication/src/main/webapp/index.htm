@@ -1,0 +1,51 @@
+<html>
+<head>
+    <title>getdns Web</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style type="text/css">
+    	.blue { color: blue; }
+    </style>
+    <script type="text/javascript" src="includes/js/jquery-1.11.2.js"></script>
+    <script type="text/javascript">
+     $(document).ready(function(){
+			$("h1").click(function(){
+        		$(this).addClass("blue").fadeOut("slow");
+    		});
+    		$("#ajaxform").submit(function(event) {
+
+      			/* stop form from submitting normally */
+      			event.preventDefault();
+
+      			/* get some values from elements on the page: */
+      			var $form = $( this ),
+      			url = $form.attr( 'action' );
+
+      			/* Send the data using post */
+      			var posting = $.get( url, { domain: $('#domain').val(), rrtype: $('#rrtype').val() } );
+
+      			/* update results */
+      			posting.done(function( data ) {
+        			 $('#result').val(data)
+      			});
+      			/* Show error */
+      			posting.fail(function() {
+      			   alert("Some error occurred while processing request");
+      			});   
+			});
+     	});
+     </script>
+  </head>
+<body>
+<h1>getdns</h1>
+ <form id="ajaxform" action="demoServlet/record" method="GET" accept-charset="UTF-8" enctype="application/x-www-form-urlencoded" autocomplete="off">
+		Domain Name:<br/>
+		<input type="text" id="domain">
+		<br/>
+		RR Type:<br>
+		<input type="text" id="rrtype">
+		<input type="submit" value="Submit">
+</form>
+<br/>
+<div><textarea id="result" readonly="readonly" rows="10" cols="80" placeholder="getdns response"></textarea></div>
+</body>
+</html>

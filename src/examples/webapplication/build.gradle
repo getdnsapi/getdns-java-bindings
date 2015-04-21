@@ -1,0 +1,24 @@
+apply plugin: 'war'
+apply plugin: 'eclipse'
+
+repositories {
+    mavenCentral()
+    flatDir {
+      dirs 'lib'
+    }
+}
+
+dependencies {
+	providedCompile "javax.servlet:servlet-api:2.5"
+    compile group: 'commons-io', name: 'commons-io', version: '1.4'
+    compile group: 'log4j', name: 'log4j', version: '1.2.15', ext: 'jar'
+    compile ":getdns-java:0.1"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
+
+//httpPort = 8080
+//stopPort = 9451
+//stopKey = 'foo'
