@@ -23,10 +23,9 @@ public class WebInterfaceServlet extends HttpServlet {
 					&& rrType != null && !"".equals(rrType.trim())) {
 				GeneralSyncPositiveWithRecursive generalSync = new GeneralSyncPositiveWithRecursive();
 				try {
-					HashMap<String, Object> result = generalSync
+				        message = generalSync
 							.getDNSSyncForResourceRecord(domainName,
 									rrType.toUpperCase().trim());
-					message = result.toString();
 				} catch (Exception ex) {
 					message = "Sorry, some error occured while processing, please check if your request is valid.";
 				}
